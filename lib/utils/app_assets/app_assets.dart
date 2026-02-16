@@ -24,44 +24,51 @@ class AppAssets {
   static String downloadImage = '$_icons/download_image.svg';
   static String info = '$_icons/i.svg';
   static String saveCard='$_icons/book_mark.svg';
-
-
-
-
-   static String badges = '$_icons/badges.svg';
+  static String cart='$_icons/cart.svg';
+  static String edit = '$_icons/edit.svg';
+  static String camera = '$_icons/camera.svg';
    static String close = '$_icons/close.svg';
 
-  static String complain = '$_icons/complain.svg';
-  static String dashBoard = '$_icons/dash_board.svg';
-  static String deliver = '$_icons/deliver.svg';
+///nav bar========================================
+  static String homeNav = '$_icons/home.svg';
+  static String saveNav = '$_icons/save.svg';
+  static String cartNav = '$_icons/cart.svg';
+  static String profileNav = '$_icons/profile.svg';
 
-  static String dropDown = '$_icons/drop_down.svg';
 
-  static String inProgress = '$_icons/in_progress.svg';
+
+
+
+
+
+
+
+
+ // static String inProgress = '$_icons/in_progress.svg';
 
   static String logOut = '$_icons/logout.svg';
-  static String message = '$_icons/message.svg';
+  // static String message = '$_icons/message.svg';
+  //
+  // static String pending = '$_icons/pending.svg';
 
-  static String pending = '$_icons/pending.svg';
-
-  static String phone = '$_icons/phone.svg';
-  static String print = '$_icons/print.svg';
-  static String profile = '$_icons/profile.svg';
-  static String profileDrawer = '$_icons/profile_drawer.svg';
+  // static String phone = '$_icons/phone.svg';
+  // static String print = '$_icons/print.svg';
+  // static String profile = '$_icons/profile.svg';
+  // static String profileDrawer = '$_icons/profile_drawer.svg';
   static String save = '$_icons/save.svg';
 
 
-  static String submitReq='$_icons/submit_req.svg';
-  static String transcript='$_icons/transcript.svg';
-static String twoFactor = '$_icons/two_factor.svg';
-static String updatePass = '$_icons/update_pass.svg';
-static String updateDoc = '$_icons/upload_doc.svg';
-static String window = '$_icons/windows.svg';
+//   static String submitReq='$_icons/submit_req.svg';
+//   static String transcript='$_icons/transcript.svg';
+// static String twoFactor = '$_icons/two_factor.svg';
+// static String updatePass = '$_icons/update_pass.svg';
+// static String updateDoc = '$_icons/upload_doc.svg';
+// static String window = '$_icons/windows.svg';
 
-  static String camera = '$_icons/camera.svg';
-
-  static String reqGrade = '$_icons/request_grade.svg';
-  static String notificationTime = '$_icons/notification_time.svg';
-  static String notificationMark = '$_icons/notification_mark.svg';
+  //
+  //
+  // static String reqGrade = '$_icons/request_grade.svg';
+  // static String notificationTime = '$_icons/notification_time.svg';
+  // static String notificationMark = '$_icons/notification_mark.svg';
 
 }

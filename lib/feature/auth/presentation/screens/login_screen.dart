@@ -5,13 +5,16 @@ import 'package:chandler_app/feature/auth/presentation/widgets/input_pass_field_
 import 'package:chandler_app/feature/auth/presentation/widgets/remember_forgot_row.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
+import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
+import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -33,7 +36,40 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height:ResponsiveHelper.height(24));
     return Scaffold(
-      appBar: CustomAppBar(title: AppText.login),
+      appBar: AppBar(
+        title: Padding(
+          padding:  EdgeInsets.only(left: ResponsiveHelper.padding(16)),
+          child: Text("Reform POCT",style: GoogleFonts.poppins(
+          
+            fontWeight: FontWeight.w400,
+            fontSize: ResponsiveHelper.fontSize(20),
+            color: AppColors.blackTextColor
+          
+          
+          
+          ),),
+        ),
+        actions: [
+          Padding(
+            padding:  EdgeInsets.only(right: ResponsiveHelper.padding(16)),
+            child: CustomContainer(
+                backgroundColor: AppColors.searchBarBgColor,
+                radius: ResponsiveHelper.borderRadius(50),
+                child: CustomImage(imageSrc: AppAssets.notification)),
+          )
+          
+          
+        ],
+
+
+      ),
+
+
+
+
+
+
+     // appBar: CustomAppBar(title: AppText.login),
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),

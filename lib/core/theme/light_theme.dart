@@ -140,24 +140,29 @@ final ThemeData lightTheme = ThemeData(
   /// Text Theme ==========================================
   textTheme: TextTheme(
     titleLarge: GoogleFonts.inter(
-      fontSize: ResponsiveHelper.fontSize(32),
-      fontWeight: FontWeight.w700,
+      fontSize: ResponsiveHelper.fontSize(28),
+      fontWeight: FontWeight.w600,
       color: AppColors.black,
     ),
     titleMedium: GoogleFonts.playfairDisplay(
       fontSize: ResponsiveHelper.fontSize(20),
-      fontWeight: FontWeight.w700,
-      color: AppColors.titleColor,
+      fontWeight: FontWeight.w600,
+      color: AppColors.blackTextColor,
+    ),
+    bodyLarge: GoogleFonts.inter(
+      fontSize: ResponsiveHelper.fontSize(16),
+      fontWeight: FontWeight.w500,
+      color: AppColors.black,
     ),
     bodyMedium: GoogleFonts.inter(
       fontSize: ResponsiveHelper.fontSize(14),
       fontWeight: FontWeight.w500,
-      color: AppColors.bodyMediumText,
+      color: AppColors.black,
     ),
     bodySmall: GoogleFonts.inter(
       fontSize: ResponsiveHelper.fontSize(12),
       fontWeight: FontWeight.w400,
-      color: AppColors.greyTextColor,
+      color: AppColors.black,
     ),
     labelMedium: GoogleFonts.inter(
       fontSize: ResponsiveHelper.fontSize(12),

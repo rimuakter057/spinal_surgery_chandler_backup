@@ -32,7 +32,7 @@ class AppColors {
 
 //==============================================================================================================================
 
-  static const Color titleColor = Color(0xFF333333);
+  static const Color blackTextColor = Color(0xFF333333);
   static const Color greyTextColor = Color(0x7F7F7F80);
   static const Color dividerColor = Color(0xFFE2E2E2);
   static const Color inputBorderColor = Color(0xFFD1D5DB);
@@ -45,7 +45,8 @@ class AppColors {
 
 
   static const Color darkGrey = Color(0xFF272728);
-  static const Color searchBarBgColor = Color(0xFFFFFFFF);
+  static const Color searchBarBgColor = Color(0x0F0F0F0D);
+  static const Color navBarBgColor = Color(0x78787833);
   static const Color searchTextColor = Color(0xFF8E8E93);
    static const Color containerGreyBgColor = Color(0xFFF9FAFB);
 

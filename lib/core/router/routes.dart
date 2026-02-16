@@ -1,4 +1,3 @@
-
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/confirmed_pass_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/forgot_password_screen.dart';
@@ -7,9 +6,15 @@ import 'package:chandler_app/feature/auth/presentation/screens/sign_up_screen.da
 import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
+import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
+import 'package:chandler_app/feature/main_nav_screen/presentation/screens/main_nav_screen.dart';
+import 'package:chandler_app/feature/privacyPolicy/presentation/screens/privacy_policy_screen.dart';
+import 'package:chandler_app/feature/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:chandler_app/feature/profile/presentation/screens/profile_screen.dart';
+import 'package:chandler_app/feature/save/presentation/screens/save_screen.dart';
+import 'package:chandler_app/feature/terms_condition/presentation/screens/terms_condition_screen.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 
 
@@ -18,7 +23,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutesPath.addCartScreen.addBasePath,
+    initialLocation: RoutesPath.mainNavScreen.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -82,8 +87,45 @@ class AppRouter {
           );
         },
       ),
-///==============================================
 
+
+
+
+///navbar screens=========================
+
+      GoRoute(
+          name: RoutesPath.mainNavScreen,
+          path: RoutesPath.mainNavScreen.addBasePath,
+          pageBuilder: (context,state){
+            return _buildPageWithAnimation(child: MainNavScreen(), state: state);
+
+          }
+
+
+      ),
+
+      GoRoute(
+        name: RoutesPath.homeScreen,
+        path: RoutesPath.homeScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  HomeScreen(),
+            state: state,
+          );
+        },
+      ),
+
+
+      GoRoute(
+        name: RoutesPath.saveScreen,
+        path: RoutesPath.saveScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  SaveScreen(),
+            state: state,
+          );
+        },
+      ),
       GoRoute(
         name: RoutesPath.cartScreen,
         path: RoutesPath.cartScreen.addBasePath,
@@ -94,6 +136,20 @@ class AppRouter {
           );
         },
       ),
+
+      GoRoute(
+        name: RoutesPath.profileScreen,
+        path: RoutesPath.profileScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  ProfileScreen(),
+            state: state,
+          );
+        },
+      ),
+
+
+///==============================================
 
 
       GoRoute(
@@ -107,7 +163,39 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        name: RoutesPath.editProfileScreen,
+        path: RoutesPath.editProfileScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  EditProfileScreen(),
+            state: state,
+          );
+        },
+      ),
 
+
+      GoRoute(
+        name: RoutesPath.privacyPolicyScreen,
+        path: RoutesPath.privacyPolicyScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  PrivacyPolicyScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutesPath.termsConditionScreen,
+        path: RoutesPath.termsConditionScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  TermsConditionScreen(),
+            state: state,
+          );
+        },
+      ),
 
 
     ],

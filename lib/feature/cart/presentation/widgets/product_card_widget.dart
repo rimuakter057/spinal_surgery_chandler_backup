@@ -98,8 +98,9 @@ class ProductCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  [
-                  Icon(Icons.shopping_cart_outlined, color: Colors.orange, size: ResponsiveHelper.iconSize(22)),
-                  SizedBox(width: ResponsiveHelper.spacing(10)),
+
+               CustomImage(imageSrc: AppAssets.cart),
+                 SizedBox(width: ResponsiveHelper.spacing(10)),
                   Text(
                     'Add to Cart',
                     style:context.bodySmall.copyWith(color: AppColors.primaryColor)

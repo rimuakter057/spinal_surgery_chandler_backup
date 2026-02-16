@@ -18,18 +18,30 @@ class RoutesPath {
   static const String confirmedPassScreen = 'confirmedPassScreen';
 
 
-    ///home==============================-===============
+    ///navbar screes==============================-===============
+
+  static const String mainNavScreen = 'mainNavScreen';
   static const String homeScreen = 'homeScreen';
+  static const String saveScreen="saveScreen";
   static const String cartScreen = 'cartScreen';
+  static const String profileScreen='profile';
+
+
+
+  ///=====================================
   static const String addCartScreen = 'addCartScreen';
+
 
 
 ///profile=======================================================
 
-  static const String profileScreen='profile';
+
+  static const String editProfileScreen='editProfile';
 
 
   static const String notificationScreen='notification';
+  static const String termsConditionScreen='termsCondition';
+  static const String privacyPolicyScreen='privacyPolicy';
 
 
 
