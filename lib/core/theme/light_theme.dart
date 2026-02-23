@@ -85,12 +85,11 @@ final ThemeData lightTheme = ThemeData(
     iconColor: AppColors.primaryColor,
     prefixIconColor: AppColors.primaryColor,
     suffixIconColor: AppColors.primaryColor,
-    contentPadding: EdgeInsets.symmetric(
-      horizontal: ResponsiveHelper.width(15),
-      vertical: ResponsiveHelper.height(14),
-    ),
+    contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: ResponsiveHelper.padding(16),),
 
 
+
+    border: InputBorder.none,
 
     /// prefix constraints (responsive)
     prefixIconConstraints: BoxConstraints(

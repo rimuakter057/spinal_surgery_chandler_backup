@@ -11,27 +11,15 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      height: ResponsiveHelper.height(48),
-      width: double.infinity,
-      radius: ResponsiveHelper.borderRadius(12), // rounded corners,
-      backgroundColor: AppColors.searchBarBgColor,
-      child: TextField(
-        decoration: InputDecoration(
-          fillColor: AppColors.searchBarBgColor,
-          filled: true,
-          hintText: "Search here...", // placeholder text
-          hintStyle: context.bodyMedium.copyWith(
-            color: AppColors.searchTextColor,
-          ),
+    return TextField(
+      decoration: InputDecoration(
 
-          prefixIconConstraints: BoxConstraints(
-            minHeight: ResponsiveHelper.height(20),
-            minWidth: ResponsiveHelper.width(20),
-          ),
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: ResponsiveHelper.padding(16),),
-          border: InputBorder.none,
+        hintText: "Search here...", // placeholder text
+        hintStyle: context.bodyMedium.copyWith(
+          color: AppColors.searchTextColor,
         ),
+
+
       ),
     );
   }
