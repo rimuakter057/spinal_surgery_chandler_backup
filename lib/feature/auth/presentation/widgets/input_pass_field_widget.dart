@@ -1,6 +1,7 @@
 import 'package:chandler_app/feature/auth/presentation/widgets/password_field_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/title_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +20,7 @@ class InputPassFieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleWidget(title: title),
+        Text(title,style: context.labelLarge,),
         SizedBox(height: ResponsiveHelper.height(8) ,),
         PasswordFieldWidget(
           validator: validator,

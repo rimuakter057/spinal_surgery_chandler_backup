@@ -1,3 +1,4 @@
+import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/forgot-code_heading_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/input_field_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
@@ -34,7 +35,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                 controller: emailController,
               ),
                   SizedBox(height: ResponsiveHelper.height(120),),
-         ElevatedButton(onPressed: (){}, child: Text(AppText.resetPassword))
+         ElevatedButton(onPressed: (){
+           context.pushNamed(RoutesPath.verifyCodeScreen);
+         }, child: Text(AppText.sendOtp))
 
             ],
           ),

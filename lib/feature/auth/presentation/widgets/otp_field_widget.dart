@@ -25,7 +25,7 @@ class OtpFieldWidget extends StatelessWidget {
       keyboardType: TextInputType.number,
       animationType: AnimationType.fade,
       enableActiveFill: true,
-
+        backgroundColor: Colors.transparent,
       textStyle:context.bodyMedium.copyWith(color: AppColors.white),
       cursorColor: Colors.black,
       pinTheme: PinTheme(

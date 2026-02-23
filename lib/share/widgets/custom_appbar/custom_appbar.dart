@@ -47,7 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Text(
         title,
-        style: context.bodyLarge,
+        style: context.titleSmall,
       ),
     );
   }

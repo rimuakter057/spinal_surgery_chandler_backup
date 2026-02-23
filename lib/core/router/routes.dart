@@ -3,6 +3,7 @@ import 'package:chandler_app/feature/auth/presentation/screens/confirmed_pass_sc
 import 'package:chandler_app/feature/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/login_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/sign_up_screen.dart';
+import 'package:chandler_app/feature/auth/presentation/screens/splash_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
@@ -23,11 +24,23 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutesPath.mainNavScreen.addBasePath,
+    initialLocation: RoutesPath.splashScreen.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
       ///======================= auth Route =======================
+
+      GoRoute(
+        name: RoutesPath.splashScreen,
+        path: RoutesPath.splashScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  SplashScreen(),
+            state: state,
+          );
+        },
+      ),
+
 
       GoRoute(
         name: RoutesPath.signUpScreen,

@@ -18,13 +18,13 @@ class ConfirmedPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget gap=SizedBox(height:ResponsiveHelper.height(24));
     return Scaffold(
-      appBar: CustomAppBar(title: AppText.emailVerify),
+      appBar: CustomAppBar(title: AppText.confirmPassword),
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
           child: Column(
             children: [
-
+              SizedBox(height: ResponsiveHelper.height(120),),
 
               ///password field
               InputPassFieldWidget(

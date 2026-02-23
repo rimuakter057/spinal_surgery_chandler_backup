@@ -1,6 +1,8 @@
+import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/forgot-code_heading_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/otp_field_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,8 +15,8 @@ class VerifyCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: CustomAppBar(title: AppText.emailVerify),
-      appBar: AppBar(),
+      appBar: CustomAppBar(title: AppText.emailVerify),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
@@ -33,8 +35,10 @@ class VerifyCodeScreen extends StatelessWidget {
                 },
               ),
               SizedBox(height: ResponsiveHelper.height(120) ,),
-      ElevatedButton(onPressed: (){}, child: Text(
-          AppText.cancel
+      ElevatedButton(onPressed: (){
+        context.pushNamed(RoutesPath.confirmedPassScreen);
+      }, child: Text(
+          AppText.verify
 
       ))
 

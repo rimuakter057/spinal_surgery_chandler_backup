@@ -36,33 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height:ResponsiveHelper.height(24));
     return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding:  EdgeInsets.only(left: ResponsiveHelper.padding(16)),
-          child: Text("Reform POCT",style: GoogleFonts.poppins(
-          
-            fontWeight: FontWeight.w400,
-            fontSize: ResponsiveHelper.fontSize(20),
-            color: AppColors.blackTextColor
-          
-          
-          
-          ),),
-        ),
-        actions: [
-          Padding(
-            padding:  EdgeInsets.only(right: ResponsiveHelper.padding(16)),
-            child: CustomContainer(
-                backgroundColor: AppColors.searchBarBgColor,
-                radius: ResponsiveHelper.borderRadius(50),
-                child: CustomImage(imageSrc: AppAssets.notification)),
-          )
-          
-          
-        ],
-
-
-      ),
+      appBar: CustomAppBar(title: AppText.login),
 
 
 
@@ -132,7 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
               gap,
               gap,
 
-             ElevatedButton(onPressed: (){}, child: Text(AppText.login)),
+             ElevatedButton(onPressed: (){
+               context.pushNamed(RoutesPath.mainNavScreen);
+
+             }, child: Text(AppText.login)),
 
               SizedBox(height: ResponsiveHelper.height(12) ,),
               ActionTextWidget(

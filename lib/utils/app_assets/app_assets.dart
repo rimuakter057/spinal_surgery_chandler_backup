@@ -18,7 +18,7 @@ class AppAssets {
  static String notification = '$_icons/notification.svg';
   static String drawer = '$_icons/menu.svg';
    static String next = '$_icons/next_arrow.svg';
-  static String logo = '$_icons/logo.svg';
+  static String logo = '$_icons/logo.png';
   static String play = '$_icons/play.svg';
   static String download = '$_icons/download.svg';
   static String downloadImage = '$_icons/download_image.svg';
