@@ -42,6 +42,8 @@ class RoutesPath {
   static const String notificationScreen='notification';
   static const String termsConditionScreen='termsCondition';
   static const String privacyPolicyScreen='privacyPolicy';
+  static const String mainInformation='mainInformation';
+  static const String shoreLine='shoreLine';
 
 
 

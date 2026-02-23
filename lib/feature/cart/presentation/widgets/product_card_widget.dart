@@ -74,7 +74,7 @@ class ProductCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: context.bodyLarge,
+                  style: context.bodySmall,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -19,6 +19,7 @@ class AppText {
   static const enterAddress = 'Enter your address here';
 
   static const save = 'Save';
+  static const shoreline = 'Shoreline';
   static const cancel = 'Cancel';
 
   static const addToCart = 'Add to Cart';

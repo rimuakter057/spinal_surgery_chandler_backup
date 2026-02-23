@@ -138,12 +138,12 @@ final ThemeData lightTheme = ThemeData(
 
   /// Text Theme ==========================================
   textTheme: TextTheme(
-    titleLarge: GoogleFonts.inter(
+    titleLarge: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(28),
       fontWeight: FontWeight.w600,
       color: AppColors.black,
     ),
-    titleSmall:GoogleFonts.inter(
+    titleSmall:GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(16),
       fontWeight: FontWeight.w500,
       color: AppColors.blackTextColor,
@@ -153,29 +153,29 @@ final ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w600,
       color: AppColors.blackTextColor,
     ),
-    bodyLarge: GoogleFonts.inter(
+    bodyLarge: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(20),
       fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
-    bodyMedium: GoogleFonts.inter(
+    bodyMedium: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(14),
       fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
-    bodySmall: GoogleFonts.inter(
+    bodySmall: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(12),
       fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
-    labelMedium: GoogleFonts.inter(
+    labelMedium: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(12),
       fontWeight: FontWeight.w500,
       color: AppColors.labelTextColor,
     ),
 
 
-    labelLarge: GoogleFonts.inter(
+    labelLarge: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(14),
       fontWeight: FontWeight.w400,
       color: AppColors.blackTextColor,

@@ -132,7 +132,7 @@ class _SaveScreenState extends State<SaveScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: TextStyle(
-                                  fontSize: ResponsiveHelper.fontSize(12),
+                                  fontSize: ResponsiveHelper.fontSize(14),
                                   fontWeight: FontWeight.w400,
                                   fontFamily: AppConfig.questrial,
                                   decoration: TextDecoration.underline,

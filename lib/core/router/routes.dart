@@ -8,6 +8,8 @@ import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart'
 import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
+import 'package:chandler_app/feature/main_information/presentation/screens/main_information_screen.dart';
+import 'package:chandler_app/feature/main_information/presentation/screens/shoreline_screen.dart';
 import 'package:chandler_app/feature/main_nav_screen/presentation/screens/main_nav_screen.dart';
 import 'package:chandler_app/feature/privacyPolicy/presentation/screens/privacy_policy_screen.dart';
 import 'package:chandler_app/feature/profile/presentation/screens/edit_profile_screen.dart';
@@ -24,7 +26,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutesPath.mainNavScreen.addBasePath,
+    initialLocation: RoutesPath.shoreLine.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -36,6 +38,29 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child:  SplashScreen(),
+            state: state,
+          );
+        },
+      ),
+
+
+      GoRoute(
+        name: RoutesPath.mainInformation,
+        path: RoutesPath.mainInformation.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  MainInformationScreen(),
+            state: state,
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RoutesPath.shoreLine,
+        path: RoutesPath.shoreLine.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  ShorelineScreen(),
             state: state,
           );
         },
