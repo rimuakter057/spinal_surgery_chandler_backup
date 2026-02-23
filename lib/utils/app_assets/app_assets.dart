@@ -2,6 +2,8 @@ class AppAssets {
   AppAssets._();
 
   static final String _images = 'assets/images';
+  static final imageOne="assets/images/image.png";
+
   static final String _icons = 'assets/icons';
 
 

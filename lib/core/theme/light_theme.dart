@@ -161,7 +161,7 @@ final ThemeData lightTheme = ThemeData(
     ),
     bodyMedium: GoogleFonts.inter(
       fontSize: ResponsiveHelper.fontSize(14),
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
     bodySmall: GoogleFonts.inter(

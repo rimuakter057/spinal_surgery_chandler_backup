@@ -69,4 +69,40 @@ class AppText {
 
   ///add to cart=========================================================================================================
   static const totalAmount = 'Total Amount:';
+  ///app text process name==================
+
+
+
+
+  static const String cervicothoracic="Cervicothoracic";
+  static const String thoracolumbar="Thoracolumbar";
+
+  static const String selectOption = "Select a Option";
+  static const String posteriorCervicalFixation = "Posterior Cervical Fixation";
+  static const String anteriorCervicale = "Anterior Cervicale";
+  static const String acdf = "ACDF";
+  static const String cervicalCorpectomy = "Cervical Corpectomy";
+  static const String ctdr = "CTDR";
+  static const String acdfCagePlateCombos = "ACDF Cage/ Plate Combos";
+  static const String acdfCagesNonStandalone = "ACDF Cages Non standalone";
+  static const String acdfStandaloneCages = "ACDF Standalone Cages";
+  static const String acdfPlates = "ACDF Plates";
+  static const String posterior = "Posterior";
+  static const String anterior = "Anterior";
+  static const String staticBananaTlifCages = "Static Banana TLIF Cages";
+  static const String staticBulletObliqueTlifCages = "Static Bullet/Oblique TLIF Cages";
+  static const String expandableTlifCages = "Expandable TLIF Cages";
+  static const String pedicleScrewFixation = "Pedicle Screw Fixation";
+  static const String facetFixation = "Facet Fixation";
+  static const String isp = "ISP";
+  static const String printedTiTlifBulletOblique = "3D printed ti TLIF Bullet/Oblique";
+  static const String tiCoatedPeek = "Ti Coated Peek/ HA Peek TLIF Bullet/Oblique";
+  static const String alifStandaloneCages = "ALIF Standalone Cages";
+  static const String alifPlates = "ALIF Plates";
+  static const String alif = "ALIF";
+  static const String lumbarDiscReplacement = "Lumbar Disc Replacement";
+  static const String thoracolumbarCorpectomy = "Thoracolumbar Corpectomy";
+  static const String varisyncStandalone = "Varisync Standalone";
+
+
 }
