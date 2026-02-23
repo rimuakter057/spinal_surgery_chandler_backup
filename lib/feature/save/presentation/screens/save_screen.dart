@@ -24,6 +24,33 @@ class _SaveScreenState extends State<SaveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
+
+      drawer: Drawer(   // 🔥 add this
+
+        child: ListView(
+
+          children: [
+
+            DrawerHeader(
+              child: Text("Menu"),
+            ),
+
+            ListTile(
+              title: Text("Home"),
+              onTap: () {},
+            ),
+
+            ListTile(
+              title: Text("Profile"),
+              onTap: () {},
+            ),
+
+          ],
+
+        ),
+
+      ),
+
       appBar: AppBar(
         title: Text("Posterior Cervical Fixation",
           maxLines: 1,
@@ -36,8 +63,12 @@ class _SaveScreenState extends State<SaveScreen> {
             padding:  EdgeInsets.only(right: ResponsiveHelper.padding(12)),
             child: Row(children: [
 
+              GestureDetector(
+                  onTap:(){
+                    Scaffold.of(context).openDrawer(); // 🔥 open drawer
 
-              CustomImage(imageSrc: AppAssets.menu,),
+                  },
+                  child: CustomImage(imageSrc: AppAssets.menu,)),
               SizedBox(width: ResponsiveHelper.spacing(12),),
               CustomImage(imageSrc: AppAssets.notification,),
 
