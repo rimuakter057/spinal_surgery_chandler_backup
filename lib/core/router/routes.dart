@@ -12,6 +12,7 @@ import 'package:chandler_app/feature/main_information/presentation/screens/main_
 import 'package:chandler_app/feature/main_information/presentation/screens/shoreline_screen.dart';
 import 'package:chandler_app/feature/main_nav_screen/presentation/screens/main_nav_screen.dart';
 import 'package:chandler_app/feature/privacyPolicy/presentation/screens/privacy_policy_screen.dart';
+import 'package:chandler_app/feature/product/presentation/screens/product_details_screen.dart';
 import 'package:chandler_app/feature/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:chandler_app/feature/profile/presentation/screens/profile_screen.dart';
 import 'package:chandler_app/feature/save/presentation/screens/save_screen.dart';
@@ -26,7 +27,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutesPath.shoreLine.addBasePath,
+    initialLocation: RoutesPath.mainNavScreen.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -66,6 +67,17 @@ class AppRouter {
         },
       ),
 
+
+      GoRoute(
+        name: RoutesPath.productDetails,
+        path: RoutesPath.productDetails.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  ProductDetailsScreen(),
+            state: state,
+          );
+        },
+      ),
 
       GoRoute(
         name: RoutesPath.signUpScreen,

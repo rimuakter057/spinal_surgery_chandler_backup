@@ -24,10 +24,12 @@ class AppAssets {
   static String logo = '$_icons/logo.png';
   static String play = '$_icons/play.svg';
   static String download = '$_icons/download.svg';
-  static String downloadImage = '$_icons/download_image.svg';
+
+  static String downloadImage = '$_icons/download_image.png';
   static String info = '$_icons/i.svg';
   static String saveCard='$_icons/book_mark.svg';
   static String cart='$_icons/cart.svg';
+  static String cartWhite='$_icons/cart_white.svg';
   static String edit = '$_icons/edit.svg';
   static String camera = '$_icons/camera.svg';
    static String close = '$_icons/close.svg';

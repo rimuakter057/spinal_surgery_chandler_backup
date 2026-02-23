@@ -1,9 +1,11 @@
+import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
@@ -36,35 +38,46 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Image Section with Info Icon
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  imageUrl,
-                  height: ResponsiveHelper.height(96),
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: GestureDetector(
-                  onTap: onInfo,
-                  child: Container(
-                    padding:  ResponsiveHelper.all(6),
-                    decoration: BoxDecoration(
-                     // color: Colors.black.withOpacity(0.3),
-                      color: AppColors.blackShade,
-                      shape: BoxShape.circle,
-                    ),
-                    child: CustomImage(imageSrc: AppAssets.info),
+          GestureDetector(
+            onTap: (){
+
+           context.pushNamed(RoutesPath.addCartScreen);
+
+            },
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    imageUrl,
+                    height: ResponsiveHelper.height(96),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: GestureDetector(
+                    onTap: onInfo,
+                    child: Container(
+                      padding:  ResponsiveHelper.all(6),
+                      decoration: BoxDecoration(
+                       // color: Colors.black.withOpacity(0.3),
+                        color: AppColors.blackShade,
+                        shape: BoxShape.circle,
+                      ),
+                      child: CustomImage(imageSrc: AppAssets.info),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+
+
+
+
            SizedBox(height: ResponsiveHelper.spacing(8)),
 
           // Title and Bookmark Section

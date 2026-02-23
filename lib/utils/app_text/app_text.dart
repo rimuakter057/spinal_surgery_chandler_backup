@@ -20,6 +20,7 @@ class AppText {
 
   static const save = 'Save';
   static const shoreline = 'Shoreline';
+  static const reform = 'Reform POCT';
   static const cancel = 'Cancel';
 
   static const addToCart = 'Add to Cart';
@@ -104,6 +105,7 @@ class AppText {
   static const String lumbarDiscReplacement = "Lumbar Disc Replacement";
   static const String thoracolumbarCorpectomy = "Thoracolumbar Corpectomy";
   static const String varisyncStandalone = "Varisync Standalone";
+  static const String download = "Download";
 
 
 }
