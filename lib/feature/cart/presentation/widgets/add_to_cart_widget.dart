@@ -60,7 +60,7 @@ class AddToCartWidget extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: context.bodyLarge,
+                      style: context.bodyMedium,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

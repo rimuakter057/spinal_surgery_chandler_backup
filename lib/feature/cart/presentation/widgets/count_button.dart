@@ -18,13 +18,13 @@ class CountButton extends StatelessWidget {
     return CustomContainer(
 
       padding: ResponsiveHelper.symmetric(
-        horizontal: 13,
-        vertical: 4,
+        horizontal:12,
+        vertical: 2
       ),
-      backgroundColor: AppColors.black,
+      backgroundColor: AppColors.navUnselectedColor,
       child: GestureDetector(
         onTap: onTap,
-        child: Text(title, style: context.bodyLarge.copyWith(color: AppColors.white)),
+        child: Text(title, style: context.bodyLarge.copyWith(color: AppColors.white,fontSize: ResponsiveHelper.fontSize(14))),
       ),
     );
   }

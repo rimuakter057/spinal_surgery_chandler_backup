@@ -93,14 +93,14 @@ final ThemeData lightTheme = ThemeData(
 
     /// prefix constraints (responsive)
     prefixIconConstraints: BoxConstraints(
-      minWidth: ResponsiveHelper.width(24),
-      minHeight: ResponsiveHelper.height(24),
+      minWidth: ResponsiveHelper.iconSize(18),
+      minHeight: ResponsiveHelper.iconSize(18),
     ),
 
     /// suffix constraints (responsive)
     suffixIconConstraints: BoxConstraints(
-      minWidth: ResponsiveHelper.width(24),
-      minHeight: ResponsiveHelper.height(24),
+      minWidth: ResponsiveHelper.iconSize(18),
+      minHeight: ResponsiveHelper.iconSize(18),
     ),
 
 

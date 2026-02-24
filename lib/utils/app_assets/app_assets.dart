@@ -39,6 +39,7 @@ class AppAssets {
   static String saveNav = '$_icons/save.svg';
   static String cartNav = '$_icons/cart.svg';
   static String profileNav = '$_icons/profile.svg';
+  static String search = '$_icons/search.svg';
 
 
 
