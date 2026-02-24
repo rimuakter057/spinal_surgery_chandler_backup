@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 3;
+  //int _selectedIndex = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           DialogButtonWidget(
                             title: AppText.posteriorCervicalFixation,
                             onTap: () {
-                              context.pushNamed(RoutesPath.editProfileScreen);
+                              context.pushNamed(RoutesPath.mainInformation);
                             },
                           ),
 
@@ -130,25 +130,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       DialogButtonWidget(
                                                         title: AppText
                                                             .acdfCagePlateCombos,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          context.pushNamed(RoutesPath.mainInformation);
+                                                        },
                                                       ),
                                                       gap,
                                                       DialogButtonWidget(
                                                         title: AppText
                                                             .acdfCagesNonStandalone,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          context.pushNamed(RoutesPath.mainInformation);
+                                                        },
                                                       ),
                                                       gap,
                                                       DialogButtonWidget(
                                                         title: AppText
                                                             .acdfStandaloneCages,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          context.pushNamed(RoutesPath.mainInformation);
+                                                        },
                                                       ),
                                                       gap,
                                                       DialogButtonWidget(
                                                         title:
                                                             AppText.acdfPlates,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          context.pushNamed(RoutesPath.mainInformation);
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -162,14 +170,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                         DialogButtonWidget(
                                           title: AppText.cervicalCorpectomy,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
 
                                         gap,
 
                                         DialogButtonWidget(
                                           title: AppText.ctdr,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                       ],
                                     ),
@@ -222,33 +234,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                         DialogButtonWidget(
                                           title: AppText.staticBananaTlifCages,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                         gap,
                                         DialogButtonWidget(
                                           title: AppText
                                               .staticBulletObliqueTlifCages,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                         gap,
                                         DialogButtonWidget(
                                           title: AppText.expandableTlifCages,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                         gap,
                                         DialogButtonWidget(
                                           title: AppText.pedicleScrewFixation,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                         gap,
                                         DialogButtonWidget(
                                           title: AppText.facetFixation,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                         gap,
                                         DialogButtonWidget(
                                           title: AppText.isp,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                       ],
                                     ),
@@ -301,13 +325,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       DialogButtonWidget(
                                                         title: AppText
                                                             .alifStandaloneCages,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          context.pushNamed(RoutesPath.mainInformation);
+                                                        },
                                                       ),
                                                       gap,
                                                       DialogButtonWidget(
                                                         title:
                                                             AppText.alifPlates,
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          context.pushNamed(RoutesPath.mainInformation);
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -321,14 +349,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                         DialogButtonWidget(
                                           title: AppText.cervicalCorpectomy,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
 
                                         gap,
 
                                         DialogButtonWidget(
                                           title: AppText.ctdr,
-                                          onTap: () {},
+                                          onTap: () {
+                                            context.pushNamed(RoutesPath.mainInformation);
+                                          },
                                         ),
                                       ],
                                     ),
