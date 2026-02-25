@@ -3,6 +3,7 @@ import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/home/presentation/widgets/dialog_button_widget.dart';
 import 'package:chandler_app/feature/home/presentation/widgets/dialog_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    const gap = SizedBox(height: 10);
+    final Widget gap = SizedBox(height: ResponsiveHelper.padding(12));
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                 // ১. ব্যাকগ্রাউন্ড ইমেজ
                 Center(
                   child: Image.asset(
-                    'assets/images/main_image.png',
+                    AppAssets.mainImage,
                     width: width,
                     height: height,
                     fit: BoxFit.fitWidth, // ইমেজটিকে চওড়ায় ফুল স্ক্রিন করবে

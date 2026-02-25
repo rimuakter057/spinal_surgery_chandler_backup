@@ -5,26 +5,25 @@ import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 
 class CountButton extends StatelessWidget {
-  const CountButton({
-    super.key,
-    required this.onTap, required this.title,
-  });
+  const CountButton({super.key, required this.onTap, required this.title});
 
-  final String  title;
+  final String title;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-
-      padding: ResponsiveHelper.symmetric(
-        horizontal:12,
-        vertical: 2
-      ),
+      padding: ResponsiveHelper.symmetric(horizontal: 12, vertical: 2),
       backgroundColor: AppColors.navUnselectedColor,
       child: GestureDetector(
         onTap: onTap,
-        child: Text(title, style: context.bodyLarge.copyWith(color: AppColors.white,fontSize: ResponsiveHelper.fontSize(14))),
+        child: Text(
+          title,
+          style: context.bodyLarge.copyWith(
+            color: AppColors.white,
+            fontSize: ResponsiveHelper.fontSize(14),
+          ),
+        ),
       ),
     );
   }

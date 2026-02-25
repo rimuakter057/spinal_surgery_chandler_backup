@@ -185,16 +185,9 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
               },
 
             )
-
-
-
           ],),
         ),
       ),
-
-
-
-
     );
   }
 }

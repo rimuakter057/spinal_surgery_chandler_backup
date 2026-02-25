@@ -1,7 +1,6 @@
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/add_to_cart_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
-import 'package:chandler_app/share/widgets/custom_divider/custom_divider.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
@@ -41,10 +40,11 @@ class CartScreen extends StatelessWidget {
             child: Row(
               children: [
                 GestureDetector(
-                    onTap:(){
-                      context.pushNamed(RoutesPath.notification);
-                    },
-                    child: CustomImage(imageSrc: AppAssets.notification)),
+                  onTap: () {
+                    context.pushNamed(RoutesPath.notification);
+                  },
+                  child: CustomImage(imageSrc: AppAssets.notification),
+                ),
 
                 SizedBox(width: ResponsiveHelper.spacing(12)),
 
@@ -89,7 +89,6 @@ class CartScreen extends StatelessWidget {
               ),
               SizedBox(height: ResponsiveHelper.height(12)),
 
-
               ListView.separated(
                 itemCount: 5,
                 shrinkWrap: true,
@@ -113,8 +112,7 @@ class CartScreen extends StatelessWidget {
                 },
               ),
 
-
-        SizedBox(height: ResponsiveHelper.height(8)),
+              SizedBox(height: ResponsiveHelper.height(8)),
 
               /// total amount text===============================
               Row(
@@ -138,8 +136,4 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 }

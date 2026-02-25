@@ -9,18 +9,17 @@ import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 
-
 class CartListScreen extends StatelessWidget {
   CartListScreen({super.key});
 
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmedPasswordController =
-  TextEditingController();
+      TextEditingController();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final Widget gap = SizedBox(height: ResponsiveHelper.spacing(16));
+    //   final Widget gap = SizedBox(height: ResponsiveHelper.spacing(16));
     return Scaffold(
       key: scaffoldKey, // 🔥 important
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
@@ -55,7 +54,6 @@ class CartListScreen extends StatelessWidget {
               ),
               SizedBox(height: ResponsiveHelper.height(12)),
 
-
               ListView.separated(
                 itemCount: 5,
                 shrinkWrap: true,
@@ -78,7 +76,6 @@ class CartListScreen extends StatelessWidget {
                   return SizedBox(height: ResponsiveHelper.height(8));
                 },
               ),
-
 
               SizedBox(height: ResponsiveHelper.height(8)),
 
@@ -104,8 +101,4 @@ class CartListScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 }

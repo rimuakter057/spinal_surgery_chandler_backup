@@ -26,21 +26,23 @@ class _AddCartScreenState extends State<AddCartScreen> {
       appBar: CustomAppBar(title: "Reform POCT"),
 
       body: SingleChildScrollView(
-        padding:  ResponsiveHelper.all(20.0),
+        padding: ResponsiveHelper.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Stack(
               alignment: Alignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(15),),
-                  child: CustomImage(imageSrc: AppAssets.doctorImage,
+                  borderRadius: BorderRadius.circular(
+                    ResponsiveHelper.borderRadius(15),
+                  ),
+                  child: CustomImage(
+                    imageSrc: AppAssets.doctorImage,
 
-                      height: ResponsiveHelper.height(200),
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                    height: ResponsiveHelper.height(200),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
 
                   // child: Image.network(
@@ -54,59 +56,63 @@ class _AddCartScreenState extends State<AddCartScreen> {
                 CustomImage(imageSrc: AppAssets.play),
               ],
             ),
-             SizedBox(height: ResponsiveHelper.spacing(20)),
+            SizedBox(height: ResponsiveHelper.spacing(20)),
 
             // Title and Download Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text(
-                  'Surgical tech guide',
-                  style:context.titleSmall ,
-                ),
+                Text('Surgical tech guide', style: context.titleSmall),
                 Row(
                   children: [
                     CustomImage(imageSrc: AppAssets.downloadImage),
-                     SizedBox(width: ResponsiveHelper.width(6)),
-                     Text('Download', style:context.bodyMedium.copyWith(color: AppColors.greyTextColor) ),
                     SizedBox(width: ResponsiveHelper.width(6)),
-                    CustomImage(imageSrc: AppAssets.download)  ],
+                    Text(
+                      'Download',
+                      style: context.bodyMedium.copyWith(
+                        color: AppColors.greyTextColor,
+                      ),
+                    ),
+                    SizedBox(width: ResponsiveHelper.width(6)),
+                    CustomImage(imageSrc: AppAssets.download),
+                  ],
                 ),
               ],
             ),
-             SizedBox(height: ResponsiveHelper.height(20)),
+            SizedBox(height: ResponsiveHelper.height(20)),
 
             // Description Text
-             Text(
+            Text(
               "A Surgical Technologist, also known as a Scrub Tech or Operating Room (OR) Technician, is a vital member of the surgical team. Their primary role is to assist surgeons, anesthesiologists, and nurses by ensuring that the operating room is properly prepared, sterile, and equipped for surgical procedures.\n\n"
-                  "Surgical technologists are responsible for maintaining a sterile field, organizing surgical instruments, and anticipating the needs of the surgeon during an operation. Their work directly impacts patient safety, surgical efficiency, and infection prevention.\n\n"
-                  "This guide is designed to provide foundational knowledge and practical insight into the responsibilities, skills, and procedures required of a surgical technologist. It covers essential topics such as human anatomy, surgical instruments, aseptic techniques, operating room protocols, and patient care before, during, and after surgery.",
+              "Surgical technologists are responsible for maintaining a sterile field, organizing surgical instruments, and anticipating the needs of the surgeon during an operation. Their work directly impacts patient safety, surgical efficiency, and infection prevention.\n\n"
+              "This guide is designed to provide foundational knowledge and practical insight into the responsibilities, skills, and procedures required of a surgical technologist. It covers essential topics such as human anatomy, surgical instruments, aseptic techniques, operating room protocols, and patient care before, during, and after surgery.",
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 height: 1.5,
                 color: AppColors.blackTextColor,
               ),
             ),
-             SizedBox(height: ResponsiveHelper.spacing(24)),
+            SizedBox(height: ResponsiveHelper.spacing(24)),
           ],
         ),
       ),
       // Bottom Navigation Button
       bottomNavigationBar: Padding(
-        padding:  ResponsiveHelper.symmetric(horizontal: 20.0, vertical: 20.0),
-        child: ElevatedButton(onPressed: (){
-
-          context.pushNamed(RoutesPath.cartListScreen);
-
-        }, child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomImage(imageSrc: AppAssets.cartWhite),
-            SizedBox(width:ResponsiveHelper.width(8) ,),
-            Text(AppText.addToCart),
-          
-        ],))
+        padding: ResponsiveHelper.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: ElevatedButton(
+          onPressed: () {
+            context.pushNamed(RoutesPath.cartListScreen);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomImage(imageSrc: AppAssets.cartWhite),
+              SizedBox(width: ResponsiveHelper.width(8)),
+              Text(AppText.addToCart),
+            ],
+          ),
+        ),
       ),
     );
   }

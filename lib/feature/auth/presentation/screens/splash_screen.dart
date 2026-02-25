@@ -77,7 +77,9 @@ class _SplashScreenState extends State<SplashScreen> {
              Text(
               'PATIENT-CENTRIC',
               style: GoogleFonts.poppins(
-                  color: AppColors.black
+                  color: AppColors.black,
+                fontSize: ResponsiveHelper.fontSize(16),
+                fontWeight: FontWeight.w500,
               ),
             ),
             SizedBox(height: ResponsiveHelper.spacing(4)),
@@ -85,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
               'SURGICAL PLANNING',
               style: GoogleFonts.poppins(
                 fontSize: ResponsiveHelper.fontSize(14),
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 color: AppColors.black,
                 letterSpacing: ResponsiveHelper.width(4) // Wider spacing for the bottom line
               ),
