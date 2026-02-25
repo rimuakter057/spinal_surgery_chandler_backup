@@ -6,6 +6,7 @@ import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
+import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height: ResponsiveHelper.height(24));
     return Scaffold(
-      appBar: CustomAppBar(title: AppText.signUp),
+      appBar: AppBar(title: Text(AppText.signUp,style: context.titleSmall,),),
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
