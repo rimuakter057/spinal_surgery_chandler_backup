@@ -104,7 +104,7 @@ class CartScreen extends StatelessWidget {
                     },
                     onTapIncrement: () {},
                     onTapDecrement: () {},
-                    image: AppAssets.logo,
+                    image: AppAssets.doctorImage,
                   );
                 },
 

@@ -77,45 +77,50 @@ class _SaveScreenState extends State<SaveScreen> {
                         borderRadius: BorderRadius.circular(
                           ResponsiveHelper.borderRadius(16),
                         ),
-                        child: CustomNetworkImage(
-                          height: ResponsiveHelper.iconSize(88),
-                          width: ResponsiveHelper.iconSize(106),
-                          imageUrl: AppConstant.unknown,
+                        child: CustomImage(imageSrc: AppAssets.doctorImage,
+                            height: ResponsiveHelper.iconSize(88),
+                            width: ResponsiveHelper.iconSize(126),
                         ),
+                        
+                        // child: CustomNetworkImage(
+                        //   height: ResponsiveHelper.iconSize(88),
+                        //   width: ResponsiveHelper.iconSize(106),
+                        //   imageUrl: AppConstant.unknown,
+                        // ),
                       ),
 
                       SizedBox(width: ResponsiveHelper.width(16)),
 
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: ResponsiveHelper.width(200),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                            Text(
+                          SizedBox(
+                            width: ResponsiveHelper.width(180),
+                            child: Text(
                               item["title"]!,
                               style: context.bodyMedium,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                          ),
 
-                            SizedBox(height: ResponsiveHelper.spacing(8)),
+                          SizedBox(height: ResponsiveHelper.spacing(8)),
 
-                            Text(
-                              item["files"]!,
-                              style: context.bodyMedium,
-                            ),
+                          Text(
+                            item["files"]!,
+                            style: context.bodyMedium,
+                          ),
 
-                            SizedBox(height: ResponsiveHelper.spacing(8)),
+                          SizedBox(height: ResponsiveHelper.spacing(8)),
 
-                            Text("Add to cart"),
+                          Text("Add to cart"),
 
-                            SizedBox(height: ResponsiveHelper.spacing(8)),
+                          SizedBox(height: ResponsiveHelper.spacing(8)),
 
-                            Text("details..."),
+                          Text("details..."),
 
-                          ],
-                        ),
+                        ],
                       ),
 
                     ],

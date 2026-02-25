@@ -3,6 +3,8 @@ class AppAssets {
 
   static final String _images = 'assets/images';
   static final imageOne="assets/images/image.png";
+  static final mainImage="assets/images/main_image.png";
+  static final doctorImage="assets/images/image.png";
 
   static final String _icons = 'assets/icons';
 

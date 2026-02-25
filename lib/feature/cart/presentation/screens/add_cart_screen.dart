@@ -36,13 +36,20 @@ class _AddCartScreenState extends State<AddCartScreen> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(15),),
-                  child: Image.network(
-                   AppConstant.defaultNetworkImage,
+                  child: CustomImage(imageSrc: AppAssets.doctorImage,
 
-                    height: ResponsiveHelper.height(200),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                      height: ResponsiveHelper.height(200),
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                   ),
+
+                  // child: Image.network(
+                  //  AppConstant.defaultNetworkImage,
+                  //
+                  //   height: ResponsiveHelper.height(200),
+                  //   width: double.infinity,
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 CustomImage(imageSrc: AppAssets.play),
               ],

@@ -26,7 +26,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
           shrinkWrap: true,
           physics: AlwaysScrollableScrollPhysics(),
 
-          itemCount: 12 + 1,
+          itemCount: 3,
 
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -37,39 +37,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
           ),
 
           itemBuilder: (context, index) {
-            /// 🔥 Last item
-            if (index == 12) {
-              return GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (_) => NextScreen(),
-                  //   ),
-                  // );
-                },
 
-                child: Container(
-                  alignment: Alignment.center,
-
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(
-                      ResponsiveHelper.borderRadius(12),
-                    ),
-                  ),
-
-                  child: Text(
-                    AppText.shoreline,
-                    style: GoogleFonts.poppins(
-                      fontSize: ResponsiveHelper.fontSize(24),
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              );
-            }
 
             /// normal product card
             return ProductCard(

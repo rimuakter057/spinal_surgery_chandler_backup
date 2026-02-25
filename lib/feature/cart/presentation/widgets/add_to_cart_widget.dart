@@ -44,8 +44,8 @@ class AddToCartWidget extends StatelessWidget {
                 ),
                 child: CustomImage(
                   imageSrc: image,
-                  height: ResponsiveHelper.iconSize(66),
-                  width: ResponsiveHelper.iconSize(66),
+                  height: ResponsiveHelper.height(96),
+                  width: ResponsiveHelper.width(66),
                 ),
               ),
               SizedBox(width: ResponsiveHelper.width(8)),

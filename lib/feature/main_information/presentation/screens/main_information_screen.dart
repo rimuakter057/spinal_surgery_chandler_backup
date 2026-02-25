@@ -1,12 +1,16 @@
+import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_const/app_const.dart';
+import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 
@@ -29,6 +33,21 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
+
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: CustomImage(
+            imageSrc: AppAssets.back,
+            height: ResponsiveHelper.height(24), // small icon size
+            width: ResponsiveHelper.width(24),
+            fit: BoxFit.contain,
+          ),
+        ),
+
+
+
         title: Text(
           "Posterior Cervical Fixation",
           maxLines: 1,
@@ -41,7 +60,11 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
             child: Row(
               children: [
-                CustomImage(imageSrc: AppAssets.notification),
+                GestureDetector(
+                    onTap:(){
+                      context.pushNamed(RoutesPath.notification);
+                    },
+                    child: CustomImage(imageSrc: AppAssets.notification)),
 
                 SizedBox(width: ResponsiveHelper.spacing(12)),
 
@@ -80,12 +103,14 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
            height: ResponsiveHelper.spacing(12),
          ),
 
+
+
             GridView.builder(
 
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
 
-              itemCount: 12,
+              itemCount: 12+1,
 
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 
@@ -100,40 +125,60 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
               itemBuilder: (context, index) {
 
-                return ProductCard(
+                if(index==12){
+                  return  GestureDetector(
+                    onTap: (){
 
-                  imageUrl: AppConstant.unknown,
+                      context.pushNamed(RoutesPath.shoreLine);
 
-                  title: 'Reform POCT',
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
 
-                  onAddToCart: () {
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(
+                          ResponsiveHelper.borderRadius(12),
+                        ),
+                      ),
+
+                      child: Text(
+                        AppText.shoreline,
+                        style: GoogleFonts.poppins(
+                          fontSize: ResponsiveHelper.fontSize(24),
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  );
+
+                }else{
+
+                  return ProductCard(
+
+                    imageUrl: AppConstant.unknown,
+
+                    title: 'Reform POCT',
+
+                    onAddToCart: () {
 
 
-                  },
+                    },
 
-                  onBookmark: () {},
+                    onBookmark: () {},
 
-                  onInfo: () {},
+                    onInfo: () {},
 
-                );
+                  );
+
+                }
 
 
 
-                //
-                // ProductCard(
-                //   imageUrl: AppConstant.defaultNetworkImage,
-                //   title: 'Shoreline ti-peek',
-                //   onAddToCart: () {
-                //     print("Added to cart");
-                //   },
-                //   onBookmark: () {
-                //     print("Bookmarked");
-                //   },
-                //   onInfo: () {
-                //     print("Info clicked");
-                //   },
-                // ),
-                //
+
+
+
 
 
 
