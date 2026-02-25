@@ -26,6 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      scrolledUnderElevation: 0,
       leadingWidth: leadingWidth.w,
       leading: GestureDetector(
         onTap:onBack?? (){

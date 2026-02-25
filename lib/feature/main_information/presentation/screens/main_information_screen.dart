@@ -32,6 +32,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
 
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
 
         leading: IconButton(

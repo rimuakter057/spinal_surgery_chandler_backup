@@ -19,7 +19,6 @@ class SaveScreen extends StatefulWidget {
 }
 
 class _SaveScreenState extends State<SaveScreen> {
-
   final List<Map<String, String>> savedList = [
     {"title": "Posterior Cervical Fixation", "files": "Total Files 3"},
     {"title": "Lumbar Spine Fixation", "files": "Total Files 5"},
@@ -34,54 +33,54 @@ class _SaveScreenState extends State<SaveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
-      
-      appBar: AppBar(title: Text("Saved Product", style: context.titleSmall,),),
+      appBar: AppBar(
+          scrolledUnderElevation: 0,
+          title: Text("Saved Product", style: context.titleSmall)),
 
       body: ListView.builder(
-
         padding: ResponsiveHelper.all(8),
 
         itemCount: savedList.length + 1,
 
         itemBuilder: (context, index) {
-
           /// ✅ Last button
           if (index == savedList.length) {
-
             return Padding(
-              padding:EdgeInsets.only(top: ResponsiveHelper.padding(12),left: ResponsiveHelper.padding(12),right: ResponsiveHelper.padding(12),bottom: ResponsiveHelper.padding(78)),
-              child: ElevatedButton(onPressed: (){}, child: Text("Save Product")),
+              padding: EdgeInsets.only(
+                top: ResponsiveHelper.padding(12),
+                left: ResponsiveHelper.padding(12),
+                right: ResponsiveHelper.padding(12),
+                bottom: ResponsiveHelper.padding(100),
+              ),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text("Save Product"),
+              ),
             );
-
           }
 
           /// normal item
           final item = savedList[index];
 
           return Padding(
-            padding: EdgeInsets.only(
-              bottom: ResponsiveHelper.spacing(8),
-            ),
+            padding: EdgeInsets.only(bottom: ResponsiveHelper.spacing(8)),
             child: CustomContainer(
               backgroundColor: AppColors.primaryShadeColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Row(
                     children: [
-
                       ClipRRect(
                         borderRadius: BorderRadius.circular(
                           ResponsiveHelper.borderRadius(16),
                         ),
-                        child: CustomImage(imageSrc: AppAssets.doctorImage,
-                            height: ResponsiveHelper.iconSize(88),
-                            width: ResponsiveHelper.iconSize(126),
+                        child: CustomImage(
+                          imageSrc: AppAssets.doctorImage,
+                          height: ResponsiveHelper.iconSize(88),
+                          width: ResponsiveHelper.iconSize(126),
                         ),
-                        
+
                         // child: CustomNetworkImage(
                         //   height: ResponsiveHelper.iconSize(88),
                         //   width: ResponsiveHelper.iconSize(106),
@@ -94,7 +93,6 @@ class _SaveScreenState extends State<SaveScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           SizedBox(
                             width: ResponsiveHelper.width(180),
                             child: Text(
@@ -107,10 +105,7 @@ class _SaveScreenState extends State<SaveScreen> {
 
                           SizedBox(height: ResponsiveHelper.spacing(8)),
 
-                          Text(
-                            item["files"]!,
-                            style: context.bodyMedium,
-                          ),
+                          Text(item["files"]!, style: context.bodyMedium),
 
                           SizedBox(height: ResponsiveHelper.spacing(8)),
 
@@ -119,28 +114,21 @@ class _SaveScreenState extends State<SaveScreen> {
                           SizedBox(height: ResponsiveHelper.spacing(8)),
 
                           Text("details..."),
-
                         ],
                       ),
-
                     ],
                   ),
 
                   CustomImage(imageSrc: AppAssets.save),
-
                 ],
               ),
             ),
           );
-
         },
-
       ),
-
     );
   }
 }
-
 
 // ///search bar=============================
 // TextField(

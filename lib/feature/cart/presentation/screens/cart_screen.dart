@@ -26,6 +26,7 @@ class CartScreen extends StatelessWidget {
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
 
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         title: Text(
           "Posterior Cervical Fixation",
@@ -129,7 +130,7 @@ class CartScreen extends StatelessWidget {
               SizedBox(height: ResponsiveHelper.height(48)),
               ElevatedButton(child: Text(AppText.send), onPressed: () {}),
 
-              SizedBox(height: ResponsiveHelper.height(72)),
+              SizedBox(height: ResponsiveHelper.height(100)),
             ],
           ),
         ),

@@ -33,7 +33,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
+        scrolledUnderElevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
