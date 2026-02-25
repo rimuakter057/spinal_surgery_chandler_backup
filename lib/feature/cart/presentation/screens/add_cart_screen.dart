@@ -1,5 +1,6 @@
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_const/app_const.dart';
@@ -18,7 +19,7 @@ class _AddCartScreenState extends State<AddCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: CustomAppBar(title: "Reform POCT"),
 
       body: SingleChildScrollView(
         padding:  ResponsiveHelper.all(20.0),
@@ -28,21 +29,21 @@ class _AddCartScreenState extends State<AddCartScreen> {
             // Video/Image Thumbnail Section
 
 
-
-            ProductCard(
-              imageUrl: AppConstant.defaultNetworkImage,
-              title: 'Shoreline ti-peek',
-              onAddToCart: () {
-                print("Added to cart");
-              },
-              onBookmark: () {
-                print("Bookmarked");
-              },
-              onInfo: () {
-                print("Info clicked");
-              },
-            ),
-
+            //
+            // ProductCard(
+            //   imageUrl: AppConstant.defaultNetworkImage,
+            //   title: 'Shoreline ti-peek',
+            //   onAddToCart: () {
+            //     print("Added to cart");
+            //   },
+            //   onBookmark: () {
+            //     print("Bookmarked");
+            //   },
+            //   onInfo: () {
+            //     print("Info clicked");
+            //   },
+            // ),
+            //
 
 
 
