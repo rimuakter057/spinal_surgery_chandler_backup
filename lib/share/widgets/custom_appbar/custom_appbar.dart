@@ -1,3 +1,4 @@
+import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
@@ -40,8 +41,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Center(
           child: CustomImage(
             imageSrc:leadingIcon?? AppAssets.back,
-            height: iconSize.h,
-            width: iconSize.w,
+            height: ResponsiveHelper.iconSize(iconSize),
+            width:ResponsiveHelper.iconSize(iconSize),
             fit: BoxFit.contain,
           ),
         ),
