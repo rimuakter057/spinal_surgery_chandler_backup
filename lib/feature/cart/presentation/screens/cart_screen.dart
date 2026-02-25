@@ -2,13 +2,13 @@ import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/add_to_cart_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_divider/custom_divider.dart';
+import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CartScreen extends StatelessWidget {
@@ -18,17 +18,14 @@ class CartScreen extends StatelessWidget {
   final TextEditingController confirmedPasswordController =
       TextEditingController();
 
-  final GlobalKey<ScaffoldState> scaffoldKey =
-  GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final Widget gap = SizedBox(height: 24.h);
+    final Widget gap = SizedBox(height: ResponsiveHelper.spacing(16));
     return Scaffold(
       key: scaffoldKey, // 🔥 important
-      drawer: Drawer(
-        backgroundColor: AppColors.white,
-        child: _buildDrawer(context),
-      ),
+      drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
@@ -48,23 +45,17 @@ class CartScreen extends StatelessWidget {
                 SizedBox(width: ResponsiveHelper.spacing(12)),
 
                 GestureDetector(
+                  onTap: () {
+                    scaffoldKey.currentState!.openDrawer();
+                  },
 
-                    onTap: () {
-
-                      scaffoldKey.currentState!
-                          .openDrawer();
-
-                    },
-
-                    child: CustomImage(imageSrc: AppAssets.menu)),
+                  child: CustomImage(imageSrc: AppAssets.menu),
+                ),
               ],
             ),
           ),
         ],
       ),
-
-
-
 
       body: SingleChildScrollView(
         child: Padding(
@@ -80,7 +71,9 @@ class CartScreen extends StatelessWidget {
                   ),
 
                   prefixIcon: Padding(
-                    padding:  EdgeInsets.only(left:ResponsiveHelper.padding(16)),
+                    padding: EdgeInsets.only(
+                      left: ResponsiveHelper.padding(16),
+                    ),
                     child: CustomImage(
                       imageSrc: AppAssets.search,
                       height: ResponsiveHelper.iconSize(18),
@@ -90,139 +83,55 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListView.builder(
+              SizedBox(height: ResponsiveHelper.height(12)),
+
+
+              ListView.separated(
                 itemCount: 5,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      AddToCartWidget(
-                        title: "Nike Epic React",
-                        price: '850',
-                        onTapDetails: () {
-                          //context.pushNamed(RoutesPath.cartDetailsScreen);
-                        },
-                        onTapIncrement: () {},
-                        onTapDecrement: () {},
-                        image: AppAssets.logo,
-                      ),
-                      SizedBox(height: 8.h),
-                    ],
+                  return AddToCartWidget(
+                    title: "Nike Epic React",
+                    price: '850',
+                    onTapDetails: () {
+                      //context.pushNamed(RoutesPath.cartDetailsScreen);
+                    },
+                    onTapIncrement: () {},
+                    onTapDecrement: () {},
+                    image: AppAssets.logo,
                   );
+                },
+
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: ResponsiveHelper.height(8));
                 },
               ),
 
-              SizedBox(height: 16.h),
+
+        SizedBox(height: ResponsiveHelper.height(8)),
 
               /// total amount text===============================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(AppText.totalAmount, style: context.bodyLarge),
+                  Text(AppText.totalAmount, style: context.bodyMedium),
                   Text(
                     "\$850",
-                    style: context.titleLarge.copyWith(color: AppColors.black),
+                    style: context.bodyLarge.copyWith(color: AppColors.black),
                   ),
                 ],
               ),
 
-              SizedBox(height: 72.h),
+              SizedBox(height: ResponsiveHelper.height(48)),
               ElevatedButton(child: Text(AppText.send), onPressed: () {}),
+
+              SizedBox(height: ResponsiveHelper.height(72)),
             ],
           ),
         ),
       ),
-    );
-  }
-
-
-
-
-
-
-  ///drawer==================================================
-  Column _buildDrawer(BuildContext context) {
-    final Widget gap = SizedBox(height: ResponsiveHelper.spacing(16));
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: ResponsiveHelper.symmetric(horizontal: 16.0,vertical: 32),
-          child: SizedBox(
-            height: ResponsiveHelper.height(100),
-            child: CustomImage(imageSrc: AppAssets.logo),
-          ),
-        ),
-
-        const CustomDivider(color: AppColors.dividerColor),
-
-        Padding(
-          padding: ResponsiveHelper.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildDrawerTitle(
-                context,
-                title: "My Cart",
-                onTap: () {
-                  // context.pushNamed(RoutePath.orderScreen);
-                },
-              ),
-              gap,
-              _buildDrawerTitle(
-                context,
-                title: "History",
-                onTap: () {
-                  //  context.pushNamed(RoutePath.historyScreen);
-                },
-              ),
-              gap,
-              _buildDrawerTitle(
-                context,
-                title: AppText.privacyPolicy,
-                onTap: () {
-                  //  context.pushNamed(RoutePath.privacyPolicyScreen);
-                },
-              ),
-              gap,
-              _buildDrawerTitle(
-                context,
-                title: AppText.termsAndConditions,
-                onTap: () {
-                  // context.pushNamed(RoutePath.termsOfConditionScreen);
-                },
-              ),
-
-              gap,
-
-              _buildDrawerTitle(
-                context,
-                title: AppText.logOut,
-                onTap: () {
-                  // context.pushNamed(RoutePath.loginScreen);
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-
-
-
-  ///drawer title=============================================================================
-  GestureDetector _buildDrawerTitle(
-      BuildContext context, {
-        required String title,
-        required VoidCallback onTap,
-      })
-  {
-    return GestureDetector(
-      onTap: onTap,
-      child: Text(title, style: context.bodyLarge),
     );
   }
 

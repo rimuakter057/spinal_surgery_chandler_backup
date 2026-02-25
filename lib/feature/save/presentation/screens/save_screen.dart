@@ -35,7 +35,9 @@ class _SaveScreenState extends State<SaveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: CustomAppBar(title: "Saved Product"),
+
+      
+      appBar: AppBar(title: Text("Saved Product", style: context.titleSmall,),),
 
       body: ListView.builder(
 

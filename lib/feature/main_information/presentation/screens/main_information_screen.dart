@@ -1,5 +1,6 @@
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_const/app_const.dart';
@@ -17,33 +18,44 @@ class MainInformationScreen extends StatefulWidget {
 }
 
 class _MainInformationScreenState extends State<MainInformationScreen> {
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey, // 🔥 important
+      drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
 
       appBar: AppBar(
-        title: Text("Posterior Cervical Fixation",
+        automaticallyImplyLeading: false,
+        title: Text(
+          "Posterior Cervical Fixation",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: context.titleSmall,),
+          style: context.titleSmall,
+        ),
 
         actions: [
-
           Padding(
-            padding:  EdgeInsets.only(right: ResponsiveHelper.padding(12)),
-            child: Row(children: [
+            padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
+            child: Row(
+              children: [
+                CustomImage(imageSrc: AppAssets.notification),
 
+                SizedBox(width: ResponsiveHelper.spacing(12)),
 
-              CustomImage(imageSrc: AppAssets.menu,),
-              SizedBox(width: ResponsiveHelper.spacing(12),),
-              CustomImage(imageSrc: AppAssets.notification,),
+                GestureDetector(
+                  onTap: () {
+                    scaffoldKey.currentState!.openDrawer();
+                  },
 
-
-            ],),
-          )
-
+                  child: CustomImage(imageSrc: AppAssets.menu),
+                ),
+              ],
+            ),
+          ),
         ],
-
       ),
 
 
