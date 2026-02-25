@@ -21,6 +21,8 @@ class CustomDrawer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
+          SizedBox(  height: ResponsiveHelper.height(18),),
+
           /// logo
           Padding(
             padding: ResponsiveHelper.symmetric(
@@ -45,11 +47,11 @@ class CustomDrawer extends StatelessWidget {
               CrossAxisAlignment.start,
               children: [
 
-                _buildDrawerTitle(
-                  context,
-                  title: "My Cart",
-                  onTap: () {},
-                ),
+                // _buildDrawerTitle(
+                //   context,
+                //   title: "My Cart",
+                //   onTap: () {},
+                // ),
 
                 _buildDrawerTitle(
                   context,
@@ -80,7 +82,11 @@ class CustomDrawer extends StatelessWidget {
                 _buildDrawerTitle(
                   context,
                   title: AppText.logOut,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed(
+                        RoutesPath
+                            .loginScreen);
+                  },
                 ),
               ],
             ),
@@ -103,10 +109,10 @@ class CustomDrawer extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding:  EdgeInsets.only(bottom: ResponsiveHelper.padding(16)),
         child: Text(
           title,
-          style: context.bodyLarge,
+          style: context.bodyMedium,
         ),
       ),
     );

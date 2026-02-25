@@ -40,7 +40,11 @@ class CartScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
             child: Row(
               children: [
-                CustomImage(imageSrc: AppAssets.notification),
+                GestureDetector(
+                    onTap:(){
+                      context.pushNamed(RoutesPath.notification);
+                    },
+                    child: CustomImage(imageSrc: AppAssets.notification)),
 
                 SizedBox(width: ResponsiveHelper.spacing(12)),
 

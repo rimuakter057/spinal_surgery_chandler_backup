@@ -31,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
 
             Text(
              "Banedict Fring Dron",
-              style: context.titleLarge
+              style: context.bodyLarge
             ),
             SizedBox(height: ResponsiveHelper.spacing(4)),
             Text(
@@ -85,7 +85,7 @@ class ProfileScreen extends StatelessWidget {
   ///details cart=========================================================================================================
   CustomContainer _buildDeliveryDetails(BuildContext context) {
     return CustomContainer(
-      backgroundColor: AppColors.greyTextColor,
+      backgroundColor: AppColors.navUnselectedColor,
       width: double.infinity,
 
       child: Column(

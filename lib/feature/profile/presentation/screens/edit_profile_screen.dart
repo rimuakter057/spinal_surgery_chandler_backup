@@ -33,7 +33,7 @@ class EditProfileScreen extends StatelessWidget {
 
             Text(
                 "Banedict Fring Dron",
-                style: context.titleLarge
+                style: context.bodyLarge
             ),
             SizedBox(height: ResponsiveHelper.spacing(4)),
             Text(

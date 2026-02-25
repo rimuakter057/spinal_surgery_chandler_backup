@@ -25,7 +25,7 @@ class SmallOutlineGradientButtonRow extends StatelessWidget {
             onTap: outlineOnTap,
             child: Container(
               width: double.infinity,
-              padding:  ResponsiveHelper.symmetric(horizontal: 24, vertical: 12),
+              padding:  ResponsiveHelper.symmetric(horizontal: 24, vertical: 8),
               decoration: BoxDecoration(
                 color: AppColors.backgroundColor,
                 borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12) ,),
@@ -49,7 +49,7 @@ class SmallOutlineGradientButtonRow extends StatelessWidget {
             onTap: gradientOnTap,
             child: Container(
               width: double.infinity,
-              padding:  ResponsiveHelper.symmetric(horizontal: 24, vertical: 12),
+              padding:  ResponsiveHelper.symmetric(horizontal: 24, vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: AppColors.primaryColor,
