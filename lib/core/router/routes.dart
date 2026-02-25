@@ -6,6 +6,7 @@ import 'package:chandler_app/feature/auth/presentation/screens/sign_up_screen.da
 import 'package:chandler_app/feature/auth/presentation/screens/splash_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.dart';
+import 'package:chandler_app/feature/cart/presentation/screens/cart_list_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/main_information_screen.dart';
@@ -212,6 +213,18 @@ class AppRouter {
           );
         },
       ),
+
+      GoRoute(
+        name: RoutesPath.cartListScreen,
+        path: RoutesPath.cartListScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  CartListScreen(),
+            state: state,
+          );
+        },
+      ),
+
 
       GoRoute(
         name: RoutesPath.editProfileScreen,

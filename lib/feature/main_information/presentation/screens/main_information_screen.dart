@@ -106,13 +106,36 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
                   title: 'Reform POCT',
 
-                  onAddToCart: () {},
+                  onAddToCart: () {
+
+
+                  },
 
                   onBookmark: () {},
 
                   onInfo: () {},
 
                 );
+
+
+
+                //
+                // ProductCard(
+                //   imageUrl: AppConstant.defaultNetworkImage,
+                //   title: 'Shoreline ti-peek',
+                //   onAddToCart: () {
+                //     print("Added to cart");
+                //   },
+                //   onBookmark: () {
+                //     print("Bookmarked");
+                //   },
+                //   onInfo: () {
+                //     print("Info clicked");
+                //   },
+                // ),
+                //
+
+
 
               },
 
