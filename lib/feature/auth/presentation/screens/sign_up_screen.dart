@@ -3,12 +3,10 @@ import 'package:chandler_app/feature/auth/presentation/widgets/action_text_widge
 import 'package:chandler_app/feature/auth/presentation/widgets/input_field_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/input_pass_field_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
-import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 

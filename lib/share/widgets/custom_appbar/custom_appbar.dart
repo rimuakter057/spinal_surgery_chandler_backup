@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String? leadingIcon;
@@ -30,27 +29,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       leadingWidth: leadingWidth.w,
       leading: GestureDetector(
-        onTap:onBack?? (){
-          context.pop();
-
-        },
-
-
-
-
+        onTap:
+            onBack ??
+            () {
+              context.pop();
+            },
         child: Center(
           child: CustomImage(
-            imageSrc:leadingIcon?? AppAssets.back,
+            imageSrc: leadingIcon ?? AppAssets.back,
             height: ResponsiveHelper.iconSize(iconSize),
-            width:ResponsiveHelper.iconSize(iconSize),
+            width: ResponsiveHelper.iconSize(iconSize),
             fit: BoxFit.contain,
           ),
         ),
       ),
-      title: Text(
-        title,
-        style: context.titleSmall,
-      ),
+      title: Text(title, style: context.titleSmall),
     );
   }
 

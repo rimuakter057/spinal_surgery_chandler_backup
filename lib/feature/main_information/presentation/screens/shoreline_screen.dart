@@ -5,12 +5,11 @@ import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_const/app_const.dart';
-import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 
 

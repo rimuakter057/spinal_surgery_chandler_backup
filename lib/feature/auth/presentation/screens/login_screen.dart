@@ -5,16 +5,13 @@ import 'package:chandler_app/feature/auth/presentation/widgets/input_pass_field_
 import 'package:chandler_app/feature/auth/presentation/widgets/remember_forgot_row.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
-import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
-import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 
 class LoginScreen extends StatefulWidget {

@@ -37,7 +37,6 @@
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
-import 'package:chandler_app/share/widgets/network_image/custom_network_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
