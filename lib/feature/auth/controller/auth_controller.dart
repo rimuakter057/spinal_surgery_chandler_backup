@@ -58,7 +58,8 @@ class AuthController extends GetxController {
     required String phone,
     required String password,
     required String confirmPassword,
-  }) async {
+  }) async
+  {
     inProgressSignup.value = true;
     errorMessage.value = '';
 
@@ -113,10 +114,20 @@ class AuthController extends GetxController {
       "email": email,
       "otp": otp,
     });
-
     inProgressVerification.value = false;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      final data=response.body['data'];
+      await Future.wait([
+
+        SharePrefsHelper.setString(
+          AppConstant.refreshToken,
+          data['otp_verification_token'],
+        ),
+
+      ]);
+
+
       return true;
     } else {
     //  errorMessage.value = response.body?["message"] ?? "email does not exit";
@@ -139,8 +150,9 @@ class AuthController extends GetxController {
   var isLoadingReset = false.obs;
 
   Future<bool> resetOtp({
-    required String email,
+
     required String password,
+    required String confirmedPassword,
     required String token,
 
   }) async
@@ -149,7 +161,10 @@ class AuthController extends GetxController {
 
     final response = await ApiClient.postData(
      ApiUrl.resetPassword,
-  {"email": email, "password": password, "token": token},
+  { "password": password,
+    "confirm_password":confirmedPassword,
+    "token": token},
+      isAuthRequired: false,
     );
 
 
@@ -160,7 +175,9 @@ class AuthController extends GetxController {
 
       return true;
     } else {
-      errorMessage.value = response.body?["message"] ?? "email does not exit";
+
+      _setErrorMessage(response.body?["Something went wrong"]);
+
       return false;
     }
   }

@@ -143,7 +143,7 @@ class AppRouter {
 
           return _buildPageWithAnimation(
             child: ConfirmedPasswordScreen(
-              email: email,
+
 
             ),
             state: state,

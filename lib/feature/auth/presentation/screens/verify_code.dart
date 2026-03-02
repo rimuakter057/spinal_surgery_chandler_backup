@@ -114,7 +114,7 @@ class VerifyCodeScreen extends StatelessWidget {
     if (success) {
 
       context.pushNamed(RoutesPath.confirmedPassScreen,
-        extra:  email,
+
       );
 
       otpController.clear();

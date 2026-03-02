@@ -36,7 +36,9 @@ class ApiClient extends GetxService {
     dynamic body, {
     Map<String, String>? headers,
     bool isJson = true,
-  }) async {
+        bool isAuthRequired = true,
+      }) async
+  {
     if (!await _checkConnection()) {
       return const Response(
         statusCode: 0,
@@ -44,7 +46,12 @@ class ApiClient extends GetxService {
       );
     }
 
-    bearerToken = await SharePrefsHelper.getString(AppConstant.bearerToken);
+   // bearerToken = await SharePrefsHelper.getString(AppConstant.bearerToken);
+
+    String? bearerToken = isAuthRequired
+        ? await SharePrefsHelper.getString(AppConstant.bearerToken)
+        : null;
+
 
     var mainHeaders = isJson
         ? {
