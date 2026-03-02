@@ -1,4 +1,5 @@
 import 'package:chandler_app/core/router/route_path.dart';
+import 'package:chandler_app/feature/auth/controller/auth_controller.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/action_text_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/input_field_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/input_pass_field_widget.dart';
@@ -7,6 +8,7 @@ import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -18,6 +20,7 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmedPassController = TextEditingController();
+  final AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height: ResponsiveHelper.height(24));

@@ -1,4 +1,5 @@
 import 'package:chandler_app/core/router/route_path.dart';
+import 'package:chandler_app/feature/auth/controller/auth_controller.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/action_text_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/input_field_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/input_pass_field_widget.dart';
@@ -6,10 +7,12 @@ import 'package:chandler_app/feature/auth/presentation/widgets/remember_forgot_r
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
+import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -23,6 +26,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthController authController = Get.find<AuthController>();
+
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
@@ -126,4 +131,55 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+
+
+
+
+
+  Future<void> onTapLogin() async {
+    debugPrint("===================click sign in=====================");
+    // ✅ CHECK EMAIL
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    // email empty check
+    if (email.isEmpty) {
+      CustomSnackbar.error(context, "Please enter your email");
+      return;
+    }
+
+    // email format check
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$',
+    );
+    if (!emailRegex.hasMatch(email)) {
+      CustomSnackbar.error(context, "Please enter a valid email address");
+      return;
+    }
+    {
+      // password empty check
+      if (password.isEmpty) {
+        CustomSnackbar.error(context, "Please enter your password");
+        return;
+      }
+
+      debugPrint(
+        "===================authcontroller=======================================",
+      );
+      bool success = await authController.login(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      if (success) {
+        context.goNamed(RoutesPath.homeScreen);
+      } else {
+        CustomSnackbar.error(context, authController.errorMessage.value);
+      }
+    }
+  }
+
+
+
 }

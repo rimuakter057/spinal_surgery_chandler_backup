@@ -1,16 +1,16 @@
-// import 'package:gau_app/features/auth/controller/auth_controller.dart';
-// import 'package:gau_app/features/home/controller/home_controller.dart';
-// import 'package:get/get.dart';
-// import 'package:get/get_instance/src/bindings_interface.dart';
-//
-// class DependencyInjection extends Bindings {
-//   @override
-//   void dependencies() {
-//
-//     Get.lazyPut(() => AuthController(), fenix: true);
-//
-//     Get.lazyPut(() => HomeController(), fenix: true);
-//
-//
-//   }
-// }
+
+import 'package:chandler_app/feature/auth/controller/auth_controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_instance/src/bindings_interface.dart';
+
+class DependencyInjection extends Bindings {
+  @override
+  void dependencies() {
+
+    Get.lazyPut(() => AuthController(), fenix: true);
+
+   // Get.lazyPut(() => HomeController(), fenix: true);
+
+
+  }
+}

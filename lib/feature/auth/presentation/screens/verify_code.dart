@@ -1,16 +1,21 @@
 import 'package:chandler_app/core/router/route_path.dart';
+import 'package:chandler_app/feature/auth/controller/auth_controller.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/forgot-code_heading_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/otp_field_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
+import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 
 class VerifyCodeScreen extends StatelessWidget {
   VerifyCodeScreen({super.key});
-  final TextEditingController _otpController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
+  final AuthController authController = Get.find<AuthController>();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class VerifyCodeScreen extends StatelessWidget {
               SizedBox(height: ResponsiveHelper.height(64) ,),
               ///otp field==========================================
               OtpFieldWidget(
-                controller: _otpController,
+                controller: otpController,
                 onCompleted: (value) {
                   debugPrint("OTP Completed: $value");
                 },
@@ -48,6 +53,58 @@ class VerifyCodeScreen extends StatelessWidget {
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+  Future<void> onTapVerification(BuildContext context) async {
+
+    // email empty check
+    if (otpController.text.trim().isEmpty) {
+
+      CustomSnackbar.error(context, "Otp cannot be empty");
+
+      return;
+
+    }
+
+    if (!_key.currentState!.validate()) return;
+
+
+
+    bool success = await authController.verifyOtp(
+      email:" widget.email",
+      otp: int.tryParse(otpController.text.trim()) ?? 0, // convert string to int
+    );
+
+    if (success) {
+
+      // context.pushNamed(RoutesPath.createNewPassScreen,
+      //   extra:   widget.email,
+      // );
+
+      otpController.clear();
+
+    } else {
+
+      CustomSnackbar.error(
+        context,
+        authController.errorMessage.value,
+      );
+
+    }
+
+  }
+
+
 }
 
 

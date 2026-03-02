@@ -11,7 +11,7 @@ import 'helper/responsive_helper/responsive_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- // await initDependencies();
+  DependencyInjection().dependencies();
 
   runApp(const MyApp());
 }
@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Chandler',
               theme: AppTheme.lightTheme,
+            initialBinding: DependencyInjection(), // ✅ auto inject,
               routeInformationParser:
               AppRouter.initRoute.routeInformationParser,
               routerDelegate: AppRouter.initRoute.routerDelegate,
