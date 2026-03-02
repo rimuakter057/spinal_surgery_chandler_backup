@@ -6,13 +6,16 @@ import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
+import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 
 class VerifyCodeScreen extends StatelessWidget {
-  VerifyCodeScreen({super.key});
+  VerifyCodeScreen({super.key, required this.email});
+  final String email;
+
   final TextEditingController otpController = TextEditingController();
   final AuthController authController = Get.find<AuthController>();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
@@ -25,29 +28,52 @@ class VerifyCodeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
-          child: Column(
-            children: [
+          child: Form(
+            key: _key,
+            child: Column(
+              children: [
 
-              ForgotCodeHeadingWidget(title: AppText.enterVerificationCode, subtitle:AppText.verificationSent,),
+                ForgotCodeHeadingWidget(title: AppText.enterVerificationCode, subtitle:AppText.verificationSent,),
 
 
-              SizedBox(height: ResponsiveHelper.height(64) ,),
-              ///otp field==========================================
-              OtpFieldWidget(
-                controller: otpController,
-                onCompleted: (value) {
-                  debugPrint("OTP Completed: $value");
-                },
-              ),
-              SizedBox(height: ResponsiveHelper.height(120) ,),
-      ElevatedButton(onPressed: (){
-        context.pushNamed(RoutesPath.confirmedPassScreen);
-      }, child: Text(
-          AppText.verify
+                SizedBox(height: ResponsiveHelper.height(64) ,),
+                ///otp field==========================================
+                OtpFieldWidget(
+                  controller: otpController,
+                  onCompleted: (value) {
+                    debugPrint("OTP Completed: $value");
+                  },
+                ),
+                SizedBox(height: ResponsiveHelper.height(120) ,),
+                  // ElevatedButton(onPressed: ()
+                  // {
+                  //   context.pushNamed(RoutesPath.confirmedPassScreen);
+                  // }, child: Text(
+                  //     AppText.verify
+                  //
+                  // )),
 
-      ))
 
-            ],
+
+
+                Obx(() {
+                  return ElevatedButton(
+                    onPressed: authController.inProgressVerification.value
+                        ? (){}
+                        : () => onTapVerification(context),
+
+                    child: authController.inProgressVerification.value
+                        ? CircularProgressIndicator(
+                      color: AppColors.white,
+                    )
+                        : Text(AppText.verify),
+                  );
+                }),
+
+
+
+              ],
+            ),
           ),
         ),
       ),
@@ -81,15 +107,15 @@ class VerifyCodeScreen extends StatelessWidget {
 
 
     bool success = await authController.verifyOtp(
-      email:" widget.email",
+      email:email,
       otp: int.tryParse(otpController.text.trim()) ?? 0, // convert string to int
     );
 
     if (success) {
 
-      // context.pushNamed(RoutesPath.createNewPassScreen,
-      //   extra:   widget.email,
-      // );
+      context.pushNamed(RoutesPath.confirmedPassScreen,
+        extra:  email,
+      );
 
       otpController.clear();
 

@@ -6,6 +6,7 @@ import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
+import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -24,25 +25,41 @@ class ForgotPasswordScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
-          child: Column(
-            children: [
+          child: Form(
+            key: _key,
+            child: Column(
+              children: [
 
-              ForgotCodeHeadingWidget(title: AppText.forgotPasswordTitle, subtitle:AppText.forgotPasswordSubtitle,),
+                ForgotCodeHeadingWidget(title: AppText.forgotPasswordTitle, subtitle:AppText.forgotPasswordSubtitle,),
 
 
-              SizedBox(height: ResponsiveHelper.height(64)),
-              ///email field
-              InputFieldWidget(
-                title: AppText.enterYourEmail,
-                hint: AppText.enterEmail,
-                controller: emailController,
-              ),
-                  SizedBox(height: ResponsiveHelper.height(120),),
-         ElevatedButton(onPressed: (){
-           context.pushNamed(RoutesPath.verifyCodeScreen);
-         }, child: Text(AppText.sendOtp))
+                SizedBox(height: ResponsiveHelper.height(64)),
+                ///email field
+                InputFieldWidget(
+                  title: AppText.enterYourEmail,
+                  hint: AppText.enterEmail,
+                  controller: emailController,
+                ),
+                    SizedBox(height: ResponsiveHelper.height(120),),
 
-            ],
+                // forgot  Button
+                Obx(() {
+                  return ElevatedButton(
+                    onPressed: authController.inProgressForgot.value
+                        ? (){}
+                        : () => onTapForgot(context),
+
+                    child: authController.inProgressForgot.value
+                        ? CircularProgressIndicator(
+                      color: AppColors.white,
+                    )
+                        : Text(AppText.sendOtp),
+                  );
+                }),
+
+
+              ],
+            ),
           ),
         ),
       ),
@@ -71,9 +88,9 @@ class ForgotPasswordScreen extends StatelessWidget {
 
     if (success) {
 
-     // context.pushNamed(RoutesPath.verificationScreen,
-      //  extra: emailController.text.trim(),
-     // );
+     context.pushNamed(RoutesPath.verifyCodeScreen,
+       extra: emailController.text.trim(),
+     );
 
       emailController.clear();
 

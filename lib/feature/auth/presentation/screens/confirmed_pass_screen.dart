@@ -12,7 +12,11 @@ import 'package:go_router/go_router.dart';
 
 
 class ConfirmedPasswordScreen extends StatelessWidget {
-  ConfirmedPasswordScreen({super.key});
+  ConfirmedPasswordScreen({super.key, required this.email,});
+  final String email;
+
+
+
   final AuthController authController = Get.find<AuthController>();
   final TextEditingController newPassword = TextEditingController();
   final TextEditingController confirmedPasswordController = TextEditingController();
@@ -21,36 +25,40 @@ class ConfirmedPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget gap=SizedBox(height:ResponsiveHelper.height(24));
+
     return Scaffold(
       appBar: CustomAppBar(title: AppText.confirmPassword),
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
-          child: Column(
-            children: [
-              SizedBox(height: ResponsiveHelper.height(120),),
+          child: Form(
+            key: _key,
+            child: Column(
+              children: [
+                SizedBox(height: ResponsiveHelper.height(120),),
 
-              ///password field
-              InputPassFieldWidget(
-                title: AppText.password,
-                hint: AppText.enterPassword,
-                controller: newPassword,
-              ),
-              gap,
-              ///confirmed password field
-              InputPassFieldWidget(
-                title: AppText.confirmPassword,
-                hint: AppText.enterConfirmedPassword,
-                controller: confirmedPasswordController,
-              ),
+                ///password field
+                InputPassFieldWidget(
+                  title: AppText.password,
+                  hint: AppText.enterPassword,
+                  controller: newPassword,
+                ),
+                gap,
+                ///confirmed password field
+                InputPassFieldWidget(
+                  title: AppText.confirmPassword,
+                  hint: AppText.enterConfirmedPassword,
+                  controller: confirmedPasswordController,
+                ),
 
-              gap,
-              gap,
-              ElevatedButton(child:  Text(AppText.resetPassword), onPressed: () {
-                context.pushNamed(RoutesPath.loginScreen);
-              }),
+                gap,
+                gap,
+                ElevatedButton(child:  Text(AppText.resetPassword), onPressed: () {
+                  context.pushNamed(RoutesPath.loginScreen);
+                }),
 
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -87,11 +95,14 @@ class ConfirmedPasswordScreen extends StatelessWidget {
 
     if (!_key.currentState!.validate()) return;
 
-    bool success = await authController.resetPassword(
-      email: "widget.email", // use email passed from previous screen
-      newPassword: newPassword.text.trim(),
-      confirmedPassword: confirmedPasswordController.text.trim(),
+    bool success = await authController.resetOtp(
+      email: email, password: '', token: '', // use email passed from previous screen
+
     );
+
+
+
+
 
     if (success) {
       CustomSnackbar.success(context, "Password reset successful");

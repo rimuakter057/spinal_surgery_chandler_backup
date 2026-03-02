@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/helper/shared_prefe/shared_prefe.dart';
@@ -97,8 +99,8 @@ class AuthController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
-      errorMessage.value = response.body?['message'] ?? 'Something went wrong';
-
+     // errorMessage.value = response.body?['message'] ?? 'Something went wrong';
+      _setErrorMessage(response.body?["Something went wrong"]);
       return false;
     }
   }
@@ -109,7 +111,7 @@ class AuthController extends GetxController {
     inProgressVerification.value = true;
     final Response response = await ApiClient.postData(ApiUrl.verifyOtp, {
       "email": email,
-      "resetCode": otp,
+      "otp": otp,
     });
 
     inProgressVerification.value = false;
@@ -117,32 +119,67 @@ class AuthController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
-      errorMessage.value = response.body?["message"] ?? "email does not exit";
+    //  errorMessage.value = response.body?["message"] ?? "email does not exit";
+      _setErrorMessage(response.body?["Something went wrong"]);
+
       return false;
     }
   }
 
-  ///reset password================================================
-  RxBool inProgressResetPass = false.obs;
-  Future<bool> resetPassword({
-    required String email,
-    required dynamic newPassword,
-    required dynamic confirmedPassword,
-  }) async {
-    inProgressResetPass.value = true;
-    final Response response = await ApiClient.postData(ApiUrl.resetPassword, {
-      "email": email,
-      "password": newPassword,
-      "confirmPassword": confirmedPassword,
-    });
 
-    inProgressResetPass.value = false;
+
+
+
+
+
+
+
+  ///reset===============================
+
+  var isLoadingReset = false.obs;
+
+  Future<bool> resetOtp({
+    required String email,
+    required String password,
+    required String token,
+
+  }) async
+  {
+    isLoadingReset.value = true;
+
+    final response = await ApiClient.postData(
+     ApiUrl.resetPassword,
+  {"email": email, "password": password, "token": token},
+    );
+
+
+
+    isLoadingReset.value = false;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+
       return true;
     } else {
       errorMessage.value = response.body?["message"] ?? "email does not exit";
       return false;
     }
   }
+
+
+
+
+
+  void _setErrorMessage(dynamic msg) {
+    if (msg is String) {
+      errorMessage.value = msg;
+    } else if (msg is List) {
+      errorMessage.value = msg.join(', ');
+    } else {
+      errorMessage.value = 'Something went wrong';
+    }
+  }
+
+
 }
+
+

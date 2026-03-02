@@ -11,9 +11,9 @@ class ApiUrl {
 ///app url================================================
   static const String login = "/auth/signin";
   static const String signUp = "/auth/register";
-  static const String forgot = "/auth/forget-password";
-  static const String verifyOtp = "/auth/verify-reset-otp";
-  static const String resetPassword = "/auth/reset-password";
+  static const String forgot = "/users/forget-password";
+  static const String verifyOtp = "/users/verify-otp";
+  static const String resetPassword = "/users/reset-password";
 
   ///create complain========================================
 
