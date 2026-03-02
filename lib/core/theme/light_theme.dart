@@ -124,6 +124,8 @@ final ThemeData lightTheme = ThemeData(
       borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
       borderSide: BorderSide(color: AppColors.inputBorderColor),
     ),
+
+
     hintStyle: GoogleFonts.poppins(
       fontSize: ResponsiveHelper.fontSize(14),
       fontWeight: FontWeight.w400,
@@ -134,6 +136,11 @@ final ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w400,
       color: AppColors.errorColor,
     ),
+
+
+
+
+
   ),
 
   /// Text Theme ==========================================

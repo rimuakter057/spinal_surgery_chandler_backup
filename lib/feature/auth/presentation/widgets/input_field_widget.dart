@@ -25,6 +25,7 @@ class InputFieldWidget extends StatelessWidget {
 
         SizedBox(height: ResponsiveHelper.height(8) ,),
         TextFormField(
+          style: context.bodyMedium,
           validator: validator,
           controller: controller,
           decoration: InputDecoration(hintText: hint),

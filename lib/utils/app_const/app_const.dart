@@ -9,4 +9,11 @@ static String defaultNetworkImage="https://images.unsplash.com/photo-15161171728
   static String refreshToken = "RefreshToken";
   static String userId = "UserId";
 
+
+
+  // ✅ Remember Me
+  static String rememberMe = "RememberMe";
+  static String rememberedEmail = "RememberedEmail";
+  static String rememberedPassword = "RememberedPassword";
+
 }

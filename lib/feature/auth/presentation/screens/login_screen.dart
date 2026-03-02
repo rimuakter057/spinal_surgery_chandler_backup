@@ -5,10 +5,12 @@ import 'package:chandler_app/feature/auth/presentation/widgets/input_field_widge
 import 'package:chandler_app/feature/auth/presentation/widgets/input_pass_field_widget.dart';
 import 'package:chandler_app/feature/auth/presentation/widgets/remember_forgot_row.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
+import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   bool rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRememberedEmail();
+  }
+
+  void _loadRememberedEmail() async {
+    final rememberedEmail = await SharePrefsHelper.getString(AppConstant.rememberedEmail);
+    final rememberedPassword = await SharePrefsHelper.getString(AppConstant.rememberedPassword);
+    final isRemember = await SharePrefsHelper.getBool(AppConstant.rememberMe) ?? false;
+
+    if (isRemember && rememberedEmail.isNotEmpty && rememberedPassword.isNotEmpty) {
+      setState(() {
+        emailController.text = rememberedEmail;
+        passwordController.text = rememberedPassword;
+        rememberMe = true;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +131,21 @@ class _LoginScreenState extends State<LoginScreen> {
               gap,
               gap,
 
-             ElevatedButton(onPressed: (){
-               context.pushNamed(RoutesPath.mainNavScreen);
 
-             }, child: Text(AppText.login)),
+
+
+
+
+              Obx((){
+                  return ElevatedButton(
+                    onPressed:authController.inProgressLogIn.value?null:()=>onTapLogin() ,
+                    child: authController.inProgressLogIn.value?CircularProgressIndicator(
+                      color: AppColors.white,
+                    ):
+                    Text(AppText.signIn),);
+
+              }),
+
 
               SizedBox(height: ResponsiveHelper.height(12) ,),
               ActionTextWidget(
@@ -173,6 +207,20 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (success) {
+
+        // ✅ Remember Me
+        if(rememberMe){
+          await SharePrefsHelper.setString(AppConstant.rememberedEmail, email);
+          await SharePrefsHelper.setString(AppConstant.rememberedPassword, password);
+          await SharePrefsHelper.setBool(AppConstant.rememberMe, true);
+        } else {
+          await SharePrefsHelper.remove(AppConstant.rememberedEmail);
+          await SharePrefsHelper.remove(AppConstant.rememberedPassword);
+          await SharePrefsHelper.setBool(AppConstant.rememberMe, false);
+        }
+
+
+
         context.goNamed(RoutesPath.homeScreen);
       } else {
         CustomSnackbar.error(context, authController.errorMessage.value);

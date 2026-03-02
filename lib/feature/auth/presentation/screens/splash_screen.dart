@@ -1,8 +1,11 @@
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
+import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
+import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,23 +19,63 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  //
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //
+  //   Future.delayed(Duration(seconds: 3),
+  //     (){
+  //       context.goNamed(RoutesPath.signUpScreen);
+  //     }
+  //
+  //   );
+  //
+  //
+  //
+  //
+  // }
+
+
+
+
+
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    
-    Future.delayed(Duration(seconds: 3),
-      (){
-        context.goNamed(RoutesPath.signUpScreen);
-      }
-
-    );
-
-
-    
-    
+    _handleNavigation();
   }
+
+
+
+  Future<void> _handleNavigation() async {
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    String token =
+    await SharePrefsHelper.getString(AppConstant.bearerToken);
+
+    print("TOKEN IS============================: $token");
+
+    if (token.isNotEmpty) {
+
+      context.go(RoutesPath.mainNavScreen.addBasePath);
+
+    } else {
+
+      context.go(RoutesPath.signUpScreen.addBasePath);
+
+    }
+  }
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

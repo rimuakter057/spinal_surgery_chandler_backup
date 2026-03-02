@@ -21,22 +21,60 @@ class AuthController extends GetxController {
 
     inProgressLogIn.value = false;
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final data = response.body['data'];
       await Future.wait([
         SharePrefsHelper.setString(
           AppConstant.bearerToken,
-          data['accessToken'],
+          data['token'],
         ),
-        SharePrefsHelper.setString(
-          AppConstant.refreshToken,
-          data['refreshToken'],
-        ),
+        // SharePrefsHelper.setString(
+        //   AppConstant.refreshToken,
+        //   data['refreshToken'],
+        // ),
         SharePrefsHelper.setString(AppConstant.userId, data['id']),
       ]);
       return true;
+    } else {
+      final msg = response.body?['message'] ?? 'Something went wrong';
+      errorMessage.value = msg;
+      return false;
     }
-    else {
+  }
+
+
+
+
+
+
+  ///sign up===================================================================
+  RxBool inProgressSignup = false.obs;
+
+  Future<bool> signUp({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    inProgressSignup.value = true;
+    errorMessage.value = '';
+
+    final Response response = await ApiClient.postData(ApiUrl.signUp, {
+      "full_name": fullName,
+      "email": email,
+      "phone": phone,
+      "password": password,
+      "confirmPassword": confirmPassword,
+    });
+
+    inProgressSignup.value = false;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      //final data = response.body['data'];
+
+      return true;
+    } else {
       final msg = response.body?['message'] ?? 'Something went wrong';
       errorMessage.value = msg;
       return false;
@@ -56,7 +94,7 @@ class AuthController extends GetxController {
 
     inProgressForgot.value = false;
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       errorMessage.value = response.body?['message'] ?? 'Something went wrong';
@@ -76,7 +114,7 @@ class AuthController extends GetxController {
 
     inProgressVerification.value = false;
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       errorMessage.value = response.body?["message"] ?? "email does not exit";
@@ -100,7 +138,7 @@ class AuthController extends GetxController {
 
     inProgressResetPass.value = false;
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       errorMessage.value = response.body?["message"] ?? "email does not exit";

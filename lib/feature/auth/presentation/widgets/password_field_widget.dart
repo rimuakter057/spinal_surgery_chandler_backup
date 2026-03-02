@@ -1,6 +1,7 @@
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
+import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 
 
@@ -25,6 +26,7 @@ class _PasswordFieldWidgetState extends State<PasswordFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: context.bodyMedium,
       validator: widget.validator,
       controller: widget.controller,
       obscureText: _obscureText,
