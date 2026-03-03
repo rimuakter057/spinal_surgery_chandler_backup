@@ -31,6 +31,7 @@ class RoutesPath {
   ///=====================================
   static const String addCartScreen = 'addCartScreen';
   static const String cartListScreen = 'cartListScreen';
+  static const String orderScreen = 'orderScreen';
 
 
 

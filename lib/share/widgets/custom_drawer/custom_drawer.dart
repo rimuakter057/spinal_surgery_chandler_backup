@@ -53,11 +53,11 @@ class CustomDrawer extends StatelessWidget {
                 //   onTap: () {},
                 // ),
 
-                _buildDrawerTitle(
-                  context,
-                  title: "History",
-                  onTap: () {},
-                ),
+                // _buildDrawerTitle(
+                //   context,
+                //   title: "History",
+                //   onTap: () {},
+                // ),
 
                 _buildDrawerTitle(
                   context,

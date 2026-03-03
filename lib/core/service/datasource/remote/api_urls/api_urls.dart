@@ -15,6 +15,8 @@ class ApiUrl {
   static const String verifyOtp = "/users/verify-otp";
   static const String resetPassword = "/users/reset-password";
 
+  static const String node="/nodes";
+
   ///create complain========================================
 
 static const String createComplain="/complaints/create-request";

@@ -1,3 +1,4 @@
+import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/add_to_cart_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
@@ -8,6 +9,7 @@ import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CartListScreen extends StatelessWidget {
   CartListScreen({super.key});
@@ -92,7 +94,12 @@ class CartListScreen extends StatelessWidget {
               ),
 
               SizedBox(height: ResponsiveHelper.height(48)),
-              ElevatedButton(child: Text(AppText.send), onPressed: () {}),
+              ElevatedButton(child: Text(AppText.send), onPressed: () {
+
+                context.pushNamed(RoutesPath.orderScreen);
+
+
+              }),
 
               SizedBox(height: ResponsiveHelper.height(72)),
             ],

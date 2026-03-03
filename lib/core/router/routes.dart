@@ -8,6 +8,7 @@ import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart'
 import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_list_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
+import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
 import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/main_information_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/shoreline_screen.dart';
@@ -29,7 +30,7 @@ class AppRouter {
       GlobalKey<NavigatorState>();
 
   static final GoRouter initRoute = GoRouter(
-    initialLocation: RoutesPath.loginScreen.addBasePath,
+    initialLocation: RoutesPath.mainNavScreen.addBasePath,
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -231,6 +232,18 @@ class AppRouter {
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
             child:  CartListScreen(),
+            state: state,
+          );
+        },
+      ),
+
+
+      GoRoute(
+        name: RoutesPath.orderScreen,
+        path: RoutesPath.orderScreen.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  OrderScreen(),
             state: state,
           );
         },

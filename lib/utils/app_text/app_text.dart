@@ -26,6 +26,7 @@ class AppText {
   static const addToCart = 'Add to Cart';
 
   static const login = 'Login';
+  static const enterHere = 'Enter here..';
   static const logOut = 'Log Out';
   static const signUp = 'Sign Up';
   static const signIn = 'Sign In';

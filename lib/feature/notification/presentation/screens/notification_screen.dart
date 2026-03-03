@@ -38,7 +38,7 @@ class NotificationScreen extends StatelessWidget {
                   SizedBox(height: ResponsiveHelper.spacing(12)),
                   Text(
                     "20-Dec-2024, 3:00 PM",
-                    style: context.bodySmall.copyWith(color: AppColors.greyTextColor),
+                    style: context.bodySmall.copyWith(color: AppColors.primaryColor),
                   ),
                 ],
               ),
