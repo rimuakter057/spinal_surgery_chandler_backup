@@ -53,10 +53,10 @@ class AppRouter {
         name: RoutesPath.mainInformation,
         path: RoutesPath.mainInformation.addBasePath,
         pageBuilder: (context, state) {
-          final productData = state.extra as ProductInfo;
+          final productData = state.extra as HomeModel;
 
           return _buildPageWithAnimation(
-            child:  MainInformationScreen(product: productData,),
+            child:  MainInformationScreen(homeModel: productData,),
             state: state,
           );
         },

@@ -14,6 +14,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback onAddToCart;
   final VoidCallback onBookmark;
   final VoidCallback onInfo;
+  final bool isBookmarked;
 
   const ProductCard({
     super.key,
@@ -21,7 +22,7 @@ class ProductCard extends StatelessWidget {
     required this.title,
     required this.onAddToCart,
     required this.onBookmark,
-    required this.onInfo,
+    required this.onInfo, required this.isBookmarked,
   });
 
   @override
@@ -96,7 +97,17 @@ class ProductCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              CustomImage(imageSrc: AppAssets.saveCard),
+
+              GestureDetector(
+                onTap: onBookmark,
+                child: CustomImage(
+                  imageSrc: isBookmarked
+                      ? AppAssets.saveNav   // true হলে filled
+                      : AppAssets.saveCard,        // false হলে normal
+                ),
+              ),
+
+
             ],
           ),
           SizedBox(height: ResponsiveHelper.spacing(8)),

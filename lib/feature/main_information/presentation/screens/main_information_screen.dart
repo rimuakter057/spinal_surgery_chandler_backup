@@ -16,8 +16,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class MainInformationScreen extends StatefulWidget {
-  const MainInformationScreen({super.key, required this.product});
-  final ProductInfo product;
+  const MainInformationScreen({super.key, required this.homeModel});
+  final HomeModel homeModel;
   @override
   State<MainInformationScreen> createState() => _MainInformationScreenState();
 }
@@ -27,19 +27,17 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_){
-
-      debugPrint("=================${widget.product.id}\n${widget.product.description}\n${widget.product.brochureFileUrl}\n${widget.product.videoFileUrl}\n${widget.product.bannerImageUrl}\n${widget.product.videoFileUrl}=========================");
-
-    });
-
-
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //
+  //   WidgetsBinding.instance.addPostFrameCallback((_){
+  //
+  //   });
+  //
+  //
+  // }
 
 
   @override
@@ -174,10 +172,11 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                 }else{
 
                   return ProductCard(
+                    isBookmarked: widget.homeModel.isBookmarked??false,
 
                     imageUrl: AppConstant.unknown,
 
-                    title: 'Reform POCT',
+                    title:widget.homeModel.title.toString(),
 
                     onAddToCart: () {
 

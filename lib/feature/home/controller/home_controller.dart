@@ -29,7 +29,7 @@ class HomeController extends GetxController {
 
 
         final decoded = response.body; // ✅ already Map
-        print("========================================${decoded['data']}");
+
         final List<dynamic> list = decoded['data'] as List<dynamic>;
         homeList.value = list.map((json) => HomeModel.fromJson(json)).toList();
       }
@@ -65,7 +65,7 @@ class HomeController extends GetxController {
     if (model.productInfo != null) {
       context.pushNamed(RoutesPath.mainInformation,
 
-        extra: model.productInfo,
+        extra: model,
       );
       return;
     }

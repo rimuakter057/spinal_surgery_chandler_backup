@@ -111,7 +111,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
               itemBuilder: (context, index) {
 
                 return ProductCard(
-
+                 isBookmarked: false,
                   imageUrl: AppConstant.unknown,
 
                   title: 'Reform POCT',
