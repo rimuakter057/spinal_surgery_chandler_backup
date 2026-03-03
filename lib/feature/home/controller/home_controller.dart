@@ -63,7 +63,10 @@ class HomeController extends GetxController {
   void onNodeClick(HomeModel model, BuildContext context) async {
 
     if (model.productInfo != null) {
-      context.pushNamed(RoutesPath.mainInformation);
+      context.pushNamed(RoutesPath.mainInformation,
+
+        extra: model.productInfo,
+      );
       return;
     }
 

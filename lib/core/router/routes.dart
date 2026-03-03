@@ -9,6 +9,7 @@ import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.d
 import 'package:chandler_app/feature/cart/presentation/screens/cart_list_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
+import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/main_information_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/shoreline_screen.dart';
@@ -52,8 +53,10 @@ class AppRouter {
         name: RoutesPath.mainInformation,
         path: RoutesPath.mainInformation.addBasePath,
         pageBuilder: (context, state) {
+          final productData = state.extra as ProductInfo;
+
           return _buildPageWithAnimation(
-            child:  MainInformationScreen(),
+            child:  MainInformationScreen(product: productData,),
             state: state,
           );
         },

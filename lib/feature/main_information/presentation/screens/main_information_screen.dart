@@ -1,5 +1,6 @@
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
+import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
@@ -15,8 +16,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class MainInformationScreen extends StatefulWidget {
-  const MainInformationScreen({super.key});
-
+  const MainInformationScreen({super.key, required this.product});
+  final ProductInfo product;
   @override
   State<MainInformationScreen> createState() => _MainInformationScreenState();
 }
@@ -24,6 +25,22 @@ class MainInformationScreen extends StatefulWidget {
 class _MainInformationScreenState extends State<MainInformationScreen> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_){
+
+      debugPrint("=================${widget.product.id}\n${widget.product.description}\n${widget.product.brochureFileUrl}\n${widget.product.videoFileUrl}\n${widget.product.bannerImageUrl}\n${widget.product.videoFileUrl}=========================");
+
+    });
+
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
