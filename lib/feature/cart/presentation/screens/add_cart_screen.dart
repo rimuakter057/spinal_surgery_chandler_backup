@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
@@ -13,6 +18,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+
+
+
+
 class AddCartScreen extends StatefulWidget {
   const AddCartScreen({super.key, required this.product});
 
@@ -23,7 +33,8 @@ class AddCartScreen extends StatefulWidget {
 }
 
 class _AddCartScreenState extends State<AddCartScreen> {
-
+  bool _isDownloading = false;
+  double _downloadProgress = 0.0;
   ProductInfo? get info => widget.product.productInfo;
 
   /// 🔥 URL builder — backslash fix + base url
@@ -42,6 +53,9 @@ class _AddCartScreenState extends State<AddCartScreen> {
     });
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     final bannerUrl = _buildUrl(info?.videoFileUrl);
@@ -55,8 +69,6 @@ class _AddCartScreenState extends State<AddCartScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            /// 🔥 Banner image + play icon
             Stack(
               alignment: Alignment.center,
               children: [
@@ -91,8 +103,8 @@ class _AddCartScreenState extends State<AddCartScreen> {
                 if (brochureUrl.isNotEmpty)
                   GestureDetector(
                     onTap: () {
-                      /// TODO: brochure open/download
-                      debugPrint("===== Brochure URL: $brochureUrl");
+                      final fileName = brochureUrl.split('/').last;
+                      _downloadFile(brochureUrl, fileName);
                     },
                     child: Row(
                       children: [
@@ -149,6 +161,75 @@ class _AddCartScreenState extends State<AddCartScreen> {
       ),
     );
   }
+
+
+
+
+
+
+
+  Future<void> _downloadFile(String url, String fileName) async {
+    try {
+      // ✅ Android version check
+      if (Platform.isAndroid) {
+        final androidVersion = await _getAndroidVersion();
+        if (androidVersion < 33) {
+          final status = await Permission.storage.request();
+          if (!status.isGranted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Storage permission denied")),
+            );
+            return;
+          }
+        }
+        // Android 13+ এ permission লাগে না
+      }
+
+      setState(() {
+        _isDownloading = true;
+        _downloadProgress = 0.0;
+      });
+
+      final dir = await getApplicationDocumentsDirectory();
+      final savePath = "${dir.path}/$fileName";
+
+      final dio = Dio();
+      await dio.download(
+        url,
+        savePath,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            setState(() => _downloadProgress = received / total);
+          }
+        },
+      );
+
+      setState(() => _isDownloading = false);
+
+      await OpenFile.open(savePath);
+
+    } catch (e) {
+      setState(() => _isDownloading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Download failed: $e")),
+      );
+    }
+  }
+
+// ✅ Android version helper
+  Future<int> _getAndroidVersion() async {
+    if (Platform.isAndroid) {
+      final version = Platform.operatingSystemVersion;
+      final match = RegExp(r'(\d+)').firstMatch(version);
+      return int.tryParse(match?.group(1) ?? '0') ?? 0;
+    }
+    return 0;
+  }
+
+
+
+
+
 }
 
 
