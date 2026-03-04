@@ -43,13 +43,7 @@ class _AddCartScreenState extends State<AddCartScreen> {
                     fit: BoxFit.cover,
                   ),
 
-                  // child: Image.network(
-                  //  AppConstant.defaultNetworkImage,
-                  //
-                  //   height: ResponsiveHelper.height(200),
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  // ),
+
                 ),
                 CustomImage(imageSrc: AppAssets.play),
               ],

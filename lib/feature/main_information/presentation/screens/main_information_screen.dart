@@ -127,7 +127,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                   );
                 }
 
-                /// 🔥 controller.productList সরাসরি use করো
+
                 final filtered = searchQuery.value.isEmpty
                     ? controller.productList.toList()
                     : controller.productList
@@ -158,15 +158,16 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                   itemBuilder: (context, index) {
                     final item = filtered[index];
                     final imageUrl =
-                        "${ApiUrl.baseUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
+                        "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
 
-                    debugPrint("==== Product: ${item.title}");
+                    debugPrint("==== Image Url:=============================== $imageUrl");
 
                     return ProductCard(
                       isBookmarked: item.isBookmarked ?? false,
                       imageUrl: imageUrl,
                       title: item.title ?? "",
                       onAddToCart: () {},
+                      tapDetails: () {},
                       onBookmark: () {},
                       onInfo: () {},
                     );

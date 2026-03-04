@@ -14,6 +14,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback onAddToCart;
   final VoidCallback onBookmark;
   final VoidCallback onInfo;
+  final VoidCallback tapDetails;
   final bool isBookmarked;
 
   const ProductCard({
@@ -22,7 +23,9 @@ class ProductCard extends StatelessWidget {
     required this.title,
     required this.onAddToCart,
     required this.onBookmark,
-    required this.onInfo, required this.isBookmarked,
+    required this.onInfo,
+    required this.isBookmarked,
+    required this.tapDetails,
   });
 
   @override
@@ -41,24 +44,20 @@ class ProductCard extends StatelessWidget {
         children: [
           // Image Section with Info Icon
           GestureDetector(
-            onTap: (){
-
-           context.pushNamed(RoutesPath.addCartScreen);
-
-            },
+            onTap: tapDetails,
             child: Stack(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   
-                  child: CustomImage(imageSrc: AppAssets.doctorImage),
 
-                  // child: Image.network(
-                  //   imageUrl,
-                  //   height: ResponsiveHelper.height(96),
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  // ),
+
+                  child: Image.network(
+                    imageUrl,
+                    height: ResponsiveHelper.height(96),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Positioned(
                   top: 10,

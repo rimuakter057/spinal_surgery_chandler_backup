@@ -101,6 +101,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
                     title: 'Reform POCT',
 
                     onAddToCart: () {},
+                    tapDetails: () {},
 
                     onBookmark: () {},
 
