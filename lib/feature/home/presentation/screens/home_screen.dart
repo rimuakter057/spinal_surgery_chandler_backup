@@ -1,36 +1,33 @@
+
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
-import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
-import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
+
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //final HomeController controller = Get.put(HomeController());
   final HomeController controller = Get.find<HomeController>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchNodes(context: context);
+      /// 🔥 Screen load এ root nodes fetch — rootList এ save হবে
+      controller.fetchRootNodes(context: context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final Widget gap = SizedBox(height: ResponsiveHelper.spacing(12));
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -41,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return Stack(
               children: [
-                // Background image
+
+                /// Background image
                 Center(
                   child: Image.asset(
                     AppAssets.mainImage,
@@ -51,21 +49,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                // Cervicothoracic Section
+                /// Loading indicator
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+
+                /// 🔥 Cervicothoracic → rootList[0] এর id নিয়ে process করবে
                 Positioned(
                   top: height * 0.25,
                   right: width * 0.08,
                   child: GestureDetector(
-                    onTap: () {
-                      controller
-                          .fetchNodes(parentId: null, context: context)
-                          .then((_) {
-                            controller.showNodeDialog(
-                              null,
-                              context,
-                            ); // parentId null
-                          });
-                    },
+                    onTap: () => controller.onRootItemClick(1, context),
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       color: Colors.transparent,
@@ -80,20 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                // Thoracolumbar Section
+                /// 🔥 Thoracolumbar → rootList[1] এর id নিয়ে process করবে
                 Positioned(
                   bottom: height * 0.20,
                   left: width * 0.19,
                   child: GestureDetector(
-                    onTap: () {
-                      controller.fetchNodes(parentId: null, context: context).then((_) {
-                        if (controller.homeList.isNotEmpty) {
-                          controller.showNodeDialog(null, context); // safe
-                        } else {
-                          CustomSnackbar.error(context, "No nodes available");
-                        }
-                      });
-                    },
+                    onTap: () => controller.onRootItemClick(0, context),
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       color: Colors.transparent,
@@ -107,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+
               ],
             );
           },

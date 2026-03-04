@@ -10,9 +10,6 @@ import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
-
-
 class ShorelineScreen extends StatefulWidget {
   const ShorelineScreen({super.key});
 
@@ -21,7 +18,6 @@ class ShorelineScreen extends StatefulWidget {
 }
 
 class _ShorelineScreenState extends State<ShorelineScreen> {
-
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -45,8 +41,6 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
           ),
         ),
 
-
-
         title: Text(
           "Posterior Cervical Fixation",
           maxLines: 1,
@@ -57,97 +51,67 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
-            child:   GestureDetector(
-                onTap:(){
-                  context.pushNamed(RoutesPath.notification);
-                },
-                child: CustomImage(imageSrc: AppAssets.notification)),
+            child: GestureDetector(
+              onTap: () {
+                context.pushNamed(RoutesPath.notification);
+              },
+              child: CustomImage(imageSrc: AppAssets.notification),
+            ),
           ),
         ],
       ),
 
-
-
       body: SingleChildScrollView(
         child: Padding(
-          padding:  ResponsiveHelper.all(8.0),
-          child: Column(children: [
-            ///search bar=============================
-            TextField(
-              decoration: InputDecoration(
-                hintText: "Search here...",
-                hintStyle: context.bodyMedium.copyWith(
-                  color: AppColors.searchTextColor,
+          padding: ResponsiveHelper.all(8.0),
+          child: Column(
+            children: [
+              ///search bar=============================
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Search here...",
+                  hintStyle: context.bodyMedium.copyWith(
+                    color: AppColors.searchTextColor,
+                  ),
                 ),
-
-
               ),
-            ),
 
-            SizedBox(
-              height: ResponsiveHelper.spacing(12),
-            ),
+              SizedBox(height: ResponsiveHelper.spacing(12)),
 
+              GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
 
+                itemCount: 3,
 
-            GridView.builder(
-
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-
-              itemCount: 3,
-
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
 
                   crossAxisSpacing: ResponsiveHelper.spacing(12),
                   mainAxisSpacing: ResponsiveHelper.spacing(12),
 
-                  childAspectRatio: 0.9
+                  childAspectRatio: 0.9,
+                ),
 
+                itemBuilder: (context, index) {
+                  return ProductCard(
+                    isBookmarked: false,
+                    imageUrl: AppConstant.unknown,
+
+                    title: 'Reform POCT',
+
+                    onAddToCart: () {},
+
+                    onBookmark: () {},
+
+                    onInfo: () {},
+                  );
+                },
               ),
-
-              itemBuilder: (context, index) {
-
-                return ProductCard(
-                 isBookmarked: false,
-                  imageUrl: AppConstant.unknown,
-
-                  title: 'Reform POCT',
-
-                  onAddToCart: () {
-
-
-                  },
-
-                  onBookmark: () {},
-
-                  onInfo: () {},
-
-                );
-
-
-
-
-
-
-
-
-
-              },
-
-            )
-
-
-
-          ],),
+            ],
+          ),
         ),
       ),
-
-
-
-
     );
   }
 }

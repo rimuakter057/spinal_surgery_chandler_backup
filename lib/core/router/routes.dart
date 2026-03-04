@@ -49,18 +49,41 @@ class AppRouter {
       ),
 
 
+      // GoRoute(
+      //   name: RoutesPath.mainInformation,
+      //   path: RoutesPath.mainInformation.addBasePath,
+      //   pageBuilder: (context, state) {
+      //     final productData = state.extra as HomeModel;
+      //
+      //     return _buildPageWithAnimation(
+      //       child:  MainInformationScreen(homeModel: productData,),
+      //       state: state,
+      //     );
+      //   },
+      // ),
+
+
+
+
+
+
       GoRoute(
         name: RoutesPath.mainInformation,
         path: RoutesPath.mainInformation.addBasePath,
         pageBuilder: (context, state) {
-          final productData = state.extra as HomeModel;
+          final parentId = state.extra as String;
 
           return _buildPageWithAnimation(
-            child:  MainInformationScreen(homeModel: productData,),
+            child:  MainInformationScreen(parentId: parentId),
             state: state,
           );
         },
       ),
+
+
+
+
+
 
       GoRoute(
         name: RoutesPath.shoreLine,

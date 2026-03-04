@@ -1,5 +1,3 @@
-
-
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
@@ -12,119 +10,186 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeController extends GetxController {
-  RxList<HomeModel> homeList = <HomeModel>[].obs;
+
+  /// 🔥 Root list — HomeScreen এর 2টা button এর জন্য
+  RxList<HomeModel> rootList = <HomeModel>[].obs;
+
+  /// 🔥 Product list — MainInformationScreen এর জন্য
+  RxList<HomeModel> productList = <HomeModel>[].obs;
+
   RxBool isLoading = false.obs;
 
-
-  Future<void> fetchNodes({String? parentId,required  BuildContext context}) async {
+  // ─────────────────────────────────────────────────────────
+  // HomeScreen initState এ একবার call হবে
+  // ─────────────────────────────────────────────────────────
+  Future<void> fetchRootNodes({required BuildContext context}) async {
     isLoading.value = true;
-
-    final uri = parentId == null
-        ? ApiUrl.node
-        : "${ApiUrl.node}?parent_id=$parentId";
-
     try {
-      final response = await ApiClient.getData(uri);
+      final response = await ApiClient.getData(ApiUrl.node);
       if (response.statusCode == 200) {
-
-
-        final decoded = response.body; // ✅ already Map
-
-        final List<dynamic> list = decoded['data'] as List<dynamic>;
-        homeList.value = list.map((json) => HomeModel.fromJson(json)).toList();
-      }
-
-
-      else {
-        homeList.clear();
-
-        CustomSnackbar.error(context, "Failed to fetch nodes");
-
+        final List<dynamic> list = response.body['data'] as List<dynamic>;
+        rootList.value = list.map((e) => HomeModel.fromJson(e)).toList();
+      } else {
+        CustomSnackbar.error(context, "Failed to load");
       }
     } catch (e) {
-      homeList.clear();
-
-
-
       CustomSnackbar.error(context, e.toString());
-      debugPrint(e.toString());
-
     }
-
     isLoading.value = false;
   }
 
+  // ─────────────────────────────────────────────────────────
+  // MainInformationScreen initState এ call হবে
+  // productList এ data আসবে
+  // ─────────────────────────────────────────────────────────
+  Future<void> fetchProducts({
+    required String parentId,
+    required BuildContext context,
+  }) async {
+    isLoading.value = true;
+    productList.clear(); // 🔥 প্রতিবার fresh
+    try {
+      final response =
+      await ApiClient.getData("${ApiUrl.node}?parent_id=$parentId");
+      if (response.statusCode == 200) {
+        final List<dynamic> list = response.body['data'] as List<dynamic>;
+        productList.value = list.map((e) => HomeModel.fromJson(e)).toList();
+      } else {
+        CustomSnackbar.error(context, "Failed to fetch products");
+      }
+    } catch (e) {
+      CustomSnackbar.error(context, e.toString());
+      debugPrint(e.toString());
+    }
+    isLoading.value = false;
+  }
 
-
-
-
-
-
-  void onNodeClick(HomeModel model, BuildContext context) async {
-
-    if (model.productInfo != null) {
-      context.pushNamed(RoutesPath.mainInformation,
-
-        extra: model,
-      );
+  // ─────────────────────────────────────────────────────────
+  // HomeScreen button tap
+  // ─────────────────────────────────────────────────────────
+  Future<void> onRootItemClick(int index, BuildContext context) async {
+    if (rootList.isEmpty || index >= rootList.length) {
+      CustomSnackbar.error(context, "Data not loaded yet.");
       return;
     }
 
-    await fetchNodes(parentId: model.id, context: context);
+    final HomeModel rootItem = rootList[index];
 
-    if (homeList.isNotEmpty) {
-      if (context.mounted) {
-        showNodeDialog(model, context);
-      }
+    if (rootItem.type?.toUpperCase() == "PRODUCT") {
+      context.pushNamed(RoutesPath.mainInformation, extra: rootItem.id);
+      return;
+    }
+
+    final List<HomeModel> children = await _fetchChildren(
+      parentId: rootItem.id!,
+      context: context,
+    );
+
+    if (!context.mounted) return;
+
+    if (children.isEmpty) {
+      CustomSnackbar.error(context, "No sub-categories found.");
+      return;
+    }
+
+    final bool allProducts =
+    children.every((e) => e.type?.toUpperCase() == "PRODUCT");
+
+    if (allProducts) {
+      context.pushNamed(RoutesPath.mainInformation, extra: rootItem.id);
     } else {
-
-      CustomSnackbar.error(context, "No more sub-categories found.");
+      _showDialog(children: children, context: context);
     }
   }
 
+  // ─────────────────────────────────────────────────────────
+  // Dialog button tap
+  // ─────────────────────────────────────────────────────────
+  Future<void> onDialogItemClick(HomeModel item, BuildContext context) async {
+    if (item.type?.toUpperCase() == "PRODUCT") {
+      context.pushNamed(RoutesPath.mainInformation, extra: item.id);
+      return;
+    }
 
-
-
-
-
-  void showNodeDialog(HomeModel? parent, BuildContext context) {
-    if (homeList.isEmpty) return;
-
-    showDialog(
+    final List<HomeModel> children = await _fetchChildren(
+      parentId: item.id!,
       context: context,
-      builder: (context) => Obx(() {
-
-        if (homeList.isEmpty) return const SizedBox.shrink();
-
-        return DialogWidget(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: homeList.map((item) {
-              final title = item.title ?? 'Untitled';
-
-              return Column(
-                children: [
-                  DialogButtonWidget(
-                    title: title,
-                    onTap: () {
-                      Navigator.pop(context);
-                      onNodeClick(item, context);
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              );
-            }).toList(),
-          ),
-        );
-      }),
     );
+
+    if (!context.mounted) return;
+
+    if (children.isEmpty) {
+      CustomSnackbar.error(context, "No sub-categories found.");
+      return;
+    }
+
+    final bool allProducts =
+    children.every((e) => e.type?.toUpperCase() == "PRODUCT");
+
+    if (allProducts) {
+      context.pushNamed(RoutesPath.mainInformation, extra: item.id);
+    } else {
+      _showDialog(children: children, context: context);
+    }
   }
 
+  // ─────────────────────────────────────────────────────────
+  // Internal — local list return করে, global state নেই
+  // ─────────────────────────────────────────────────────────
+  Future<List<HomeModel>> _fetchChildren({
+    required String parentId,
+    required BuildContext context,
+  }) async {
+    isLoading.value = true;
+    List<HomeModel> result = [];
+    try {
+      final response =
+      await ApiClient.getData("${ApiUrl.node}?parent_id=$parentId");
+      if (response.statusCode == 200) {
+        final List<dynamic> list = response.body['data'] as List<dynamic>;
+        result = list.map((e) => HomeModel.fromJson(e)).toList();
+      } else {
+        CustomSnackbar.error(context, "Failed to fetch");
+      }
+    } catch (e) {
+      CustomSnackbar.error(context, e.toString());
+      debugPrint(e.toString());
+    }
+    isLoading.value = false;
+    return result;
+  }
 
-
-
+  // ─────────────────────────────────────────────────────────
+  // Dialog
+  // ─────────────────────────────────────────────────────────
+  void _showDialog({
+    required List<HomeModel> children,
+    required BuildContext context,
+  }) {
+    showDialog(
+      context: context,
+      builder: (ctx) => DialogWidget(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: children.map((item) {
+            return Column(
+              children: [
+                DialogButtonWidget(
+                  title: item.title ?? 'Untitled',
+                  onTap: () async {
+                    Navigator.of(ctx, rootNavigator: true).pop();
+                    await Future.delayed(const Duration(milliseconds: 100));
+                    if (context.mounted) {
+                      onDialogItemClick(item, context);
+                    }
+                  },
+                ),
+                const SizedBox(height: 12),
+              ],
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
 }
-
-
-
