@@ -16,6 +16,7 @@ class ApiUrl {
   static const String resetPassword = "/users/reset-password";
 
   static const String node="/nodes";
+  static const String bookmark="/bookmarks/items";
 
   ///create complain========================================
 

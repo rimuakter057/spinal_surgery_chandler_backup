@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -33,6 +35,12 @@ class AddCartScreen extends StatefulWidget {
 }
 
 class _AddCartScreenState extends State<AddCartScreen> {
+
+  final CartController cartController = Get.find<CartController>();
+
+
+
+
   bool _isDownloading = false;
   double _downloadProgress = 0.0;
   ProductInfo? get info => widget.product.productInfo;

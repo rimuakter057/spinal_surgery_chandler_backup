@@ -10,6 +10,31 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeController extends GetxController {
+  ///cart=======================================
+
+  RxBool inProgressForgot = false.obs;
+
+  Future<bool> addBookmark({required String id}) async {
+    inProgressForgot.value = true;
+
+    final Response response = await ApiClient.postData(ApiUrl.bookmark, {
+      "item_id": id,
+    });
+
+    inProgressForgot.value = false;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+
+      return false;
+    }
+  }
+
+
+
+
+
 
   /// 🔥 Root list — HomeScreen এর 2টা button এর জন্য
   RxList<HomeModel> rootList = <HomeModel>[].obs;

@@ -6,6 +6,7 @@ import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
+import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
@@ -177,7 +178,26 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
                         );
                       },
-                      onBookmark: () {},
+                      onBookmark: ()async {
+
+                        try {
+                          final success = await controller.addBookmark(id: item.id ?? "");
+                          if (success) {
+                            /// Success হলে UI update করো silently
+                            item.isBookmarked = !(item.isBookmarked ?? false);
+                            controller.productList.refresh(); // Obx rebuild
+                          } else {
+                            CustomSnackbar.error(context, "Failed. Try again.");
+                          }
+
+
+
+                        } catch (e) {
+                          CustomSnackbar.error(context, "Failed. Try again.");
+                        }
+
+
+                      },
                       onInfo: () {},
                     );
                   },
