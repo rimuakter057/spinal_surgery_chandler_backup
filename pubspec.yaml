@@ -60,6 +60,11 @@ dependencies:
   progress_indicator: ^0.2.2
   file_picker: ^10.3.8
   logger: ^2.6.2
+  video_player: ^2.9.2
+  open_file: ^3.5.11
+  path_provider: ^2.1.5
+  chewie: ^1.13.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

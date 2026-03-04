@@ -49,24 +49,6 @@ class AppRouter {
       ),
 
 
-      // GoRoute(
-      //   name: RoutesPath.mainInformation,
-      //   path: RoutesPath.mainInformation.addBasePath,
-      //   pageBuilder: (context, state) {
-      //     final productData = state.extra as HomeModel;
-      //
-      //     return _buildPageWithAnimation(
-      //       child:  MainInformationScreen(homeModel: productData,),
-      //       state: state,
-      //     );
-      //   },
-      // ),
-
-
-
-
-
-
       GoRoute(
         name: RoutesPath.mainInformation,
         path: RoutesPath.mainInformation.addBasePath,
@@ -245,8 +227,10 @@ class AppRouter {
         name: RoutesPath.addCartScreen,
         path: RoutesPath.addCartScreen.addBasePath,
         pageBuilder: (context, state) {
+          final product = state.extra as HomeModel;
+
           return _buildPageWithAnimation(
-            child:  AddCartScreen(),
+            child:  AddCartScreen(product: product,),
             state: state,
           );
         },

@@ -2,6 +2,7 @@ import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
+import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
@@ -160,14 +161,22 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                     final imageUrl =
                         "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
 
-                    debugPrint("==== Image Url:=============================== $imageUrl");
+
 
                     return ProductCard(
                       isBookmarked: item.isBookmarked ?? false,
                       imageUrl: imageUrl,
                       title: item.title ?? "",
-                      onAddToCart: () {},
-                      tapDetails: () {},
+                      onAddToCart: (){
+
+                      },
+                      tapDetails: () {
+                        _goToDetail(
+                            context: context,
+                            item: item
+
+                        );
+                      },
                       onBookmark: () {},
                       onInfo: () {},
                     );
@@ -180,4 +189,20 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
       ),
     );
   }
+
+
+
+
+
+
+
+
+  void _goToDetail({required BuildContext context,required HomeModel item}) {
+    context.pushNamed(
+      RoutesPath.addCartScreen,
+      extra: item,
+    );
+  }
+
+
 }
