@@ -79,16 +79,7 @@ class AppRouter {
       ),
 
 
-      GoRoute(
-        name: RoutesPath.productDetails,
-        path: RoutesPath.productDetails.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child:  ProductDetailsScreen(),
-            state: state,
-          );
-        },
-      ),
+
 
       GoRoute(
         name: RoutesPath.signUpScreen,
@@ -236,6 +227,22 @@ class AppRouter {
           );
         },
       ),
+
+
+
+      GoRoute(
+        name: RoutesPath.productDetailsScreen,
+        path: RoutesPath.productDetailsScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final String id = state.extra as String;
+
+          return _buildPageWithAnimation(
+            child:  ProductDetailsScreen(id: id,),
+            state: state,
+          );
+        },
+      ),
+
 
 
       GoRoute(

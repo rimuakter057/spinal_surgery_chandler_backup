@@ -96,6 +96,8 @@ class _CartScreenState extends State<CartScreen> {
 
             final items = controller.cartItems;
 
+
+
             return Column(
               children: [
                 /// Search Bar
@@ -136,12 +138,19 @@ class _CartScreenState extends State<CartScreen> {
                       final item = items[index];
                       final imageUrl =
                           "${ApiUrl.primaryUrl}/${item.itemImage?.replaceAll("\\", "/")}";
-
+                      debugPrint("==============${item.itemId}");
                       return AddToCartWidget(
                         title: item.itemTitle ?? "",
                         price: item.quantity.toString(),
                         image: imageUrl,
-                        onTapDetails: () {},
+                        onTapDetails: () {
+                          debugPrint("===tap id: ${item.itemId}"); // confirm করুন
+                        context.pushNamed(RoutesPath.productDetailsScreen,extra: item.itemId);
+
+
+
+
+                        },
                         onTapIncrement: () {},
                         onTapDecrement: () {},
                       );

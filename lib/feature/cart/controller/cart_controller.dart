@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
+import 'package:chandler_app/feature/cart/models/cart_details_model.dart';
 import 'package:chandler_app/feature/cart/models/cart_model.dart';
+import 'package:chandler_app/feature/cart/presentation/screens/cart_details_screen.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -20,20 +22,19 @@ class CartController extends  GetxController {
     }
   }
 
+
   ///get single details
   final RxBool isLoadingGetSingleDetails = false.obs;
-  final Rxn<HomeModel> singleDetails = Rxn<HomeModel>(); // ✅ single object
+  final Rxn<CartDetailsModel> singleDetails = Rxn<CartDetailsModel>();
 
   Future<void> fetchSingleDetails({required String itemId}) async {
     isLoadingGetSingleDetails.value = true;
     final response = await ApiClient.getData(ApiUrl.singleDetails(id: itemId));
     isLoadingGetSingleDetails.value = false;
-
     if (response.statusCode == 200) {
-      singleDetails.value = HomeModel.fromJson(response.body['data']); // ✅ HomeModel
+      singleDetails.value = CartDetailsModel.fromJson(response.body['data']);
     }
   }
-
 
 
 
