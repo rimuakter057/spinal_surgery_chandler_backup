@@ -17,6 +17,7 @@ class ApiUrl {
 
   static const String node="/nodes";
   static const String bookmark="/bookmarks/items";
+  static const String addToCart="/cart/items";
 
   ///create complain========================================
 

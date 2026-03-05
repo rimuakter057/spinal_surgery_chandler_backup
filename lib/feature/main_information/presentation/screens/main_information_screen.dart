@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../share/widgets/custom_loader/custom_loader.dart';
+
 class MainInformationScreen extends StatefulWidget {
   const MainInformationScreen({super.key, required this.parentId});
 
@@ -125,7 +127,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                 if (controller.isLoading.value) {
                   return const Padding(
                     padding: EdgeInsets.only(top: 60),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: Center(child: CustomLoader()),
                   );
                 }
 

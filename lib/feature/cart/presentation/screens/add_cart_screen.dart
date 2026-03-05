@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
+import 'package:chandler_app/share/widgets/custom_loader/custom_loader.dart';
+import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
@@ -153,10 +155,26 @@ class _AddCartScreenState extends State<AddCartScreen> {
       bottomNavigationBar: Padding(
         padding: ResponsiveHelper.symmetric(horizontal: 20.0, vertical: 20.0),
         child: ElevatedButton(
-          onPressed: () {
-            context.pushNamed(RoutesPath.cartListScreen);
+          // onPressed: () {
+          //   context.pushNamed(RoutesPath.cartListScreen);
+          // },
+
+
+
+          onPressed: () async {
+            final success = await cartController.addToCart(product:widget.product, context: context);
+            if (success) {
+              CustomSnackbar.success(context, "Added to cart!");
+             // context.pushNamed(RoutesPath.cartListScreen);
+            } else {
+              CustomSnackbar.error(context, "Failed to add to cart");
+            }
           },
-          child: Row(
+
+
+          child: cartController.isLoading.value
+              ? CustomLoader()
+              : Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -165,6 +183,28 @@ class _AddCartScreenState extends State<AddCartScreen> {
               Text(AppText.addToCart),
             ],
           ),
+
+          // child: Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     CustomImage(imageSrc: AppAssets.cartWhite),
+          //     SizedBox(width: ResponsiveHelper.width(8)),
+          //     Text(AppText.addToCart),
+          //   ],
+          // ),
+
+
+
+
+
+
+
+
+
+
+
+
         ),
       ),
     );
