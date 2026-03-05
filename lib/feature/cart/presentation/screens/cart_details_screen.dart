@@ -22,26 +22,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
-
-
-
-class AddCartScreen extends StatefulWidget {
-  const AddCartScreen({super.key, required this.product});
+class CartDetailsScreen extends StatefulWidget {
+  const CartDetailsScreen({super.key, required this.product});
 
   final HomeModel product;
 
   @override
-  State<AddCartScreen> createState() => _AddCartScreenState();
+  State<CartDetailsScreen> createState() => _CartDetailsScreenState();
 }
 
-class _AddCartScreenState extends State<AddCartScreen> {
-
+class _CartDetailsScreenState extends State<CartDetailsScreen> {
   final CartController cartController = Get.find<CartController>();
-
-
-
 
   bool _isDownloading = false;
   double _downloadProgress = 0.0;
@@ -62,9 +53,6 @@ class _AddCartScreenState extends State<AddCartScreen> {
       debugPrint("===== brochureUrl: ${_buildUrl(info?.brochureFileUrl)}");
     });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -158,19 +146,18 @@ class _AddCartScreenState extends State<AddCartScreen> {
           // onPressed: () {
           //   context.pushNamed(RoutesPath.cartListScreen);
           // },
-
-
-
           onPressed: () async {
-            final success = await cartController.addToCart(product:widget.product, context: context);
+            final success = await cartController.addToCart(
+              product: widget.product,
+              context: context,
+            );
             if (success) {
               CustomSnackbar.success(context, "Added to cart!");
-             // context.pushNamed(RoutesPath.cartListScreen);
+              // context.pushNamed(RoutesPath.cartListScreen);
             } else {
               CustomSnackbar.error(context, "Failed to add to cart");
             }
           },
-
 
           child: cartController.isLoading.value
               ? CustomLoader()
@@ -193,28 +180,10 @@ class _AddCartScreenState extends State<AddCartScreen> {
           //     Text(AppText.addToCart),
           //   ],
           // ),
-
-
-
-
-
-
-
-
-
-
-
-
         ),
       ),
     );
   }
-
-
-
-
-
-
 
   Future<void> _downloadFile(String url, String fileName) async {
     try {
@@ -255,16 +224,15 @@ class _AddCartScreenState extends State<AddCartScreen> {
       setState(() => _isDownloading = false);
 
       await OpenFile.open(savePath);
-
     } catch (e) {
       setState(() => _isDownloading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Download failed: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Download failed: $e")));
     }
   }
 
-// ✅ Android version helper
+  // ✅ Android version helper
   Future<int> _getAndroidVersion() async {
     if (Platform.isAndroid) {
       final version = Platform.operatingSystemVersion;
@@ -273,22 +241,4 @@ class _AddCartScreenState extends State<AddCartScreen> {
     }
     return 0;
   }
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

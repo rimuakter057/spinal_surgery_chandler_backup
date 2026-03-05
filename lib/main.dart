@@ -1,5 +1,7 @@
+import 'package:chandler_app/feature/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'core/di/injection.dart';
@@ -11,7 +13,7 @@ import 'helper/responsive_helper/responsive_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DependencyInjection().dependencies();
+  Get.put(HomeController());
 
   runApp(const MyApp());
 }

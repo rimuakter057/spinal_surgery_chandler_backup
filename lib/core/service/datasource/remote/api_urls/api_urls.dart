@@ -18,6 +18,8 @@ class ApiUrl {
   static const String node="/nodes";
   static const String bookmark="/bookmarks/items";
   static const String addToCart="/cart/items";
+  static const String cart="/cart";
+  static  String singleDetails ({required String id})=>"/nodes/$id";
 
   ///create complain========================================
 

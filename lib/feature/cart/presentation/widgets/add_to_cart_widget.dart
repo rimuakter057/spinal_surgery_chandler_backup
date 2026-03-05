@@ -1,6 +1,7 @@
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
+import 'package:chandler_app/share/widgets/network_image/custom_network_image.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/config/app_config.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
@@ -42,18 +43,21 @@ class AddToCartWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   ResponsiveHelper.borderRadius(16),
                 ),
-                child: CustomImage(
-                  imageSrc: image,
-                  height: ResponsiveHelper.height(96),
-                  width: ResponsiveHelper.width(66),
+
+
+                child: CustomNetworkImage(
+                    imageUrl: image,
+                    height: ResponsiveHelper.height(96),
+                    width: ResponsiveHelper.width(126),
                 ),
+
               ),
               SizedBox(width: ResponsiveHelper.width(8)),
 
               ///details
               ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth: ResponsiveHelper.width(128),
+                  maxWidth: ResponsiveHelper.width(148),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +70,7 @@ class AddToCartWidget extends StatelessWidget {
                     ),
                     SizedBox(height: ResponsiveHelper.spacing(12),),
                     Text(
-                      "Total Files 3",
+                      "Total Files 1",
                       style: context.bodyMedium.copyWith(color: AppColors.primaryColor)
                     ),
                     SizedBox(height: ResponsiveHelper.spacing(12),),

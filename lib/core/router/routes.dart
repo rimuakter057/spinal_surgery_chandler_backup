@@ -5,7 +5,7 @@ import 'package:chandler_app/feature/auth/presentation/screens/login_screen.dart
 import 'package:chandler_app/feature/auth/presentation/screens/sign_up_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/splash_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart';
-import 'package:chandler_app/feature/cart/presentation/screens/add_cart_screen.dart';
+import 'package:chandler_app/feature/cart/presentation/screens/cart_details_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_list_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
@@ -223,25 +223,15 @@ class AppRouter {
 ///==============================================
 
 
+
       GoRoute(
-        name: RoutesPath.addCartScreen,
-        path: RoutesPath.addCartScreen.addBasePath,
+        name: RoutesPath.cartDetailsScreen,
+        path: RoutesPath.cartDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
           final product = state.extra as HomeModel;
 
           return _buildPageWithAnimation(
-            child:  AddCartScreen(product: product,),
-            state: state,
-          );
-        },
-      ),
-
-      GoRoute(
-        name: RoutesPath.cartListScreen,
-        path: RoutesPath.cartListScreen.addBasePath,
-        pageBuilder: (context, state) {
-          return _buildPageWithAnimation(
-            child:  CartListScreen(),
+            child:  CartDetailsScreen(product: product,),
             state: state,
           );
         },

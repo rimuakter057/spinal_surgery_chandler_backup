@@ -10,7 +10,43 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeController extends GetxController {
-  ///cart=======================================
+
+
+  ///add cart =====================================
+  final RxBool isLoadingCart = false.obs;
+
+  Future<bool> addToCart({
+    required String itemId,
+    required String itemTitle,
+    required String itemImage,
+  }) async {
+    isLoadingCart.value = true;
+
+    final body = {
+      "item_id": itemId,
+      "item_title": itemTitle,
+      "item_image": itemImage,
+      "quantity": 1,
+    };
+
+    final response = await ApiClient.postData(ApiUrl.addToCart, body);
+    isLoadingCart.value = false;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+
+
+
+
+
+
+///cart=======================================
 
   RxBool inProgressForgot = false.obs;
 
@@ -35,7 +71,6 @@ class HomeController extends GetxController {
 
 
 
-
   /// 🔥 Root list — HomeScreen এর 2টা button এর জন্য
   RxList<HomeModel> rootList = <HomeModel>[].obs;
 
@@ -45,7 +80,7 @@ class HomeController extends GetxController {
   RxBool isLoading = false.obs;
 
   // ─────────────────────────────────────────────────────────
-  // HomeScreen initState এ একবার call হবে
+  /// HomeScreen initState এ একবার call হবে
   // ─────────────────────────────────────────────────────────
   Future<void> fetchRootNodes({required BuildContext context}) async {
     isLoading.value = true;

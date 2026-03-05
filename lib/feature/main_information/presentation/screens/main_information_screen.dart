@@ -1,5 +1,7 @@
 import 'package:chandler_app/core/router/route_path.dart';
+import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
+import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
@@ -30,6 +32,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
   /// 🔥 HomeController — productList use করবে
   final HomeController controller = Get.find<HomeController>();
+  //final CartController cartController = Get.find<CartController>();
 
   final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
@@ -131,7 +134,6 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                   );
                 }
 
-
                 final filtered = searchQuery.value.isEmpty
                     ? controller.productList.toList()
                     : controller.productList
@@ -161,29 +163,40 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                   ),
                   itemBuilder: (context, index) {
                     final item = filtered[index];
+
                     final imageUrl =
                         "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
-
-
 
                     return ProductCard(
                       isBookmarked: item.isBookmarked ?? false,
                       imageUrl: imageUrl,
                       title: item.title ?? "",
-                      onAddToCart: (){
 
-                      },
-                      tapDetails: () {
-                        _goToDetail(
-                            context: context,
-                            item: item
-
+                      onAddToCart: () async {
+                        final success = await controller.addToCart(
+                          itemId: item.id ?? "",
+                          itemTitle: item.title ?? "",
+                          itemImage: item.productInfo?.bannerImageUrl ?? "",
                         );
-                      },
-                      onBookmark: ()async {
 
+                        if (success) {
+                          CustomSnackbar.success(context, "Added to cart!");
+                        } else {
+                          CustomSnackbar.error(
+                            context,
+                            "Failed to add to cart",
+                          );
+                        }
+                      },
+
+                      tapDetails: () {
+                        _goToDetail(context: context, item: item);
+                      },
+                      onBookmark: () async {
                         try {
-                          final success = await controller.addBookmark(id: item.id ?? "");
+                          final success = await controller.addBookmark(
+                            id: item.id ?? "",
+                          );
                           if (success) {
                             /// Success হলে UI update করো silently
                             item.isBookmarked = !(item.isBookmarked ?? false);
@@ -191,14 +204,9 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                           } else {
                             CustomSnackbar.error(context, "Failed. Try again.");
                           }
-
-
-
                         } catch (e) {
                           CustomSnackbar.error(context, "Failed. Try again.");
                         }
-
-
                       },
                       onInfo: () {},
                     );
@@ -212,19 +220,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
     );
   }
 
-
-
-
-
-
-
-
-  void _goToDetail({required BuildContext context,required HomeModel item}) {
-    context.pushNamed(
-      RoutesPath.addCartScreen,
-      extra: item,
-    );
+  void _goToDetail({required BuildContext context, required HomeModel item}) {
+    context.pushNamed(RoutesPath.cartDetailsScreen, extra: item);
   }
-
-
 }
