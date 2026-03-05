@@ -36,6 +36,8 @@ class _CartScreenState extends State<CartScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchCart();
 
+      debugPrint("init state=================================");
+
     });
   }
 

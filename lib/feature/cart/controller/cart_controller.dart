@@ -29,13 +29,33 @@ class CartController extends  GetxController {
 
   Future<void> fetchSingleDetails({required String itemId}) async {
     isLoadingGetSingleDetails.value = true;
+
+    debugPrint("===== fetchSingleDetails CALLED =====");
+    debugPrint("itemId: $itemId");
+    debugPrint("Full URL: ${ApiUrl.singleDetails(id: itemId)}");
+
     final response = await ApiClient.getData(ApiUrl.singleDetails(id: itemId));
+
+    debugPrint("statusCode: ${response.statusCode}");
+    debugPrint("body: ${response.body}");
+
     isLoadingGetSingleDetails.value = false;
+
     if (response.statusCode == 200) {
-      singleDetails.value = CartDetailsModel.fromJson(response.body['data']);
+      final data = response.body['data'];
+      debugPrint("data from body: $data");
+
+      if (data == null) {
+        debugPrint("❌ data is NULL — API returned 200 but data is empty");
+        return;
+      }
+
+      singleDetails.value = CartDetailsModel.fromJson(data);
+      debugPrint("✅ singleDetails set: ${singleDetails.value?.title}");
+    } else {
+      debugPrint("❌ API FAILED — statusCode: ${response.statusCode}");
     }
   }
-
 
 
 

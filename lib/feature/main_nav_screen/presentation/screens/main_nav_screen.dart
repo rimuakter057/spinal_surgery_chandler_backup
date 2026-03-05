@@ -30,6 +30,23 @@ class _MainNavScreenState extends State<MainNavScreen> {
     const ProfileScreen(),
   ];
 
+
+
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 0:
+        return HomeScreen();
+      case 1:
+        return const SaveScreen();
+      case 2:
+        return CartScreen();
+      case 3:
+        return const ProfileScreen();
+      default:
+        return HomeScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +54,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
 
       backgroundColor: Colors.transparent,
 
-      body: IndexedStack(index: _selectedIndex, children: _screens),
+      body: _getScreen(_selectedIndex),
 
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.only(

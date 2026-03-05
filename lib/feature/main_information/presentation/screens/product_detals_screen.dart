@@ -24,7 +24,7 @@ final String id;
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  final CartController cartController = Get.find<CartController>();
+  //final CartController cartController = Get.find<CartController>();
 
 
   String _buildUrl(String? path) {
@@ -32,13 +32,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return "${ApiUrl.primaryUrl}/${path.replaceAll("\\", "/")}";
   }
 
+
+
+
+  late final CartController cartController;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      cartController.fetchSingleDetails(itemId: widget.id); // ✅
-    });
+    cartController = Get.find<CartController>();
+
+    cartController.singleDetails.value = null;   // clear old data
+    cartController.fetchSingleDetails(itemId: widget.id);
+
+    debugPrint("id: ${widget.id}");
   }
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +62,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
       final product = cartController.singleDetails.value;
       final info = product?.productInfo;
-      final bannerUrl = _buildUrl(info?.videoFileUrl);
+      final videoUrl = _buildUrl(info?.videoFileUrl);
       final brochureUrl = _buildUrl(info?.brochureFileUrl);
+
+      debugPrint("product: $product \n info: $info \n videoUrl: $videoUrl \n brochureUrl: $brochureUrl");
 
       return Scaffold(
         appBar: CustomAppBar(title: product?.title ?? "Product"),
@@ -67,7 +85,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ResponsiveHelper.borderRadius(15),
                     ),
                     child: CustomNetworkImage(
-                      imageUrl: bannerUrl,
+                      imageUrl: videoUrl,
                       height: ResponsiveHelper.height(200),
                       width: double.infinity,
                     ),

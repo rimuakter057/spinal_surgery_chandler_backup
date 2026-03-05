@@ -13,7 +13,7 @@ import 'helper/responsive_helper/responsive_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(HomeController());
+  DependencyInjection().dependencies();
 
   runApp(const MyApp());
 }

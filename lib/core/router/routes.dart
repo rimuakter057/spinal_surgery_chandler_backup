@@ -234,7 +234,7 @@ class AppRouter {
         name: RoutesPath.productDetailsScreen,
         path: RoutesPath.productDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final String id = state.extra as String;
+          final String id = state.extra as String? ?? '';
 
           return _buildPageWithAnimation(
             child:  ProductDetailsScreen(id: id,),
