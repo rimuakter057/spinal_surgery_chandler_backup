@@ -187,6 +187,16 @@ class _SaveScreenState extends State<SaveScreen> {
       body: Obx(() {
         if (controller.isLoadingBookMark.value) {
           return const Center(child: CircularProgressIndicator());
+        }if(controller.bookmarkItems.isEmpty){
+
+
+         return Center(
+            child: Text(
+              "No saved products",
+              style: context.bodyMedium
+            ),
+          );
+
         }
 
         return ListView.builder(
