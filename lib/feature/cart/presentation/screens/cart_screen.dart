@@ -146,14 +146,12 @@ class _CartScreenState extends State<CartScreen> {
                         price: item.quantity.toString(),
                         image: imageUrl,
                         onTapDetails: () {
-                          debugPrint("===tap id: ${item.itemId}"); // confirm করুন
+                          debugPrint("===tap id: ${item.itemId}");
                         context.pushNamed(RoutesPath.productDetailsScreen,extra: item.itemId);
-
-
-
 
                         },
                         onTapIncrement: () {},
+                        countText: item.quantity ?? 1,
                         onTapDecrement: () {},
                       );
                     },

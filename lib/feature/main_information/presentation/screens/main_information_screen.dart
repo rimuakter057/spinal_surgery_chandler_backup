@@ -189,9 +189,19 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                         }
                       },
 
+                      // tapDetails: () {
+                      //   _goToDetail(context: context, item: item);
+                      // },
+
+
                       tapDetails: () {
-                        _goToDetail(context: context, item: item);
+                        debugPrint("===tap id: ${item.id}"); // confirm করুন
+                        context.pushNamed(RoutesPath.productDetailsScreen,extra: item.id);
+
                       },
+
+
+
                       onBookmark: () async {
                         try {
                           final success = await controller.addBookmark(

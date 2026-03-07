@@ -19,6 +19,7 @@ class AddToCartWidget extends StatelessWidget {
     required this.onTapIncrement,
     required this.onTapDecrement,
     required this.image,
+    required this.countText,
   });
 
   final String title;
@@ -27,6 +28,7 @@ class AddToCartWidget extends StatelessWidget {
   final VoidCallback onTapIncrement;
   final VoidCallback onTapDecrement;
   final String image;
+  final int countText;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +111,7 @@ class AddToCartWidget extends StatelessWidget {
               SizedBox(height: ResponsiveHelper.spacing(4),),
               CountButton(onTap: onTapDecrement,
 
-                title: "1",
+                title: countText?.toString() ?? '1',
               ),
               SizedBox(height: ResponsiveHelper.spacing(4),),
               CountButton(onTap: onTapDecrement,
