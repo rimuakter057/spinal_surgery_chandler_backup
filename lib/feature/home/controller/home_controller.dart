@@ -46,18 +46,18 @@ class HomeController extends GetxController {
 
 
 
-///cart=======================================
+///add bookmark=======================================
 
-  RxBool inProgressForgot = false.obs;
+  RxBool inProgressAddBookMark = false.obs;
 
   Future<bool> addBookmark({required String id}) async {
-    inProgressForgot.value = true;
+    inProgressAddBookMark.value = true;
 
-    final Response response = await ApiClient.postData(ApiUrl.bookmark, {
+    final Response response = await ApiClient.postData(ApiUrl.addBookmark, {
       "item_id": id,
     });
 
-    inProgressForgot.value = false;
+    inProgressAddBookMark.value = false;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
@@ -66,6 +66,57 @@ class HomeController extends GetxController {
       return false;
     }
   }
+
+
+
+
+
+
+  ///remove bookmark=======================================
+
+  Future<void> removeBookmark({
+    required String itemId,
+    required BuildContext context,
+  }) async {
+    final index = productList.indexWhere((item) => item.id == itemId);
+    if (index == -1) return;
+
+    final item = productList[index];
+
+    // Optimistic UI update
+  //  item.isBookmarked = false;
+    productList.refresh();
+
+    final response = await ApiClient.deleteData(
+      ApiUrl.removeBookmark(itemId: itemId),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 204) {
+      CustomSnackbar.success(context: context, message: "Bookmark removed");
+    } else {
+      // Revert on failure
+     // item.isBookmarked = true;
+      productList.refresh();
+      CustomSnackbar.error(context, response.statusText ?? 'Something went wrong');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -199,7 +250,8 @@ class HomeController extends GetxController {
   Future<List<HomeModel>> _fetchChildren({
     required String parentId,
     required BuildContext context,
-  }) async {
+  }) async
+  {
     isLoading.value = true;
     List<HomeModel> result = [];
     try {
@@ -252,4 +304,30 @@ class HomeController extends GetxController {
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

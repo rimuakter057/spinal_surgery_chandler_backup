@@ -49,7 +49,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  
+
 
 
                   child: Image.network(
@@ -67,7 +67,7 @@ class ProductCard extends StatelessWidget {
                     child: Container(
                       padding:  ResponsiveHelper.all(6),
                       decoration: BoxDecoration(
-                       // color: Colors.black.withOpacity(0.3),
+                        // color: Colors.black.withOpacity(0.3),
                         color: AppColors.blackShade,
                         shape: BoxShape.circle,
                       ),
@@ -82,7 +82,7 @@ class ProductCard extends StatelessWidget {
 
 
 
-           SizedBox(height: ResponsiveHelper.spacing(8)),
+          SizedBox(height: ResponsiveHelper.spacing(8)),
 
           // Title and Bookmark Section
           Row(
@@ -126,11 +126,11 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  [
 
-               CustomImage(imageSrc: AppAssets.cart),
-                 SizedBox(width: ResponsiveHelper.spacing(10)),
+                  CustomImage(imageSrc: AppAssets.cart),
+                  SizedBox(width: ResponsiveHelper.spacing(10)),
                   Text(
-                    AppText.addToCart,
-                    style:context.bodySmall.copyWith(color: AppColors.primaryColor)
+                      AppText.addToCart,
+                      style:context.bodySmall.copyWith(color: AppColors.primaryColor)
                   ),
                 ],
               ),

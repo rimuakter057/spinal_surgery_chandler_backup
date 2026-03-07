@@ -340,7 +340,8 @@ class ApiClient extends GetxService {
     String uri, {
     dynamic body,
     Map<String, String>? headers,
-  }) async {
+  }) async
+  {
     bearerToken = await SharePrefsHelper.getString(AppConstant.bearerToken);
 
     var mainHeaders = {

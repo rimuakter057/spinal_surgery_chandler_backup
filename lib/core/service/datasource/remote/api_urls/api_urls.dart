@@ -16,7 +16,10 @@ class ApiUrl {
   static const String resetPassword = "/users/reset-password";
 
   static const String node="/nodes";
-  static const String bookmark="/bookmarks/items";
+  static const String bookmark="/bookmarks";
+  static const String addBookmark="/bookmarks/items";
+
+  static  String removeBookmark({required String itemId})=>"/bookmarks/items/$itemId";
   static const String addToCart="/cart/items";
   static const String cart="/cart";
   static  String singleDetails ({required String id})=>"/nodes/$id";

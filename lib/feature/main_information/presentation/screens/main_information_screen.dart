@@ -110,14 +110,14 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                   ),
                   prefixIcon: const Icon(Icons.search),
                   suffixIcon: Obx(
-                    () => searchQuery.value.isNotEmpty
+                        () => searchQuery.value.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {
-                              searchController.clear();
-                              searchQuery.value = '';
-                            },
-                          )
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        searchController.clear();
+                        searchQuery.value = '';
+                      },
+                    )
                         : const SizedBox.shrink(),
                   ),
                 ),
@@ -137,12 +137,12 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                 final filtered = searchQuery.value.isEmpty
                     ? controller.productList.toList()
                     : controller.productList
-                          .where(
-                            (e) => (e.title ?? '').toLowerCase().contains(
-                              searchQuery.value,
-                            ),
-                          )
-                          .toList();
+                    .where(
+                      (e) => (e.title ?? '').toLowerCase().contains(
+                    searchQuery.value,
+                  ),
+                )
+                    .toList();
 
                 if (filtered.isEmpty) {
                   return const Padding(
@@ -180,7 +180,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                         );
 
                         if (success) {
-                          CustomSnackbar.success(context, "Added to cart!");
+                          CustomSnackbar.success(context: context,message:  "Added to cart!");
                         } else {
                           CustomSnackbar.error(
                             context,

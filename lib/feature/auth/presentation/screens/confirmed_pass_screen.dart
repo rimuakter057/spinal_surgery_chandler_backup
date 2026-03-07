@@ -147,7 +147,7 @@ class _ConfirmedPasswordScreenState extends State<ConfirmedPasswordScreen> {
     );
 
     if (success) {
-      CustomSnackbar.success(context, "Password reset successful");
+      CustomSnackbar.success(context: context,message:  "Password reset successful");
       context.pushNamed(RoutesPath.loginScreen);
       newPassword.clear();
       confirmedPasswordController.clear();

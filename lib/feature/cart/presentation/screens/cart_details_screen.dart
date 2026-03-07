@@ -152,7 +152,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
               context: context,
             );
             if (success) {
-              CustomSnackbar.success(context, "Added to cart!");
+              CustomSnackbar.success(context: context,message:  "Added to cart!");
               // context.pushNamed(RoutesPath.cartListScreen);
             } else {
               CustomSnackbar.error(context, "Failed to add to cart");

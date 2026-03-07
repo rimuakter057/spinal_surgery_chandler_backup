@@ -1,18 +1,18 @@
 class BookMarkModel {
   String? id;
   String? userId;
-  List<Items>? items;
+  List<BookMarkItems>? bookMarkItems;
   int? totalItems;
 
-  BookMarkModel({this.id, this.userId, this.items, this.totalItems});
+  BookMarkModel({this.id, this.userId, this.bookMarkItems, this.totalItems});
 
   BookMarkModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     if (json['items'] != null) {
-      items = <Items>[];
+      bookMarkItems = <BookMarkItems>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        bookMarkItems!.add(new BookMarkItems.fromJson(v));
       });
     }
     totalItems = json['total_items'];
@@ -22,24 +22,24 @@ class BookMarkModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    if (this.bookMarkItems != null) {
+      data['items'] = this.bookMarkItems!.map((v) => v.toJson()).toList();
     }
     data['total_items'] = this.totalItems;
     return data;
   }
 }
 
-class Items {
+class BookMarkItems {
   String? id;
   String? itemId;
   Item? item;
   String? createdAt;
   String? updatedAt;
 
-  Items({this.id, this.itemId, this.item, this.createdAt, this.updatedAt});
+  BookMarkItems({this.id, this.itemId, this.item, this.createdAt, this.updatedAt});
 
-  Items.fromJson(Map<String, dynamic> json) {
+  BookMarkItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     itemId = json['item_id'];
     item = json['item'] != null ? new Item.fromJson(json['item']) : null;

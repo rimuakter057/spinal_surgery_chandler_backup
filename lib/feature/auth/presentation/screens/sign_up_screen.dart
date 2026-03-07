@@ -164,7 +164,7 @@ class SignUpScreen extends StatelessWidget {
     );
 
     if (success) {
-      CustomSnackbar.success(context, 'Account created successfully!');
+      CustomSnackbar.success(context: context,message:  'Account created successfully!');
       context.pushNamed(RoutesPath.loginScreen);
     } else {
       CustomSnackbar.error(context, authController.errorMessage.value);

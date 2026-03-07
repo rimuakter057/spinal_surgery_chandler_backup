@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomSnackbar {
 
   /// ✅ SUCCESS
-  static void success(BuildContext context, String message) {
+  static void success({required BuildContext context,required String message}) {
 
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
