@@ -140,7 +140,11 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> list = response.body['data'] as List<dynamic>;
         rootList.value = list.map((e) => HomeModel.fromJson(e)).toList();
-      } else {
+      } else if(response.statusCode==401){
+
+        context.goNamed(RoutesPath.loginScreen);
+        CustomSnackbar.error(context, "Please login again");
+      }else {
         CustomSnackbar.error(context, "Failed to load");
       }
     } catch (e) {
@@ -156,7 +160,8 @@ class HomeController extends GetxController {
   Future<void> fetchProducts({
     required String parentId,
     required BuildContext context,
-  }) async {
+  }) async
+  {
     isLoading.value = true;
     productList.clear(); // 🔥 প্রতিবার fresh
     try {
@@ -165,9 +170,17 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> list = response.body['data'] as List<dynamic>;
         productList.value = list.map((e) => HomeModel.fromJson(e)).toList();
-        debugPrint("==================${response.body.toString()}==============");
-      } else {
+        debugPrint("Total products: ${productList.length}");
+        for (var e in list) {
+          debugPrint("RAW is_bookmarked: ${e['is_bookmarked']} | type: ${e['is_bookmarked'].runtimeType}");
+        }
+      }else if(response.statusCode==401){
 
+        context.goNamed(RoutesPath.loginScreen);
+        CustomSnackbar.error(context, "Please login again");
+      }
+
+      else {
         CustomSnackbar.error(context, "Failed to fetch products");
       }
     } catch (e) {

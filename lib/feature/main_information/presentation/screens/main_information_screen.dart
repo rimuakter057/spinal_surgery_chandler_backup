@@ -191,7 +191,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                           }
                         },
                         tapDetails: () {
-                          debugPrint("===tap id: ${item.id}");
+                          debugPrint("=== id: ${item.id}");
                           context.pushNamed(RoutesPath.productDetailsScreen,
                               extra: item.id);
                         },
