@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 class HomeModel {
   String? id;
   String? title;
   String? parentId;
   String? type;
   ProductInfo? productInfo;
-  bool? isBookmarked;
+ // bool? isBookmarked;
+  RxBool isBookmarked = false.obs; // 🔥 Rx করো
   String? createdAt;
   String? updatedAt;
 
@@ -16,9 +19,12 @@ class HomeModel {
         this.parentId,
         this.type,
         this.productInfo,
-        this.isBookmarked,
+       // this.isBookmarked,
+        bool isBookmarked = false,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt}){
+    this.isBookmarked = isBookmarked.obs; // 🔥
+  }
 
   HomeModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,10 +39,8 @@ class HomeModel {
       productInfo = null;
     }
 
-    // productInfo = json['product_info'] != null
-    //     ? ProductInfo.fromJson(json['product_info'])
-    //     : null;
-    isBookmarked = json['is_bookmarked'];
+    isBookmarked = RxBool(json['is_bookmarked'] ?? false);
+   // isBookmarked = json['is_bookmarked'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -53,7 +57,9 @@ class HomeModel {
     if (productInfo != null) {
       data['product_info'] = productInfo!.toJson();
     }
-    data['is_bookmarked'] = isBookmarked;
+// ✅ একদম safe
+    data['is_bookmarked'] = isBookmarked.value == true;
+  //  data['is_bookmarked'] = isBookmarked;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;

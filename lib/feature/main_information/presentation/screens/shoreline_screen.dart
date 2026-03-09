@@ -8,6 +8,7 @@ import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ShorelineScreen extends StatefulWidget {
@@ -95,7 +96,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
 
                 itemBuilder: (context, index) {
                   return ProductCard(
-                    isBookmarked: false,
+                    isBookmarked: false.obs,
                     imageUrl: AppConstant.unknown,
 
                     title: 'Reform POCT',

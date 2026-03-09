@@ -88,7 +88,7 @@ class HomeController extends GetxController {
     productList.refresh();
 
     final response = await ApiClient.deleteData(
-      ApiUrl.removeBookmark(itemId: itemId),
+      ApiUrl.removeBookmark(id: itemId),
     );
 
     if (response.statusCode == 200 || response.statusCode == 204) {
@@ -308,7 +308,42 @@ class HomeController extends GetxController {
 
 
 
+  Future<void> toggleBookmark({ required String itemId,}) async {
+    final item = productList.firstWhereOrNull((e) => e.id == itemId);
+    if (item == null) return;
 
+    // 🔥 আগে local toggle — fast UI response
+    item.isBookmarked.toggle();
+
+    try {
+      if (item.isBookmarked.value) {
+
+        final response = await ApiClient.postData(
+          ApiUrl.addBookmark,
+          {"item_id": itemId},
+        );
+
+        if (response.statusCode != 200 && response.statusCode != 201) {
+          item.isBookmarked.toggle();
+          debugPrint("Add bookmark failed: ${response.body}");
+        }
+      } else {
+
+        final response = await ApiClient.deleteData(
+          ApiUrl.removeBookmark(id: itemId),
+
+        );
+
+        if (response.statusCode != 200) {
+          item.isBookmarked.toggle();
+          debugPrint("Remove bookmark failed: ${response.body}");
+        }
+      }
+    } catch (e) {
+      item.isBookmarked.toggle();
+      debugPrint("Bookmark error: $e");
+    }
+  }
 
 
 

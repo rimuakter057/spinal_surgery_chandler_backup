@@ -275,7 +275,7 @@ class _SaveScreenState extends State<SaveScreen> {
                         DeleteConfirmationDialog.show(
                           context: context,
                           onConfirm: () => controller.removeBookMark(
-                            itemId: item.id.toString(),
+                            itemId: item.itemId.toString(),
                             context: context,
                           ),
                         );
@@ -290,10 +290,6 @@ class _SaveScreenState extends State<SaveScreen> {
                         ),
                       ),
                     ),
-
-
-
-
 
                   ],
                 ),

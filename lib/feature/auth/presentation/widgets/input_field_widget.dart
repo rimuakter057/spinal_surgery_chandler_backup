@@ -20,9 +20,6 @@ class InputFieldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title,style: context.labelLarge,),
-
-
-
         SizedBox(height: ResponsiveHelper.height(8) ,),
         TextFormField(
           style: context.bodyMedium,

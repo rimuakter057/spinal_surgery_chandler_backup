@@ -6,23 +6,26 @@ import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final VoidCallback onAddToCart;
-  final VoidCallback onBookmark;
+
+  final RxBool isBookmarked; // 🔥 bool → RxBool
   final VoidCallback onInfo;
   final VoidCallback tapDetails;
-  final bool isBookmarked;
+ // final bool isBookmarked;
+  final VoidCallback onBookmark;
 
   const ProductCard({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.onAddToCart,
-    required this.onBookmark,
+   required this.onBookmark,
     required this.onInfo,
     required this.isBookmarked,
     required this.tapDetails,
@@ -97,16 +100,17 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
 
+// bookmark icon টা Obx দিয়ে wrap করো
               GestureDetector(
                 onTap: onBookmark,
-                child: CustomImage(
-                  imageSrc: isBookmarked
-                      ? AppAssets.saveNav   // true হলে filled
-                      : AppAssets.saveCard,        // false হলে normal
+                child: Obx(
+                      () => CustomImage(
+                    imageSrc: isBookmarked.value  // 🔥 .value
+                        ? AppAssets.saveNav
+                        : AppAssets.saveCard,
+                  ),
                 ),
               ),
-
-
             ],
           ),
           SizedBox(height: ResponsiveHelper.spacing(8)),

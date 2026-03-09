@@ -57,7 +57,7 @@ class CartController extends GetxController {
   {
     isLoadingDeleteBookMark.value = true;
     final response = await ApiClient.deleteData(
-      ApiUrl.removeBookmark(itemId: itemId),
+      ApiUrl.removeBookmark(id: itemId),
     );
     isLoadingDeleteBookMark.value = false;
     if (response.statusCode == 200 || response.statusCode == 204) {

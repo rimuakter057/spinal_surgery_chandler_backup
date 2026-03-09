@@ -19,7 +19,7 @@ class ApiUrl {
   static const String bookmark="/bookmarks";
   static const String addBookmark="/bookmarks/items";
 
-  static  String removeBookmark({required String itemId})=>"/bookmarks/items/$itemId";
+  static  String removeBookmark({required String id})=>"/bookmarks/items/$id";
   static const String addToCart="/cart/items";
   static const String cart="/cart";
   static  String singleDetails ({required String id})=>"/nodes/$id";
