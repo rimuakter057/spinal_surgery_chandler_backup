@@ -167,137 +167,131 @@ class SaveScreen extends StatefulWidget {
 }
 
 class _SaveScreenState extends State<SaveScreen> {
-  final CartController controller= Get.find<CartController>();
+  final CartController controller = Get.find<CartController>();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller.fetchBookMark();
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text("Saved Product", style: context.titleSmall),
       ),
-      body: Obx(() {
-        if (controller.isLoadingBookMark.value) {
-          return const Center(child: CircularProgressIndicator());
-        }if(controller.bookmarkItems.isEmpty){
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.fetchBookMark();
+        },
+        child: Obx(() {
+          if (controller.isLoadingBookMark.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-
-         return Center(
-            child: Text(
-              "No saved products",
-              style: context.bodyMedium
-            ),
-          );
-
-        }
-
-        return ListView.builder(
-          padding: ResponsiveHelper.all(8),
-         itemCount: controller.bookmarkItems.length,
-         // itemCount: controller.bookmarkItems.length + 1,
-          itemBuilder: (context, index) {
-            // /// ✅ Last button
-            // if (index == controller.bookmarkItems.length) {
-            //   return Padding(
-            //     padding: EdgeInsets.only(
-            //       top: ResponsiveHelper.padding(12),
-            //       left: ResponsiveHelper.padding(12),
-            //       right: ResponsiveHelper.padding(12),
-            //       bottom: ResponsiveHelper.padding(100),
-            //     ),
-            //     child: ElevatedButton(
-            //       onPressed: () {},
-            //       child: const Text("Save Product"),
-            //     ),
-            //   );
-            // }
-
-            /// normal item
-            final item = controller.bookmarkItems[index];
-
-            return Padding(
-              padding: EdgeInsets.only(bottom: ResponsiveHelper.spacing(8)),
-              child: CustomContainer(
-                backgroundColor: AppColors.primaryShadeColor,
-                child: Row(
-                  children: [
-                    // Image
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        ResponsiveHelper.borderRadius(16),
-                      ),
-                      child: item.item?.productInfo?.bannerImageUrl != null
-                          ? CustomNetworkImage(
-                        height: ResponsiveHelper.iconSize(88),
-                        width: ResponsiveHelper.iconSize(126),
-                        imageUrl: item.item!.productInfo!.bannerImageUrl!,
-                      )
-                          : CustomImage(
-                        imageSrc: AppAssets.doctorImage,
-                        height: ResponsiveHelper.iconSize(88),
-                        width: ResponsiveHelper.iconSize(126),
+          if (controller.bookmarkItems.isEmpty) {
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: SizedBox(
+                    height: constraints.maxHeight,
+                    child: Center(
+                      child: Text(
+                        "No saved products",
+                        style: context.bodyMedium,
                       ),
                     ),
+                  ),
+                );
+              },
+            );
+          }
 
-                    SizedBox(width: ResponsiveHelper.width(16)),
+          return ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: ResponsiveHelper.all(8),
+            itemCount: controller.bookmarkItems.length,
+            itemBuilder: (context, index) {
+              final item = controller.bookmarkItems[index];
 
-                    // Title & details
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            item.item?.title ?? 'N/A',
-                            style: context.bodyMedium,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: ResponsiveHelper.spacing(8)),
-                          Text("details..."),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(width: ResponsiveHelper.width(8)),
-
-                    // Actions
-                    IconButton(
-                      onPressed: () {
-                        DeleteConfirmationDialog.show(
-                          context: context,
-                          onConfirm: () => controller.removeBookMark(
-                            itemId: item.itemId.toString(),
-                            context: context,
-                          ),
-                        );
-                      },
-                      icon: Obx(
-                            () => controller.isLoadingDeleteBookMark.value
-                            ? CustomLoader()
-                            : Icon(
-                          Icons.delete,
-                          size: ResponsiveHelper.iconSize(24),
-                          color: AppColors.red,
+              return Padding(
+                padding: EdgeInsets.only(bottom: ResponsiveHelper.spacing(8)),
+                child: CustomContainer(
+                  backgroundColor: AppColors.primaryShadeColor,
+                  child: Row(
+                    children: [
+                      // Image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          ResponsiveHelper.borderRadius(16),
+                        ),
+                        child: item.item?.productInfo?.bannerImageUrl != null
+                            ? CustomNetworkImage(
+                          height: ResponsiveHelper.iconSize(88),
+                          width: ResponsiveHelper.iconSize(126),
+                          imageUrl: item.item!.productInfo!.bannerImageUrl!,
+                        )
+                            : CustomImage(
+                          imageSrc: AppAssets.doctorImage,
+                          height: ResponsiveHelper.iconSize(88),
+                          width: ResponsiveHelper.iconSize(126),
                         ),
                       ),
-                    ),
 
-                  ],
+                      SizedBox(width: ResponsiveHelper.width(16)),
+
+                      // Title & details
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              item.item?.title ?? 'N/A',
+                              style: context.bodyMedium,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: ResponsiveHelper.spacing(8)),
+                            Text("details..."),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(width: ResponsiveHelper.width(8)),
+
+                      // Delete button
+                      IconButton(
+                        onPressed: () {
+                          DeleteConfirmationDialog.show(
+                            context: context,
+                            onConfirm: () => controller.removeBookMark(
+                              itemId: item.itemId.toString(),
+                              context: context,
+                            ),
+                          );
+                        },
+                        icon: Obx(
+                              () => controller.isLoadingDeleteBookMark.value
+                              ? CustomLoader()
+                              : Icon(
+                            Icons.delete,
+                            size: ResponsiveHelper.iconSize(24),
+                            color: AppColors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        );
-      }),
+              );
+            },
+          );
+        }),
+      ),
     );
   }
 }

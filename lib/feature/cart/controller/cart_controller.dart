@@ -29,10 +29,10 @@ class CartController extends GetxController {
 
 
 
-  ///get bookmark api==================================================
-
+  // ///get bookmark api==================================================
+  //
   final RxBool isLoadingBookMark = false.obs;
-  final RxList<BookMarkItems> bookmarkItems = <BookMarkItems>[].obs;
+   final RxList<BookMarkItems> bookmarkItems = <BookMarkItems>[].obs;
 
   Future<void> fetchBookMark() async {
     isLoadingBookMark.value = true;

@@ -168,7 +168,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                         "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
 
                     return ProductCard(
-                      isBookmarked: item.isBookmarked ?? false,
+                      isBookmarked: item.isBookmarked,
                       imageUrl: imageUrl,
                       title: item.title ?? "",
 
@@ -203,20 +203,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
 
                       onBookmark: () async {
-                        try {
-                          final success = await controller.addBookmark(
-                            id: item.id ?? "",
-                          );
-                          if (success) {
-                            /// Success হলে UI update করো silently
-                            item.isBookmarked = !(item.isBookmarked ?? false);
-                            controller.productList.refresh(); // Obx rebuild
-                          } else {
-                            CustomSnackbar.error(context, "Failed. Try again.");
-                          }
-                        } catch (e) {
-                          CustomSnackbar.error(context, "Failed. Try again.");
-                        }
+                        controller.toggleBookmark(
+                            itemId: item.id.toString(),
+
+                        );
                       },
                       onInfo: () {},
                     );

@@ -165,7 +165,9 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> list = response.body['data'] as List<dynamic>;
         productList.value = list.map((e) => HomeModel.fromJson(e)).toList();
+        debugPrint(response.body.toString());
       } else {
+
         CustomSnackbar.error(context, "Failed to fetch products");
       }
     } catch (e) {

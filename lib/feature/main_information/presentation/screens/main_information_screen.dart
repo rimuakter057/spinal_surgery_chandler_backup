@@ -30,9 +30,7 @@ class MainInformationScreen extends StatefulWidget {
 class _MainInformationScreenState extends State<MainInformationScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  /// 🔥 HomeController — productList use করবে
   final HomeController controller = Get.find<HomeController>();
-
 
   final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
@@ -41,7 +39,6 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      /// 🔥 parentId দিয়ে productList fetch করবে
       controller.fetchProducts(parentId: widget.parentId, context: context);
     });
   }
@@ -50,6 +47,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _onRefresh() async {
+    await controller.fetchProducts(parentId: widget.parentId, context: context);
   }
 
   @override
@@ -94,126 +95,118 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: ResponsiveHelper.all(8.0),
-          child: Column(
-            children: [
-              /// Search Bar
-              TextField(
-                controller: searchController,
-                onChanged: (val) => searchQuery.value = val.toLowerCase(),
-                decoration: InputDecoration(
-                  hintText: "Search here...",
-                  hintStyle: context.bodyMedium.copyWith(
-                    color: AppColors.searchTextColor,
-                  ),
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: Obx(
-                        () => searchQuery.value.isNotEmpty
-                        ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        searchController.clear();
-                        searchQuery.value = '';
-                      },
-                    )
-                        : const SizedBox.shrink(),
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: ResponsiveHelper.all(8.0),
+            child: Column(
+              children: [
+                /// Search Bar
+                TextField(
+                  controller: searchController,
+                  onChanged: (val) => searchQuery.value = val.toLowerCase(),
+                  decoration: InputDecoration(
+                    hintText: "Search here...",
+                    hintStyle: context.bodyMedium.copyWith(
+                      color: AppColors.searchTextColor,
+                    ),
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: Obx(
+                          () => searchQuery.value.isNotEmpty
+                          ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          searchController.clear();
+                          searchQuery.value = '';
+                        },
+                      )
+                          : const SizedBox.shrink(),
+                    ),
                   ),
                 ),
-              ),
 
-              SizedBox(height: ResponsiveHelper.spacing(12)),
+                SizedBox(height: ResponsiveHelper.spacing(12)),
 
-              /// Product Grid
-              Obx(() {
-                if (controller.isLoading.value) {
-                  return const Padding(
-                    padding: EdgeInsets.only(top: 60),
-                    child: Center(child: CustomLoader()),
-                  );
-                }
-
-                final filtered = searchQuery.value.isEmpty
-                    ? controller.productList.toList()
-                    : controller.productList
-                    .where(
-                      (e) => (e.title ?? '').toLowerCase().contains(
-                    searchQuery.value,
-                  ),
-                )
-                    .toList();
-
-                if (filtered.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.only(top: 60),
-                    child: Center(child: Text("No Products Found")),
-                  );
-                }
-
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: filtered.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: ResponsiveHelper.spacing(12),
-                    mainAxisSpacing: ResponsiveHelper.spacing(12),
-                    childAspectRatio: 0.9,
-                  ),
-                  itemBuilder: (context, index) {
-                    final item = filtered[index];
-
-                    final imageUrl =
-                        "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
-
-                    return ProductCard(
-                      isBookmarked: item.isBookmarked,
-                      imageUrl: imageUrl,
-                      title: item.title ?? "",
-
-                      onAddToCart: () async {
-                        final success = await controller.addToCart(
-                          itemId: item.id ?? "",
-                          itemTitle: item.title ?? "",
-                          itemImage: item.productInfo?.bannerImageUrl ?? "",
-                        );
-
-                        if (success) {
-                          CustomSnackbar.success(context: context,message:  "Added to cart!");
-                        } else {
-                          CustomSnackbar.error(
-                            context,
-                            "Failed to add to cart",
-                          );
-                        }
-                      },
-
-                      // tapDetails: () {
-                      //   _goToDetail(context: context, item: item);
-                      // },
-
-
-                      tapDetails: () {
-                        debugPrint("===tap id: ${item.id}"); // confirm করুন
-                        context.pushNamed(RoutesPath.productDetailsScreen,extra: item.id);
-
-                      },
-
-
-
-                      onBookmark: () async {
-                        controller.toggleBookmark(
-                            itemId: item.id.toString(),
-
-                        );
-                      },
-                      onInfo: () {},
+                /// Product Grid
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: Center(child: CustomLoader()),
                     );
-                  },
-                );
-              }),
-            ],
+                  }
+
+                  final filtered = searchQuery.value.isEmpty
+                      ? controller.productList.toList()
+                      : controller.productList
+                      .where(
+                        (e) => (e.title ?? '').toLowerCase().contains(
+                      searchQuery.value,
+                    ),
+                  )
+                      .toList();
+
+                  if (filtered.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: Center(child: Text("No Products Found")),
+                    );
+                  }
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filtered.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: ResponsiveHelper.spacing(12),
+                      mainAxisSpacing: ResponsiveHelper.spacing(12),
+                      childAspectRatio: 0.9,
+                    ),
+                    itemBuilder: (context, index) {
+                      final item = filtered[index];
+
+                      final imageUrl =
+                          "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
+
+                      return ProductCard(
+                        isBookmarked: item.isBookmarked,
+                        imageUrl: imageUrl,
+                        title: item.title ?? "",
+                        onAddToCart: () async {
+                          final success = await controller.addToCart(
+                            itemId: item.id ?? "",
+                            itemTitle: item.title ?? "",
+                            itemImage: item.productInfo?.bannerImageUrl ?? "",
+                          );
+
+                          if (success) {
+                            CustomSnackbar.success(
+                                context: context, message: "Added to cart!");
+                          } else {
+                            CustomSnackbar.error(
+                                context, "Failed to add to cart");
+                          }
+                        },
+                        tapDetails: () {
+                          debugPrint("===tap id: ${item.id}");
+                          context.pushNamed(RoutesPath.productDetailsScreen,
+                              extra: item.id);
+                        },
+                        onBookmark: () async {
+                          controller.toggleBookmark(
+                            itemId: item.id.toString(),
+                          );
+                        },
+                        onInfo: () {},
+                      );
+                    },
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),
