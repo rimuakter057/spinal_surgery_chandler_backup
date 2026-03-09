@@ -128,7 +128,7 @@ class _SaveScreenState extends State<SaveScreen> {
                           );
                         },
                         icon: Obx(
-                              () => controller.isLoadingDeleteBookMark.value
+                              () => controller.deletingItemId.value == item.itemId.toString()
                               ? CustomLoader()
                               : Icon(
                             Icons.delete,
@@ -137,6 +137,7 @@ class _SaveScreenState extends State<SaveScreen> {
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),

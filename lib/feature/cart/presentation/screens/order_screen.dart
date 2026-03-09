@@ -24,6 +24,7 @@ class OrderScreen extends StatelessWidget {
           padding:  ResponsiveHelper.all(16),
           child: Column(children: [
 
+            SizedBox(height: ResponsiveHelper.spacing(12),),
             ///address field
             InputFieldWidget(
               title: "Address",
@@ -37,7 +38,7 @@ class OrderScreen extends StatelessWidget {
                 return null;
               },
             ),
-
+            SizedBox(height: ResponsiveHelper.spacing(12),),
             ///date field
             InputFieldWidget(
               title: "Date",
@@ -51,7 +52,7 @@ class OrderScreen extends StatelessWidget {
                 return null;
               },
             ),
-
+            SizedBox(height: ResponsiveHelper.spacing(12),),
             ///time field
             InputFieldWidget(
               title: "Time",
@@ -66,7 +67,7 @@ class OrderScreen extends StatelessWidget {
               },
             ),
 
-
+            SizedBox(height: ResponsiveHelper.spacing(52),),
             ElevatedButton(onPressed: (){
 
 

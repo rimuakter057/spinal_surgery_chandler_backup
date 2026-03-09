@@ -103,25 +103,6 @@ class HomeController extends GetxController {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /// 🔥 Root list — HomeScreen এর 2টা button এর জন্য
   RxList<HomeModel> rootList = <HomeModel>[].obs;
 
@@ -130,9 +111,7 @@ class HomeController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  // ─────────────────────────────────────────────────────────
-  /// HomeScreen initState এ একবার call হবে
-  // ─────────────────────────────────────────────────────────
+
   Future<void> fetchRootNodes({required BuildContext context}) async {
     isLoading.value = true;
     try {
@@ -152,6 +131,22 @@ class HomeController extends GetxController {
     }
     isLoading.value = false;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // ─────────────────────────────────────────────────────────
   // MainInformationScreen initState এ call হবে
@@ -190,6 +185,8 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
+
+
   // ─────────────────────────────────────────────────────────
   // HomeScreen button tap
   // ─────────────────────────────────────────────────────────
@@ -218,8 +215,12 @@ class HomeController extends GetxController {
       return;
     }
 
+    // final bool allProducts =
+    // children.every((e) => e.type?.toUpperCase() == "PRODUCT");
+
     final bool allProducts =
-    children.every((e) => e.type?.toUpperCase() == "PRODUCT");
+    children.any((e) => e.type?.toUpperCase() == "PRODUCT");
+
 
     if (allProducts) {
       context.pushNamed(RoutesPath.mainInformation, extra: rootItem.id);
@@ -249,8 +250,12 @@ class HomeController extends GetxController {
       return;
     }
 
+    // final bool allProducts =
+    // children.every((e) => e.type?.toUpperCase() == "PRODUCT");
+
+
     final bool allProducts =
-    children.every((e) => e.type?.toUpperCase() == "PRODUCT");
+    children.any((e) => e.type?.toUpperCase() == "PRODUCT");
 
     if (allProducts) {
       context.pushNamed(RoutesPath.mainInformation, extra: item.id);
@@ -322,7 +327,7 @@ class HomeController extends GetxController {
 
 
 
-
+///book mark=================================
   Future<void> toggleBookmark({ required String itemId,}) async {
     final item = productList.firstWhereOrNull((e) => e.id == itemId);
     if (item == null) return;

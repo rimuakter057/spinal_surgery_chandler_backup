@@ -48,21 +48,30 @@ class CartController extends GetxController {
 
   ///delete bookmark api==================================================
 
-  final RxBool isLoadingDeleteBookMark = false.obs;
+  final RxString deletingItemId = ''.obs; // কোন item delete হচ্ছে track করবে
+
 
   Future<void> removeBookMark({
     required String itemId,
     required BuildContext context,
-  }) async
-  {
-    isLoadingDeleteBookMark.value = true;
+  }) async {
+    deletingItemId.value = itemId; // শুধু এই item এর loader
+
     final response = await ApiClient.deleteData(
       ApiUrl.removeBookmark(id: itemId),
     );
-    isLoadingDeleteBookMark.value = false;
+
+    deletingItemId.value = '';
+
+    debugPrint("Trying to delete itemId: $itemId");
+    debugPrint("bookmarkItems itemIds: ${bookmarkItems.map((e) => e.itemId).toList()}");
+
+
+
     if (response.statusCode == 200 || response.statusCode == 204) {
-      bookmarkItems.removeWhere((item) => item.id.toString() == itemId);
-      CustomSnackbar.success(context: context, message: "delete successful");
+      bookmarkItems.removeWhere((item) => item.itemId.toString() == itemId);
+
+      CustomSnackbar.success(context: context, message: "Delete successful");
     } else {
       CustomSnackbar.error(
         context,
@@ -70,7 +79,6 @@ class CartController extends GetxController {
       );
     }
   }
-
 
 
 

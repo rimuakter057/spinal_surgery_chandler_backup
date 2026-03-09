@@ -175,7 +175,10 @@ class _CartScreenState extends State<CartScreen> {
 
                 ElevatedButton(
                   child: Text(AppText.send),
-                  onPressed: () {},
+                  onPressed: () {
+
+                    context.pushNamed(RoutesPath.orderScreen);
+                  },
                 ),
 
                 SizedBox(height: ResponsiveHelper.height(100)),
