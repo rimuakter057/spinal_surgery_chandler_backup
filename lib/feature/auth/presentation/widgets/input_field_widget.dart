@@ -8,10 +8,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InputFieldWidget extends StatelessWidget {
   const InputFieldWidget({
-    super.key, required this.title, required this.hint, this.validator, required this.controller,
+    super.key,
+    this.readOnly = false,
+    required this.title,
+    required this.hint,
+    this.validator,
+    required this.controller,
+    this.onTap,
   });
   final String title;
   final String hint;
+  final bool readOnly;
+  final VoidCallback? onTap;
+
   final String? Function(String?)?validator;
   final TextEditingController controller;
   @override
@@ -22,6 +31,8 @@ class InputFieldWidget extends StatelessWidget {
         Text(title,style: context.labelLarge,),
         SizedBox(height: ResponsiveHelper.height(8) ,),
         TextFormField(
+          readOnly: readOnly,
+          onTap: onTap,
           style: context.bodyMedium,
           validator: validator,
           controller: controller,

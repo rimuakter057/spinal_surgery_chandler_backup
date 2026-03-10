@@ -42,6 +42,7 @@ class AppText {
   static const rememberMe = 'Remember me';
   static const forgotPassword = 'Forgot password?';
   static const send = "Send";
+  static const order = "Order";
   static const sendOtp = "SendOtp";
 
   // Full Name

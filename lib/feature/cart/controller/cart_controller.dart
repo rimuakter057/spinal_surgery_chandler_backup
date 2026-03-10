@@ -28,6 +28,56 @@ class CartController extends GetxController {
 
 
 
+  /// place order api====================================
+  final RxBool isLoadingOrder = false.obs;
+
+  Future<bool> placeOrder({
+    required String shippingAddress,
+    required String deliveryDate,
+    required String notes,
+  }) async {
+    isLoadingOrder.value = true;
+
+
+    debugPrint("=== cartItems count: ${cartItems.length}");
+
+    for (var item in cartItems) {
+      debugPrint("=== item: ${item.itemTitle} | qty: ${item.quantity}");
+    }
+
+    // 🔥 cartItems থেকে items list বানাও
+    final List<Map<String, dynamic>> itemsList = cartItems.map((item) => {
+      "product_id": item.itemId,
+      "product_title": item.itemTitle,
+      "product_image": item.itemImage,
+      "quantity": item.quantity ?? 1,
+    }).toList();
+
+    final body = {
+      "items": itemsList,
+      "shipping_address": shippingAddress,
+      "delivery_date": deliveryDate,
+      "notes": notes,
+    };
+
+    final response = await ApiClient.postData(ApiUrl.orders, body);
+    isLoadingOrder.value = false;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      debugPrint(response.statusText);
+      return false;
+    }
+  }
+
+
+
+
+
+
+
+
 
   // ///get bookmark api==================================================
   //

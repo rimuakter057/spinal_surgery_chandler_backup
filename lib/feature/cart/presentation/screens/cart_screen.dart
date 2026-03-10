@@ -27,8 +27,7 @@ class _CartScreenState extends State<CartScreen> {
       TextEditingController();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final CartController controller =Get.find<CartController>();
-
+  final CartController controller = Get.find<CartController>();
 
   @override
   void initState() {
@@ -36,15 +35,12 @@ class _CartScreenState extends State<CartScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchCart();
 
-      debugPrint("init state=================================");
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height: ResponsiveHelper.spacing(16));
-
 
     return Scaffold(
       key: scaffoldKey, // 🔥 important
@@ -91,14 +87,11 @@ class _CartScreenState extends State<CartScreen> {
         child: Padding(
           padding: ResponsiveHelper.all(16),
           child: Obx(() {
-
             if (controller.isLoadingGetCart.value) {
               return const Center(child: CircularProgressIndicator());
             }
 
             final items = controller.cartItems;
-
-
 
             return Column(
               children: [
@@ -110,7 +103,9 @@ class _CartScreenState extends State<CartScreen> {
                       color: AppColors.searchTextColor,
                     ),
                     prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: ResponsiveHelper.padding(16)),
+                      padding: EdgeInsets.only(
+                        left: ResponsiveHelper.padding(16),
+                      ),
                       child: CustomImage(
                         imageSrc: AppAssets.search,
                         height: ResponsiveHelper.iconSize(18),
@@ -147,8 +142,10 @@ class _CartScreenState extends State<CartScreen> {
                         image: imageUrl,
                         onTapDetails: () {
                           debugPrint("===tap id: ${item.itemId}");
-                        context.pushNamed(RoutesPath.productDetailsScreen,extra: item.itemId);
-
+                          context.pushNamed(
+                            RoutesPath.productDetailsScreen,
+                            extra: item.itemId,
+                          );
                         },
                         onTapIncrement: () {},
                         countText: item.quantity ?? 1,
@@ -174,9 +171,8 @@ class _CartScreenState extends State<CartScreen> {
                 SizedBox(height: ResponsiveHelper.height(48)),
 
                 ElevatedButton(
-                  child: Text(AppText.send),
+                  child: Text(AppText.order),
                   onPressed: () {
-
                     context.pushNamed(RoutesPath.orderScreen);
                   },
                 ),
@@ -187,15 +183,6 @@ class _CartScreenState extends State<CartScreen> {
           }),
         ),
       ),
-
-
-
-
-
-
-
-
-
     );
   }
 }
