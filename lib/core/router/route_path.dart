@@ -49,6 +49,7 @@ class RoutesPath {
   static const String shoreLine='shoreLine';
   static const String productDetails='productDetails';
   static const String notification='notification';
+  static const String history='history';
 
 
 

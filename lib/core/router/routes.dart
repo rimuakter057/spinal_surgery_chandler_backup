@@ -8,6 +8,7 @@ import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart'
 import 'package:chandler_app/feature/cart/presentation/screens/cart_details_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
+import 'package:chandler_app/feature/history/presentation/screens/history_screen.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/main_information_screen.dart';
@@ -268,6 +269,17 @@ class AppRouter {
         },
       ),
 
+
+      GoRoute(
+        name: RoutesPath.history,
+        path: RoutesPath.history.addBasePath,
+        pageBuilder: (context, state) {
+          return _buildPageWithAnimation(
+            child:  OrderHistoryScreen(),
+            state: state,
+          );
+        },
+      ),
 
       GoRoute(
         name: RoutesPath.privacyPolicyScreen,
