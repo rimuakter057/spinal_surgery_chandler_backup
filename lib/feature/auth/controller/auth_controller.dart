@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/helper/shared_prefe/shared_prefe.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import '../../../utils/app_const/app_const.dart';
@@ -193,6 +194,33 @@ class AuthController extends GetxController {
       errorMessage.value = msg.join(', ');
     } else {
       errorMessage.value = 'Something went wrong';
+    }
+  }
+
+
+
+
+
+
+
+
+  ///get profile======================================================
+  RxBool isLoadingProfile = false.obs;
+  final Rxn<Map<String, dynamic>> profileData = Rxn<Map<String, dynamic>>();
+
+  Future<void> fetchProfile() async {
+    isLoadingProfile.value = true;
+
+    final Response response = await ApiClient.getData(ApiUrl.getProfile);
+
+    isLoadingProfile.value = false;
+
+    if (response.statusCode == 200) {
+      profileData.value = response.body['data'];
+      debugPrint("✅ Profile fetched: ${profileData.value}");
+    } else {
+      _setErrorMessage(response.body?['message'] ?? 'Something went wrong');
+      debugPrint("❌ Profile fetch failed: ${response.statusText}");
     }
   }
 

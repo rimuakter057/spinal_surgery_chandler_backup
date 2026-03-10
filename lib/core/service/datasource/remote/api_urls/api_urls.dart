@@ -21,6 +21,7 @@ class ApiUrl {
   static const String bookmark="/bookmarks";
   static const String addBookmark="/bookmarks/items";
 
+
   static  String removeBookmark({required String id})=>"/bookmarks/items/$id";
   static const String addToCart="/cart/items";
   static const String cart="/cart";
@@ -37,7 +38,9 @@ static  String getSingleComplain({complainId})=>"/complaints/get-single/$complai
   }) => "/orders?page=$page&limit=$limit";
 
 
-
+  static const String getProfile="/auth/me";
+  static const String updateProfile="/users";
+  static const String changePassword="/users/change-password";
 
 
 }
