@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-
 class VerifyCodeScreen extends StatelessWidget {
   VerifyCodeScreen({super.key, required this.email});
   final String email;
@@ -32,11 +31,13 @@ class VerifyCodeScreen extends StatelessWidget {
             key: _key,
             child: Column(
               children: [
+                ForgotCodeHeadingWidget(
+                  title: AppText.enterVerificationCode,
+                  subtitle: AppText.verificationSent,
+                ),
 
-                ForgotCodeHeadingWidget(title: AppText.enterVerificationCode, subtitle:AppText.verificationSent,),
+                SizedBox(height: ResponsiveHelper.height(64)),
 
-
-                SizedBox(height: ResponsiveHelper.height(64) ,),
                 ///otp field==========================================
                 OtpFieldWidget(
                   controller: otpController,
@@ -44,34 +45,18 @@ class VerifyCodeScreen extends StatelessWidget {
                     debugPrint("OTP Completed: $value");
                   },
                 ),
-                SizedBox(height: ResponsiveHelper.height(120) ,),
-                  // ElevatedButton(onPressed: ()
-                  // {
-                  //   context.pushNamed(RoutesPath.confirmedPassScreen);
-                  // }, child: Text(
-                  //     AppText.verify
-                  //
-                  // )),
-
-
-
-
+                SizedBox(height: ResponsiveHelper.height(120)),
                 Obx(() {
                   return ElevatedButton(
                     onPressed: authController.inProgressVerification.value
-                        ? (){}
+                        ? () {}
                         : () => onTapVerification(context),
 
                     child: authController.inProgressVerification.value
-                        ? CircularProgressIndicator(
-                      color: AppColors.white,
-                    )
+                        ? CircularProgressIndicator(color: AppColors.white)
                         : Text(AppText.verify),
                   );
                 }),
-
-
-
               ],
             ),
           ),
@@ -80,57 +65,28 @@ class VerifyCodeScreen extends StatelessWidget {
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
   Future<void> onTapVerification(BuildContext context) async {
-
     // email empty check
     if (otpController.text.trim().isEmpty) {
-
       CustomSnackbar.error(context, "Otp cannot be empty");
 
       return;
-
     }
 
     if (!_key.currentState!.validate()) return;
 
-
-
     bool success = await authController.verifyOtp(
-      email:email,
-      otp: int.tryParse(otpController.text.trim()) ?? 0, // convert string to int
+      email: email,
+      otp:
+          int.tryParse(otpController.text.trim()) ?? 0, // convert string to int
     );
 
     if (success) {
-
-      context.pushNamed(RoutesPath.confirmedPassScreen,
-
-      );
+      context.pushNamed(RoutesPath.confirmedPassScreen);
 
       otpController.clear();
-
     } else {
-
-      CustomSnackbar.error(
-        context,
-        authController.errorMessage.value,
-      );
-
+      CustomSnackbar.error(context, authController.errorMessage.value);
     }
-
   }
-
-
 }
-
-

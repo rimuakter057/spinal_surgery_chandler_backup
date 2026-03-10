@@ -1,4 +1,3 @@
-
 import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/feature/save/presentation/widgets/delete_confirmation_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
@@ -83,15 +82,16 @@ class _SaveScreenState extends State<SaveScreen> {
                         ),
                         child: item.item?.productInfo?.bannerImageUrl != null
                             ? CustomNetworkImage(
-                          height: ResponsiveHelper.iconSize(88),
-                          width: ResponsiveHelper.iconSize(126),
-                          imageUrl: item.item!.productInfo!.bannerImageUrl!,
-                        )
+                                height: ResponsiveHelper.iconSize(88),
+                                width: ResponsiveHelper.iconSize(126),
+                                imageUrl:
+                                    item.item!.productInfo!.bannerImageUrl!,
+                              )
                             : CustomImage(
-                          imageSrc: AppAssets.doctorImage,
-                          height: ResponsiveHelper.iconSize(88),
-                          width: ResponsiveHelper.iconSize(126),
-                        ),
+                                imageSrc: AppAssets.doctorImage,
+                                height: ResponsiveHelper.iconSize(88),
+                                width: ResponsiveHelper.iconSize(126),
+                              ),
                       ),
 
                       SizedBox(width: ResponsiveHelper.width(16)),
@@ -128,16 +128,17 @@ class _SaveScreenState extends State<SaveScreen> {
                           );
                         },
                         icon: Obx(
-                              () => controller.deletingItemId.value == item.itemId.toString()
+                          () =>
+                              controller.deletingItemId.value ==
+                                  item.itemId.toString()
                               ? CustomLoader()
                               : Icon(
-                            Icons.delete,
-                            size: ResponsiveHelper.iconSize(24),
-                            color: AppColors.red,
-                          ),
+                                  Icons.delete,
+                                  size: ResponsiveHelper.iconSize(24),
+                                  color: AppColors.red,
+                                ),
                         ),
                       ),
-
                     ],
                   ),
                 ),

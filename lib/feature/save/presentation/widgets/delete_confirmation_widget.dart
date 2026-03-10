@@ -15,8 +15,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
   const DeleteConfirmationDialog({
     super.key,
     this.title = 'Delete Item',
-    this.message =
-        'Are you sure you want to delete this?',
+    this.message = 'Are you sure you want to delete this?',
     required this.onConfirm,
     this.confirmText = 'Delete',
     this.cancelText = 'Cancel',
@@ -25,8 +24,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
   static Future<bool?> show({
     required BuildContext context,
     String title = 'Delete Item',
-    String message =
-        'Are you sure you want to delete this?',
+    String message = 'Are you sure you want to delete this?',
     required VoidCallback onConfirm,
     String confirmText = 'Delete',
     String cancelText = 'Cancel',
@@ -59,7 +57,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
         width: ResponsiveHelper.width(300),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(20)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.12),
@@ -73,7 +71,12 @@ class DeleteConfirmationDialog extends StatelessWidget {
           children: [
             // ── Content ─────────────────────────────────────────────────────
             Padding(
-              padding: EdgeInsets.fromLTRB(24, 20, 24, 8),
+              padding: EdgeInsets.fromLTRB(
+                  24,
+                  20,
+                  24,
+                  8
+              ),
               child: Column(
                 children: [
                   Text(
@@ -93,7 +96,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
 
             // ── Divider ─────────────────────────────────────────────────────
             CustomDivider(),
-        SizedBox(height: ResponsiveHelper.spacing(12),),
+            SizedBox(height: ResponsiveHelper.spacing(12)),
             // ── Buttons ─────────────────────────────────────────────────────
             Padding(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),

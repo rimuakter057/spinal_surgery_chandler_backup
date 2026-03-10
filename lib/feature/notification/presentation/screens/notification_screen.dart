@@ -6,7 +6,6 @@ import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 
-
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
@@ -28,7 +27,9 @@ class NotificationScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Razco Food reply on your feedback",
-                    style: context.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                    style: context.bodyMedium.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   SizedBox(height: ResponsiveHelper.spacing(12)),
                   Text(
@@ -38,7 +39,9 @@ class NotificationScreen extends StatelessWidget {
                   SizedBox(height: ResponsiveHelper.spacing(12)),
                   Text(
                     "20-Dec-2024, 3:00 PM",
-                    style: context.bodySmall.copyWith(color: AppColors.primaryColor),
+                    style: context.bodySmall.copyWith(
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 ],
               ),

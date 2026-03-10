@@ -13,11 +13,11 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ConfirmedPasswordScreen extends StatefulWidget {
-  ConfirmedPasswordScreen({super.key, });
-
+  ConfirmedPasswordScreen({super.key});
 
   @override
-  State<ConfirmedPasswordScreen> createState() => _ConfirmedPasswordScreenState();
+  State<ConfirmedPasswordScreen> createState() =>
+      _ConfirmedPasswordScreenState();
 }
 
 class _ConfirmedPasswordScreenState extends State<ConfirmedPasswordScreen> {
@@ -35,8 +35,9 @@ class _ConfirmedPasswordScreenState extends State<ConfirmedPasswordScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      String? token =
-      await SharePrefsHelper.getString(AppConstant.refreshToken);
+      String? token = await SharePrefsHelper.getString(
+        AppConstant.refreshToken,
+      );
 
       print("Token:==================== $token");
 
@@ -78,30 +79,17 @@ class _ConfirmedPasswordScreenState extends State<ConfirmedPasswordScreen> {
                 gap,
                 gap,
 
-                // ElevatedButton(
-                //   child: Text(AppText.resetPassword),
-                //   onPressed: () {
-                //     context.pushNamed(RoutesPath.loginScreen);
-                //   },
-                // ),
-                //
-
-
-
                 Obx(() {
                   return ElevatedButton(
                     onPressed: authController.inProgressForgot.value
-                        ? (){}
+                        ? () {}
                         : () => onTapResetPassword(context),
 
                     child: authController.inProgressForgot.value
-                        ? CircularProgressIndicator(
-                      color: AppColors.white,
-                    )
+                        ? CircularProgressIndicator(color: AppColors.white)
                         : Text(AppText.resetPassword),
                   );
                 }),
-
               ],
             ),
           ),
@@ -111,19 +99,11 @@ class _ConfirmedPasswordScreenState extends State<ConfirmedPasswordScreen> {
   }
 
   Future<void> onTapResetPassword(BuildContext context) async {
-
-
     // check new password
     if (newPassword.text.trim().isEmpty) {
       CustomSnackbar.error(context, "New password cannot be empty");
       return;
     }
-
-    // // check confirm password
-    // if (confirmedPasswordController.text.trim().isEmpty) {
-    //   CustomSnackbar.error(context, "Confirm password cannot be empty");
-    //   return;
-    // }
 
     // check if passwords match
     if (newPassword.text.trim() != confirmedPasswordController.text.trim()) {
@@ -135,24 +115,25 @@ class _ConfirmedPasswordScreenState extends State<ConfirmedPasswordScreen> {
     String? token = await SharePrefsHelper.getString(AppConstant.refreshToken);
     debugPrint("Token is================================= $token");
 
-
     if (token.isEmpty) {
       debugPrint("Token is null");
       return;
     }
     bool success = await authController.resetOtp(
       password: newPassword.text,
-      confirmedPassword:confirmedPasswordController.text ,
+      confirmedPassword: confirmedPasswordController.text,
       token: token, // use email passed from previous screen
     );
 
     if (success) {
-      CustomSnackbar.success(context: context,message:  "Password reset successful");
+      CustomSnackbar.success(
+        context: context,
+        message: "Password reset successful",
+      );
       context.pushNamed(RoutesPath.loginScreen);
       newPassword.clear();
       confirmedPasswordController.clear();
-    } else
-    {
+    } else {
       CustomSnackbar.error(context, authController.errorMessage.value);
     }
   }

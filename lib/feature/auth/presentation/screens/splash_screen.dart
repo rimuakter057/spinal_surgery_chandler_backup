@@ -18,64 +18,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-  //
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //
-  //   Future.delayed(Duration(seconds: 3),
-  //     (){
-  //       context.goNamed(RoutesPath.signUpScreen);
-  //     }
-  //
-  //   );
-  //
-  //
-  //
-  //
-  // }
-
-
-
-
-
-
   @override
   void initState() {
     super.initState();
     _handleNavigation();
   }
 
-
-
   Future<void> _handleNavigation() async {
-
     await Future.delayed(const Duration(seconds: 2));
 
-    String token =
-    await SharePrefsHelper.getString(AppConstant.bearerToken);
+    String token = await SharePrefsHelper.getString(AppConstant.bearerToken);
 
     print("TOKEN IS============================: $token");
 
     if (token.isNotEmpty) {
-
       context.go(RoutesPath.mainNavScreen.addBasePath);
-
     } else {
-
       context.go(RoutesPath.signUpScreen.addBasePath);
-
     }
   }
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,51 +49,49 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             CustomImage(imageSrc: AppAssets.logo),
 
-             SizedBox(height: ResponsiveHelper.spacing(20),),
+            SizedBox(height: ResponsiveHelper.spacing(20)),
 
             RichText(
-              text:  TextSpan(
+              text: TextSpan(
                 style: GoogleFonts.poppins(
                   fontSize: ResponsiveHelper.fontSize(42),
                   fontWeight: FontWeight.bold,
-                  letterSpacing: ResponsiveHelper.width(1.2)
+                  letterSpacing: ResponsiveHelper.width(1.2),
                 ),
                 children: [
                   TextSpan(
                     text: 'Surgi',
-                    style: GoogleFonts.poppins(
-                        color: AppColors.black
-                    ),
+                    style: GoogleFonts.poppins(color: AppColors.black),
                   ),
                   TextSpan(
                     text: 'Source',
-                    style: GoogleFonts.poppins(
-                        color: AppColors.primaryColor
-                    ),
+                    style: GoogleFonts.poppins(color: AppColors.primaryColor),
                   ),
                 ],
               ),
             ),
 
-             SizedBox(height: ResponsiveHelper.spacing(10)),
+            SizedBox(height: ResponsiveHelper.spacing(10)),
 
             // 3. The Tagline
-             Text(
+            Text(
               'PATIENT-CENTRIC',
               style: GoogleFonts.poppins(
-                  color: AppColors.black,
+                color: AppColors.black,
                 fontSize: ResponsiveHelper.fontSize(16),
                 fontWeight: FontWeight.w500,
               ),
             ),
             SizedBox(height: ResponsiveHelper.spacing(4)),
-             Text(
+            Text(
               'SURGICAL PLANNING',
               style: GoogleFonts.poppins(
                 fontSize: ResponsiveHelper.fontSize(14),
                 fontWeight: FontWeight.w500,
                 color: AppColors.black,
-                letterSpacing: ResponsiveHelper.width(4) // Wider spacing for the bottom line
+                letterSpacing: ResponsiveHelper.width(
+                  4,
+                ), // Wider spacing for the bottom line
               ),
             ),
           ],

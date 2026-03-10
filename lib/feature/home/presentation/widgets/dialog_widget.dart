@@ -3,9 +3,7 @@ import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class DialogWidget extends StatelessWidget {
-  const DialogWidget({
-    super.key, required this.child,
-  });
+  const DialogWidget({super.key, required this.child});
   final Widget child;
   @override
   Widget build(BuildContext context) {
@@ -14,10 +12,7 @@ class DialogWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(16)),
       ),
-      child: Container(
-          padding: ResponsiveHelper.all(24),
-          child: child
-      ),
+      child: Container(padding: ResponsiveHelper.all(24), child: child),
     );
   }
 }

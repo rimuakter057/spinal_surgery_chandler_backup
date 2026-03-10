@@ -17,8 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-
-
 class LoginScreen extends StatefulWidget {
   final String role;
   const LoginScreen({super.key, required this.role});
@@ -43,11 +41,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loadRememberedEmail() async {
-    final rememberedEmail = await SharePrefsHelper.getString(AppConstant.rememberedEmail);
-    final rememberedPassword = await SharePrefsHelper.getString(AppConstant.rememberedPassword);
-    final isRemember = await SharePrefsHelper.getBool(AppConstant.rememberMe) ?? false;
+    final rememberedEmail = await SharePrefsHelper.getString(
+      AppConstant.rememberedEmail,
+    );
+    final rememberedPassword = await SharePrefsHelper.getString(
+      AppConstant.rememberedPassword,
+    );
+    final isRemember =
+        await SharePrefsHelper.getBool(AppConstant.rememberMe) ?? false;
 
-    if (isRemember && rememberedEmail.isNotEmpty && rememberedPassword.isNotEmpty) {
+    if (isRemember &&
+        rememberedEmail.isNotEmpty &&
+        rememberedPassword.isNotEmpty) {
       setState(() {
         emailController.text = rememberedEmail;
         passwordController.text = rememberedPassword;
@@ -56,19 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final Widget gap = SizedBox(height:ResponsiveHelper.height(24));
+    final Widget gap = SizedBox(height: ResponsiveHelper.height(24));
     return Scaffold(
       appBar: CustomAppBar(title: AppText.login),
 
-
-
-
-
-
-     // appBar: CustomAppBar(title: AppText.login),
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
@@ -79,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ///login image
               Center(
                 child: CustomImage(
-                  imageSrc:AppAssets.logo,
-                  height: ResponsiveHelper.iconSize(132) ,
-                  width: ResponsiveHelper.iconSize(132) ,
+                  imageSrc: AppAssets.logo,
+                  height: ResponsiveHelper.iconSize(132),
+                  width: ResponsiveHelper.iconSize(132),
                 ),
               ),
               gap,
@@ -131,29 +129,25 @@ class _LoginScreenState extends State<LoginScreen> {
               gap,
               gap,
 
-
-
-
-
-
-              Obx((){
-                  return ElevatedButton(
-                    onPressed:authController.inProgressLogIn.value?null:()=>onTapLogin() ,
-                    child: authController.inProgressLogIn.value?CircularProgressIndicator(
-                      color: AppColors.white,
-                    ):
-                    Text(AppText.signIn),);
-
+              Obx(() {
+                return ElevatedButton(
+                  onPressed: authController.inProgressLogIn.value
+                      ? null
+                      : () => onTapLogin(),
+                  child: authController.inProgressLogIn.value
+                      ? CircularProgressIndicator(color: AppColors.white)
+                      : Text(AppText.signIn),
+                );
               }),
 
-
-              SizedBox(height: ResponsiveHelper.height(12) ,),
+              SizedBox(height: ResponsiveHelper.height(12)),
               ActionTextWidget(
                 underlineColor: AppColors.primaryColor,
                 prefixText: AppText.dontHaveAccount,
                 actionText: AppText.signUp,
                 onActionTapped: () {
-                  context.pushNamed(RoutesPath.signUpScreen,
+                  context.pushNamed(
+                    RoutesPath.signUpScreen,
                     extra: widget.role,
                   );
                 },
@@ -165,11 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-
-
-
-
 
   Future<void> onTapLogin() async {
     debugPrint("===================click sign in=====================");
@@ -207,11 +196,13 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (success) {
-
         // ✅ Remember Me
-        if(rememberMe){
+        if (rememberMe) {
           await SharePrefsHelper.setString(AppConstant.rememberedEmail, email);
-          await SharePrefsHelper.setString(AppConstant.rememberedPassword, password);
+          await SharePrefsHelper.setString(
+            AppConstant.rememberedPassword,
+            password,
+          );
           await SharePrefsHelper.setBool(AppConstant.rememberMe, true);
         } else {
           await SharePrefsHelper.remove(AppConstant.rememberedEmail);
@@ -219,15 +210,10 @@ class _LoginScreenState extends State<LoginScreen> {
           await SharePrefsHelper.setBool(AppConstant.rememberMe, false);
         }
 
-
-
         context.goNamed(RoutesPath.homeScreen);
       } else {
         CustomSnackbar.error(context, authController.errorMessage.value);
       }
     }
   }
-
-
-
 }

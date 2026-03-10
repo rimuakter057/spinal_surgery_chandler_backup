@@ -1,10 +1,6 @@
-import 'package:chandler_app/feature/auth/presentation/widgets/title_widget.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-
 
 class InputFieldWidget extends StatelessWidget {
   const InputFieldWidget({
@@ -21,15 +17,15 @@ class InputFieldWidget extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
 
-  final String? Function(String?)?validator;
+  final String? Function(String?)? validator;
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,style: context.labelLarge,),
-        SizedBox(height: ResponsiveHelper.height(8) ,),
+        Text(title, style: context.labelLarge),
+        SizedBox(height: ResponsiveHelper.height(8)),
         TextFormField(
           readOnly: readOnly,
           onTap: onTap,
@@ -42,4 +38,3 @@ class InputFieldWidget extends StatelessWidget {
     );
   }
 }
-

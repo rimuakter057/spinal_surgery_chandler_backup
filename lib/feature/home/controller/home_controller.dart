@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeController extends GetxController {
-
-
   ///add cart =====================================
   final RxBool isLoadingCart = false.obs;
 
@@ -39,14 +37,7 @@ class HomeController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-///add bookmark=======================================
+  ///add bookmark=======================================
 
   RxBool inProgressAddBookMark = false.obs;
 
@@ -62,15 +53,9 @@ class HomeController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
-
       return false;
     }
   }
-
-
-
-
-
 
   ///remove bookmark=======================================
 
@@ -84,7 +69,7 @@ class HomeController extends GetxController {
     final item = productList[index];
 
     // Optimistic UI update
-  //  item.isBookmarked = false;
+    //  item.isBookmarked = false;
     productList.refresh();
 
     final response = await ApiClient.deleteData(
@@ -95,13 +80,14 @@ class HomeController extends GetxController {
       CustomSnackbar.success(context: context, message: "Bookmark removed");
     } else {
       // Revert on failure
-     // item.isBookmarked = true;
+      // item.isBookmarked = true;
       productList.refresh();
-      CustomSnackbar.error(context, response.statusText ?? 'Something went wrong');
+      CustomSnackbar.error(
+        context,
+        response.statusText ?? 'Something went wrong',
+      );
     }
   }
-
-
 
   /// 🔥 Root list — HomeScreen এর 2টা button এর জন্য
   RxList<HomeModel> rootList = <HomeModel>[].obs;
@@ -111,7 +97,6 @@ class HomeController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-
   Future<void> fetchRootNodes({required BuildContext context}) async {
     isLoading.value = true;
     try {
@@ -119,11 +104,10 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> list = response.body['data'] as List<dynamic>;
         rootList.value = list.map((e) => HomeModel.fromJson(e)).toList();
-      } else if(response.statusCode==401){
-
+      } else if (response.statusCode == 401) {
         context.goNamed(RoutesPath.loginScreen);
         CustomSnackbar.error(context, "Please login again");
-      }else {
+      } else {
         CustomSnackbar.error(context, "Failed to load");
       }
     } catch (e) {
@@ -131,6 +115,7 @@ class HomeController extends GetxController {
     }
     isLoading.value = false;
   }
+
   // ─────────────────────────────────────────────────────────
   // MainInformationScreen initState এ call হবে
   // productList এ data আসবে
@@ -138,27 +123,26 @@ class HomeController extends GetxController {
   Future<void> fetchProducts({
     required String parentId,
     required BuildContext context,
-  }) async
-  {
+  }) async {
     isLoading.value = true;
     productList.clear(); // 🔥 প্রতিবার fresh
     try {
-      final response =
-      await ApiClient.getData("${ApiUrl.node}?parent_id=$parentId");
+      final response = await ApiClient.getData(
+        "${ApiUrl.node}?parent_id=$parentId",
+      );
       if (response.statusCode == 200) {
         final List<dynamic> list = response.body['data'] as List<dynamic>;
         productList.value = list.map((e) => HomeModel.fromJson(e)).toList();
         debugPrint("Total products: ${productList.length}");
         for (var e in list) {
-          debugPrint("RAW is_bookmarked: ${e['is_bookmarked']} | type: ${e['is_bookmarked'].runtimeType}");
+          debugPrint(
+            "RAW is_bookmarked: ${e['is_bookmarked']} | type: ${e['is_bookmarked'].runtimeType}",
+          );
         }
-      }else if(response.statusCode==401){
-
+      } else if (response.statusCode == 401) {
         context.goNamed(RoutesPath.loginScreen);
         CustomSnackbar.error(context, "Please login again");
-      }
-
-      else {
+      } else {
         CustomSnackbar.error(context, "Failed to fetch products");
       }
     } catch (e) {
@@ -167,8 +151,6 @@ class HomeController extends GetxController {
     }
     isLoading.value = false;
   }
-
-
 
   // ─────────────────────────────────────────────────────────
   // HomeScreen button tap
@@ -201,9 +183,9 @@ class HomeController extends GetxController {
     // final bool allProducts =
     // children.every((e) => e.type?.toUpperCase() == "PRODUCT");
 
-    final bool allProducts =
-    children.any((e) => e.type?.toUpperCase() == "PRODUCT");
-
+    final bool allProducts = children.any(
+      (e) => e.type?.toUpperCase() == "PRODUCT",
+    );
 
     if (allProducts) {
       context.pushNamed(RoutesPath.mainInformation, extra: rootItem.id);
@@ -233,12 +215,10 @@ class HomeController extends GetxController {
       return;
     }
 
-    // final bool allProducts =
-    // children.every((e) => e.type?.toUpperCase() == "PRODUCT");
 
-
-    final bool allProducts =
-    children.any((e) => e.type?.toUpperCase() == "PRODUCT");
+    final bool allProducts = children.any(
+      (e) => e.type?.toUpperCase() == "PRODUCT",
+    );
 
     if (allProducts) {
       context.pushNamed(RoutesPath.mainInformation, extra: item.id);
@@ -253,13 +233,13 @@ class HomeController extends GetxController {
   Future<List<HomeModel>> _fetchChildren({
     required String parentId,
     required BuildContext context,
-  }) async
-  {
+  }) async {
     isLoading.value = true;
     List<HomeModel> result = [];
     try {
-      final response =
-      await ApiClient.getData("${ApiUrl.node}?parent_id=$parentId");
+      final response = await ApiClient.getData(
+        "${ApiUrl.node}?parent_id=$parentId",
+      );
       if (response.statusCode == 200) {
         final List<dynamic> list = response.body['data'] as List<dynamic>;
         result = list.map((e) => HomeModel.fromJson(e)).toList();
@@ -280,8 +260,7 @@ class HomeController extends GetxController {
   void _showDialog({
     required List<HomeModel> children,
     required BuildContext context,
-  })
-  {
+  }) {
     showDialog(
       context: context,
       builder: (ctx) => DialogWidget(
@@ -309,10 +288,8 @@ class HomeController extends GetxController {
     );
   }
 
-
-
-///book mark=================================
-  Future<void> toggleBookmark({ required String itemId,}) async {
+  ///book mark=================================
+  Future<void> toggleBookmark({required String itemId}) async {
     final item = productList.firstWhereOrNull((e) => e.id == itemId);
     if (item == null) return;
 
@@ -321,21 +298,17 @@ class HomeController extends GetxController {
 
     try {
       if (item.isBookmarked.value) {
-
-        final response = await ApiClient.postData(
-          ApiUrl.addBookmark,
-          {"item_id": itemId},
-        );
+        final response = await ApiClient.postData(ApiUrl.addBookmark, {
+          "item_id": itemId,
+        });
 
         if (response.statusCode != 200 && response.statusCode != 201) {
           item.isBookmarked.toggle();
           debugPrint("Add bookmark failed: ${response.body}");
         }
       } else {
-
         final response = await ApiClient.deleteData(
           ApiUrl.removeBookmark(id: itemId),
-
         );
 
         if (response.statusCode != 200) {
@@ -348,25 +321,4 @@ class HomeController extends GetxController {
       debugPrint("Bookmark error: $e");
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

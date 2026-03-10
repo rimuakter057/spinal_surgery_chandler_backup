@@ -83,104 +83,220 @@ class _CartScreenState extends State<CartScreen> {
         ],
       ),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: ResponsiveHelper.all(16),
-          child: Obx(() {
-            if (controller.isLoadingGetCart.value) {
-              return const Center(child: CircularProgressIndicator());
-            }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.fetchCart(); // 🔥
+        },
 
-            final items = controller.cartItems;
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: Padding(
+              padding: ResponsiveHelper.all(16),
+              child: Obx(() {
+                if (controller.isLoadingGetCart.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-            return Column(
-              children: [
-                /// Search Bar
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search here...",
-                    hintStyle: context.bodyMedium.copyWith(
-                      color: AppColors.searchTextColor,
-                    ),
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(
-                        left: ResponsiveHelper.padding(16),
+                final items = controller.cartItems;
+
+
+
+                return Column(
+                  children: [
+                    /// Search Bar
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search here...",
+                        hintStyle: context.bodyMedium.copyWith(
+                          color: AppColors.searchTextColor,
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                            left: ResponsiveHelper.padding(16),
+                          ),
+                          child: CustomImage(
+                            imageSrc: AppAssets.search,
+                            height: ResponsiveHelper.iconSize(18),
+                            width: ResponsiveHelper.iconSize(18),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       ),
-                      child: CustomImage(
-                        imageSrc: AppAssets.search,
-                        height: ResponsiveHelper.iconSize(18),
-                        width: ResponsiveHelper.iconSize(18),
-                        fit: BoxFit.contain,
-                      ),
                     ),
-                  ),
-                ),
 
-                SizedBox(height: ResponsiveHelper.height(12)),
+                    SizedBox(height: ResponsiveHelper.height(12)),
 
-                if (items.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 60),
-                    child: Center(child: Text("Cart is empty")),
-                  )
-                else
-                  ListView.separated(
-                    itemCount: items.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    separatorBuilder: (_, __) =>
-                        SizedBox(height: ResponsiveHelper.height(8)),
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      final imageUrl =
-                          "${ApiUrl.primaryUrl}/${item.itemImage?.replaceAll("\\", "/")}";
-                      debugPrint("==============${item.itemId}");
-                      return AddToCartWidget(
-                        title: item.itemTitle ?? "",
-                        price: item.quantity.toString(),
-                        image: imageUrl,
-                        onTapDetails: () {
-                          debugPrint("===tap id: ${item.itemId}");
-                          context.pushNamed(
-                            RoutesPath.productDetailsScreen,
-                            extra: item.itemId,
+                    if (items.isEmpty) ...[
+
+                    Padding(
+                        padding: EdgeInsets.only(top: ResponsiveHelper.spacing(60)),
+                        child: Center(child: Text("Cart is empty")),
+                      ),
+                    ] else ...[
+
+                      ListView.separated(
+                        itemCount: items.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        separatorBuilder: (_, __) =>
+                            SizedBox(height: ResponsiveHelper.height(8)),
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          final imageUrl =
+                              "${ApiUrl.primaryUrl}/${item.itemImage?.replaceAll("\\", "/")}";
+                          return AddToCartWidget(
+                            title: item.itemTitle ?? "",
+                            price: item.quantity.toString(),
+                            image: imageUrl,
+                            onTapDetails: () {
+                              context.pushNamed(
+                                RoutesPath.productDetailsScreen,
+                                extra: item.itemId,
+                              );
+                            },
+                            onTapIncrement: () {},
+                            countText: item.quantity ?? 1,
+                            onTapDecrement: () {},
                           );
                         },
-                        onTapIncrement: () {},
-                        countText: item.quantity ?? 1,
-                        onTapDecrement: () {},
-                      );
-                    },
-                  ),
+                      ),
 
-                SizedBox(height: ResponsiveHelper.height(8)),
+                      SizedBox(height: ResponsiveHelper.height(8)),
 
-                /// Total
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Total Product:", style: context.bodyMedium),
-                    Text(
-                      "${items.length}",
-                      style: context.bodyLarge.copyWith(color: AppColors.black),
-                    ),
+                      /// Total
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Total Product:", style: context.bodyMedium),
+                          Text(
+                            "${items.length}",
+                            style: context.bodyLarge.copyWith(color: AppColors.black),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: ResponsiveHelper.height(48)),
+
+                      ElevatedButton(
+                        child: Text(AppText.order),
+                        onPressed: () {
+                          context.pushNamed(RoutesPath.orderScreen);
+                        },
+                      ),
+
+                      SizedBox(height: ResponsiveHelper.height(100)),
+                    ],
                   ],
-                ),
+                );
 
-                SizedBox(height: ResponsiveHelper.height(48)),
 
-                ElevatedButton(
-                  child: Text(AppText.order),
-                  onPressed: () {
-                    context.pushNamed(RoutesPath.orderScreen);
-                  },
-                ),
 
-                SizedBox(height: ResponsiveHelper.height(100)),
-              ],
-            );
-          }),
+
+
+
+
+
+
+
+                // return Column(
+                //   children: [
+                //     /// Search Bar
+                //     TextField(
+                //       decoration: InputDecoration(
+                //         hintText: "Search here...",
+                //         hintStyle: context.bodyMedium.copyWith(
+                //           color: AppColors.searchTextColor,
+                //         ),
+                //         prefixIcon: Padding(
+                //           padding: EdgeInsets.only(
+                //             left: ResponsiveHelper.padding(16),
+                //           ),
+                //           child: CustomImage(
+                //             imageSrc: AppAssets.search,
+                //             height: ResponsiveHelper.iconSize(18),
+                //             width: ResponsiveHelper.iconSize(18),
+                //             fit: BoxFit.contain,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //
+                //     SizedBox(height: ResponsiveHelper.height(12)),
+                //
+                //     if (items.isEmpty)
+                //       const Padding(
+                //         padding: EdgeInsets.only(top: 60),
+                //         child: Center(child: Text("Cart is empty")),
+                //       )
+                //     else
+                //       ListView.separated(
+                //         itemCount: items.length,
+                //         shrinkWrap: true,
+                //         physics: const NeverScrollableScrollPhysics(),
+                //         padding: EdgeInsets.zero,
+                //         separatorBuilder: (_, __) =>
+                //             SizedBox(height: ResponsiveHelper.height(8)),
+                //         itemBuilder: (context, index) {
+                //           final item = items[index];
+                //           final imageUrl =
+                //               "${ApiUrl.primaryUrl}/${item.itemImage?.replaceAll("\\", "/")}";
+                //           debugPrint("==============${item.itemId}");
+                //           return AddToCartWidget(
+                //             title: item.itemTitle ?? "",
+                //             price: item.quantity.toString(),
+                //             image: imageUrl,
+                //             onTapDetails: () {
+                //               debugPrint("===tap id: ${item.itemId}");
+                //               context.pushNamed(
+                //                 RoutesPath.productDetailsScreen,
+                //                 extra: item.itemId,
+                //               );
+                //             },
+                //             onTapIncrement: () {},
+                //             countText: item.quantity ?? 1,
+                //             onTapDecrement: () {},
+                //           );
+                //         },
+                //       ),
+                //
+                //     SizedBox(height: ResponsiveHelper.height(8)),
+                //
+                //     /// Total
+                //     Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Text("Total Product:", style: context.bodyMedium),
+                //         Text(
+                //           "${items.length}",
+                //           style: context.bodyLarge.copyWith(color: AppColors.black),
+                //         ),
+                //       ],
+                //     ),
+                //
+                //     SizedBox(height: ResponsiveHelper.height(48)),
+                //
+                //     ElevatedButton(
+                //       child: Text(AppText.order),
+                //       onPressed: () {
+                //         context.pushNamed(RoutesPath.orderScreen);
+                //       },
+                //     ),
+                //
+                //     SizedBox(height: ResponsiveHelper.height(100)),
+                //   ],
+                // );
+
+
+
+
+
+              }),
+            ),
+          ),
         ),
       ),
     );

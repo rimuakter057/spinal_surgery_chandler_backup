@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/cart/models/cart_details_model.dart';
 import 'package:chandler_app/feature/cart/models/cart_model.dart';
-import 'package:chandler_app/feature/cart/presentation/screens/cart_details_screen.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/feature/save/models/bookmark_model.dart';
 import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
@@ -26,8 +24,6 @@ class CartController extends GetxController {
     }
   }
 
-
-
   /// place order api====================================
   final RxBool isLoadingOrder = false.obs;
 
@@ -38,7 +34,6 @@ class CartController extends GetxController {
   }) async {
     isLoadingOrder.value = true;
 
-
     debugPrint("=== cartItems count: ${cartItems.length}");
 
     for (var item in cartItems) {
@@ -46,12 +41,16 @@ class CartController extends GetxController {
     }
 
     // 🔥 cartItems থেকে items list বানাও
-    final List<Map<String, dynamic>> itemsList = cartItems.map((item) => {
-      "product_id": item.itemId,
-      "product_title": item.itemTitle,
-      "product_image": item.itemImage,
-      "quantity": item.quantity ?? 1,
-    }).toList();
+    final List<Map<String, dynamic>> itemsList = cartItems
+        .map(
+          (item) => {
+            "product_id": item.itemId,
+            "product_title": item.itemTitle,
+            "product_image": item.itemImage,
+            "quantity": item.quantity ?? 1,
+          },
+        )
+        .toList();
 
     final body = {
       "items": itemsList,
@@ -71,18 +70,10 @@ class CartController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-
   // ///get bookmark api==================================================
   //
   final RxBool isLoadingBookMark = false.obs;
-   final RxList<BookMarkItems> bookmarkItems = <BookMarkItems>[].obs;
+  final RxList<BookMarkItems> bookmarkItems = <BookMarkItems>[].obs;
 
   Future<void> fetchBookMark() async {
     isLoadingBookMark.value = true;
@@ -100,7 +91,6 @@ class CartController extends GetxController {
 
   final RxString deletingItemId = ''.obs; // কোন item delete হচ্ছে track করবে
 
-
   Future<void> removeBookMark({
     required String itemId,
     required BuildContext context,
@@ -114,9 +104,9 @@ class CartController extends GetxController {
     deletingItemId.value = '';
 
     debugPrint("Trying to delete itemId: $itemId");
-    debugPrint("bookmarkItems itemIds: ${bookmarkItems.map((e) => e.itemId).toList()}");
-
-
+    debugPrint(
+      "bookmarkItems itemIds: ${bookmarkItems.map((e) => e.itemId).toList()}",
+    );
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       bookmarkItems.removeWhere((item) => item.itemId.toString() == itemId);
@@ -129,14 +119,6 @@ class CartController extends GetxController {
       );
     }
   }
-
-
-
-
-
-
-
-
 
   ///get single details
   final RxBool isLoadingGetSingleDetails = false.obs;

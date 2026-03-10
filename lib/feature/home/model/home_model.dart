@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 
 class HomeModel {
@@ -57,7 +55,7 @@ class HomeModel {
     if (productInfo != null) {
       data['product_info'] = productInfo!.toJson();
     }
-// ✅ একদম safe
+
     data['is_bookmarked'] = isBookmarked.value == true;
   //  data['is_bookmarked'] = isBookmarked;
     data['createdAt'] = createdAt;

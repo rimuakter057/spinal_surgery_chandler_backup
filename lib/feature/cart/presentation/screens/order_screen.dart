@@ -1,4 +1,4 @@
-import 'package:chandler_app/core/router/route_path.dart';
+
 import 'package:chandler_app/feature/auth/presentation/widgets/input_field_widget.dart';
 import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/helper/date_converter/date_converter.dart';
@@ -18,13 +18,15 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-
   final TextEditingController deliveryDateController = TextEditingController();
-  final TextEditingController shippingAddressController = TextEditingController();
+  final TextEditingController shippingAddressController =
+      TextEditingController();
   final TextEditingController notesController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final CartController controller = Get.find<CartController>();
+
+  DateTime? _selectedDateTime;
 
   Future<void> _pickDateTime() async {
     final DateTime? date = await showDatePicker(
@@ -43,15 +45,20 @@ class _OrderScreenState extends State<OrderScreen> {
 
     if (time == null) return;
 
-    final DateTime combined = DateTime(
-      date.year, date.month, date.day,
-      time.hour, time.minute,
+    _selectedDateTime = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
     );
 
-    deliveryDateController.text = DateConverter.toIsoString(combined);
+    // 🔥 User দেখবে: "Mar 25, 2026 03:45 PM"
+    deliveryDateController.text = DateConverter.formatDateTime(
+      dateTime: _selectedDateTime,
+      pattern: 'MMM dd, yyyy hh:mm a',
+    );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -105,44 +112,54 @@ class _OrderScreenState extends State<OrderScreen> {
                 SizedBox(height: ResponsiveHelper.spacing(52)),
 
                 // 🔥 loading দেখাবে submit এর সময়
-                Obx(() => ElevatedButton(
-                  onPressed: controller.isLoadingOrder.value
-                      ? null // loading এ disable
-                      : () async {
-                    if (_formKey.currentState!.validate()) {
-                      final success = await controller.placeOrder(
-                        shippingAddress: shippingAddressController.text.trim(),
-                        deliveryDate: deliveryDateController.text.trim(),
-                        notes: notesController.text.trim(),
-                      );
+                Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoadingOrder.value
+                        ? null // loading এ disable
+                        : () async {
+                            if (_formKey.currentState!.validate()) {
+                              final success = await controller.placeOrder(
+                                shippingAddress: shippingAddressController.text
+                                    .trim(),
+                                deliveryDate: _selectedDateTime != null
+                                    ? DateConverter.toIsoString(
+                                        _selectedDateTime!,
+                                      )
+                                    : '',
 
-                      if (!context.mounted) return;
+                                notes: notesController.text.trim(),
+                              );
 
-                      if (success) {
-                        CustomSnackbar.success(
-                          context: context,
-                          message: "Order placed successfully!",
-                        );
-                        context.goNamed(RoutesPath.cartScreen);
-                      } else {
-                        CustomSnackbar.error(
-                          context,
-                          "Failed to place order",
-                        );
-                      }
-                    }
-                  },
-                  child: controller.isLoadingOrder.value
-                      ?  SizedBox(
-                    height: ResponsiveHelper.height(20),
-                    width: ResponsiveHelper.width(20),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                      :  Text("Submit"),
-                )),
+                              if (!context.mounted) return;
+
+                              if (success) {
+                                CustomSnackbar.success(
+                                  context: context,
+                                  message: "Order placed successfully!",
+                                );
+                                await controller.fetchCart();
+                                if (!context.mounted) return;
+                                context.pop();
+                              } else {
+                                CustomSnackbar.error(
+                                  context,
+                                  "Failed to place order",
+                                );
+                              }
+                            }
+                          },
+                    child: controller.isLoadingOrder.value
+                        ? SizedBox(
+                            height: ResponsiveHelper.height(20),
+                            width: ResponsiveHelper.width(20),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text("Submit"),
+                  ),
+                ),
               ],
             ),
           ),

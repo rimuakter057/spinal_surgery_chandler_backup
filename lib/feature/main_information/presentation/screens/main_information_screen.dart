@@ -1,7 +1,5 @@
 import 'package:chandler_app/core/router/route_path.dart';
-import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
-import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
@@ -15,7 +13,6 @@ import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../share/widgets/custom_loader/custom_loader.dart';
 
 class MainInformationScreen extends StatefulWidget {
@@ -254,7 +251,5 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
     );
   }
 
-  void _goToDetail({required BuildContext context, required HomeModel item}) {
-    context.pushNamed(RoutesPath.cartDetailsScreen, extra: item);
-  }
+
 }

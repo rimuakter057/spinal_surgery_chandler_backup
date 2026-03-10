@@ -1,12 +1,10 @@
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
-import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/share/widgets/network_image/custom_network_image.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/config/app_config.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-
 
 import 'count_button.dart';
 
@@ -46,13 +44,11 @@ class AddToCartWidget extends StatelessWidget {
                   ResponsiveHelper.borderRadius(16),
                 ),
 
-
                 child: CustomNetworkImage(
-                    imageUrl: image,
-                    height: ResponsiveHelper.height(96),
-                    width: ResponsiveHelper.width(126),
+                  imageUrl: image,
+                  height: ResponsiveHelper.height(96),
+                  width: ResponsiveHelper.width(126),
                 ),
-
               ),
               SizedBox(width: ResponsiveHelper.width(8)),
 
@@ -70,12 +66,14 @@ class AddToCartWidget extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(height: ResponsiveHelper.spacing(12),),
+                    SizedBox(height: ResponsiveHelper.spacing(12)),
                     Text(
                       "Total Files 1",
-                      style: context.bodyMedium.copyWith(color: AppColors.primaryColor)
+                      style: context.bodyMedium.copyWith(
+                        color: AppColors.primaryColor,
+                      ),
                     ),
-                    SizedBox(height: ResponsiveHelper.spacing(12),),
+                    SizedBox(height: ResponsiveHelper.spacing(12)),
                     GestureDetector(
                       onTap: onTapDetails,
                       child: Text(
@@ -104,20 +102,15 @@ class AddToCartWidget extends StatelessWidget {
           ///number count
           Column(
             children: [
-              CountButton(onTap: onTapDecrement,
+              CountButton(onTap: onTapDecrement, title: "-"),
+              SizedBox(height: ResponsiveHelper.spacing(4)),
+              CountButton(
+                onTap: onTapDecrement,
 
-              title: "-",
+                title: countText.toString() ?? '1',
               ),
-              SizedBox(height: ResponsiveHelper.spacing(4),),
-              CountButton(onTap: onTapDecrement,
-
-                title: countText?.toString() ?? '1',
-              ),
-              SizedBox(height: ResponsiveHelper.spacing(4),),
-              CountButton(onTap: onTapDecrement,
-
-                title: "+",
-              ),
+              SizedBox(height: ResponsiveHelper.spacing(4)),
+              CountButton(onTap: onTapDecrement, title: "+"),
             ],
           ),
         ],
@@ -125,5 +118,3 @@ class AddToCartWidget extends StatelessWidget {
     );
   }
 }
-
-

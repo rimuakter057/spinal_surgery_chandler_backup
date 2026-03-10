@@ -4,7 +4,6 @@ import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 
-
 class PasswordFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final String? hint;
@@ -41,11 +40,10 @@ class _PasswordFieldWidgetState extends State<PasswordFieldWidget> {
           child: Padding(
             padding: ResponsiveHelper.all(12), // optional padding
             child: CustomImage(
-              imageSrc:
-                  _obscureText
-                      ? AppAssets
-                          .visibilityOff // your "eye closed" image
-                      : AppAssets.visibilityOn, // your "eye open" image
+              imageSrc: _obscureText
+                  ? AppAssets
+                        .visibilityOff // your "eye closed" image
+                  : AppAssets.visibilityOn, // your "eye open" image
               height: ResponsiveHelper.iconSize(24),
               width: ResponsiveHelper.iconSize(24),
               fit: BoxFit.contain,

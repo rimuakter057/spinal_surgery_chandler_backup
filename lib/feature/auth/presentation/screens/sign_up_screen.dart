@@ -12,10 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-
 class SignUpScreen extends StatelessWidget {
-
-  SignUpScreen({super.key, });
+  SignUpScreen({super.key});
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -27,12 +25,12 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height: ResponsiveHelper.height(24));
     return Scaffold(
-      appBar: AppBar(title: Text(AppText.signUp,style: context.titleSmall,),),
+      appBar: AppBar(title: Text(AppText.signUp, style: context.titleSmall)),
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
           child: Form(
-            key:_formKey ,
+            key: _formKey,
             child: Column(
               children: [
                 ///name field
@@ -40,7 +38,8 @@ class SignUpScreen extends StatelessWidget {
                   title: AppText.fullName,
                   hint: AppText.enterFullName,
                   controller: nameController,
-                  validator: (v) => v!.isEmpty ? 'Please enter your full name' : null,
+                  validator: (v) =>
+                      v!.isEmpty ? 'Please enter your full name' : null,
                 ),
                 gap,
 
@@ -72,7 +71,8 @@ class SignUpScreen extends StatelessWidget {
                   title: AppText.phoneNumber,
                   hint: AppText.enterPhone,
                   controller: phoneController,
-                  validator: (v) => v!.isEmpty ? 'Please enter your phone number' : null,
+                  validator: (v) =>
+                      v!.isEmpty ? 'Please enter your phone number' : null,
                 ),
                 gap,
 
@@ -99,8 +99,10 @@ class SignUpScreen extends StatelessWidget {
                   hint: AppText.enterConfirmedPassword,
                   controller: confirmedPassController,
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'Please confirm your password';
-                    if (v != passwordController.text) return 'Passwords do not match';
+                    if (v == null || v.isEmpty)
+                      return 'Please confirm your password';
+                    if (v != passwordController.text)
+                      return 'Passwords do not match';
                     return null;
                   },
                 ),
@@ -108,9 +110,7 @@ class SignUpScreen extends StatelessWidget {
                 gap,
                 gap,
                 gap,
-           //   ElevatedButton(onPressed: (){}, child: Text(AppText.signUp)),
-
-
+                //   ElevatedButton(onPressed: (){}, child: Text(AppText.signUp)),
 
                 // Sign Up Button
                 Obx(() {
@@ -120,14 +120,10 @@ class SignUpScreen extends StatelessWidget {
                         : () => _onTapSignUp(context),
 
                     child: authController.inProgressSignup.value
-                        ? CircularProgressIndicator(
-                      color: AppColors.white,
-                    )
+                        ? CircularProgressIndicator(color: AppColors.white)
                         : Text(AppText.signUp),
                   );
                 }),
-
-
 
                 SizedBox(height: ResponsiveHelper.height(12)),
                 ActionTextWidget(
@@ -147,10 +143,6 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-
-
-
-
   // ====================== SignUp Action ======================
   void _onTapSignUp(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
@@ -164,13 +156,13 @@ class SignUpScreen extends StatelessWidget {
     );
 
     if (success) {
-      CustomSnackbar.success(context: context,message:  'Account created successfully!');
+      CustomSnackbar.success(
+        context: context,
+        message: 'Account created successfully!',
+      );
       context.pushNamed(RoutesPath.loginScreen);
     } else {
       CustomSnackbar.error(context, authController.errorMessage.value);
     }
   }
-
-
-
 }

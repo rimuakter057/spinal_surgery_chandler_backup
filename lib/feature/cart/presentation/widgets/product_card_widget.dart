@@ -1,4 +1,3 @@
-import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
@@ -7,7 +6,6 @@ import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
@@ -17,7 +15,7 @@ class ProductCard extends StatelessWidget {
   final RxBool isBookmarked; // 🔥 bool → RxBool
   final VoidCallback onInfo;
   final VoidCallback tapDetails;
- // final bool isBookmarked;
+  // final bool isBookmarked;
   final VoidCallback onBookmark;
 
   const ProductCard({
@@ -25,7 +23,7 @@ class ProductCard extends StatelessWidget {
     required this.imageUrl,
     required this.title,
     required this.onAddToCart,
-   required this.onBookmark,
+    required this.onBookmark,
     required this.onInfo,
     required this.isBookmarked,
     required this.tapDetails,
@@ -38,9 +36,8 @@ class ProductCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
-
       ),
-      padding:  ResponsiveHelper.all(15),
+      padding: ResponsiveHelper.all(15),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,30 +52,30 @@ class ProductCard extends StatelessWidget {
                   // 🔥 null / empty image → placeholder
                   child: imageUrl.isEmpty || imageUrl.contains('/null')
                       ? Container(
-                    height: ResponsiveHelper.height(90),
-                    width: double.infinity,
-                    color: Colors.grey.shade200,
-                    child: const Icon(
-                      Icons.image_not_supported,
-                      color: Colors.grey,
-                    ),
-                  )
-                      : Image.network(
-                    imageUrl,
-                    height: ResponsiveHelper.height(100),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        Container(
-                          height: ResponsiveHelper.height(100),
+                          height: ResponsiveHelper.height(90),
                           width: double.infinity,
                           color: Colors.grey.shade200,
                           child: const Icon(
                             Icons.image_not_supported,
                             color: Colors.grey,
                           ),
+                        )
+                      : Image.network(
+                          imageUrl,
+                          height: ResponsiveHelper.height(100),
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                height: ResponsiveHelper.height(100),
+                                width: double.infinity,
+                                color: Colors.grey.shade200,
+                                child: const Icon(
+                                  Icons.image_not_supported,
+                                  color: Colors.grey,
+                                ),
+                              ),
                         ),
-                  ),
                 ),
                 Positioned(
                   top: 10,
@@ -86,7 +83,7 @@ class ProductCard extends StatelessWidget {
                   child: GestureDetector(
                     onTap: onInfo,
                     child: Container(
-                      padding:  ResponsiveHelper.all(6),
+                      padding: ResponsiveHelper.all(6),
                       decoration: BoxDecoration(
                         // color: Colors.black.withOpacity(0.3),
                         color: AppColors.blackShade,
@@ -99,9 +96,6 @@ class ProductCard extends StatelessWidget {
               ],
             ),
           ),
-
-
-
 
           SizedBox(height: ResponsiveHelper.spacing(8)),
 
@@ -118,12 +112,14 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
 
-// bookmark icon টা Obx দিয়ে wrap করো
+              // bookmark icon টা Obx দিয়ে wrap করো
               GestureDetector(
                 onTap: onBookmark,
                 child: Obx(
-                      () => CustomImage(
-                    imageSrc: isBookmarked.value  // 🔥 .value
+                  () => CustomImage(
+                    imageSrc:
+                        isBookmarked
+                            .value // 🔥 .value
                         ? AppAssets.saveNav
                         : AppAssets.saveCard,
                   ),
@@ -136,23 +132,29 @@ class ProductCard extends StatelessWidget {
           // Add to Cart Button
           InkWell(
             onTap: onAddToCart,
-            borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
+            borderRadius: BorderRadius.circular(
+              ResponsiveHelper.borderRadius(12),
+            ),
             child: Container(
               width: double.infinity,
-              padding:  ResponsiveHelper.symmetric(vertical: 6),
+              padding: ResponsiveHelper.symmetric(vertical: 6),
               decoration: BoxDecoration(
-                color:  AppColors.primaryShadeColor, // Light orange/peach background
-                borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
+                color: AppColors
+                    .primaryShadeColor, // Light orange/peach background
+                borderRadius: BorderRadius.circular(
+                  ResponsiveHelper.borderRadius(12),
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children:  [
-
+                children: [
                   CustomImage(imageSrc: AppAssets.cart),
                   SizedBox(width: ResponsiveHelper.spacing(10)),
                   Text(
-                      AppText.addToCart,
-                      style:context.bodySmall.copyWith(color: AppColors.primaryColor)
+                    AppText.addToCart,
+                    style: context.bodySmall.copyWith(
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 ],
               ),

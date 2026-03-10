@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-
-
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({super.key});
   final TextEditingController emailController = TextEditingController();
@@ -29,35 +27,33 @@ class ForgotPasswordScreen extends StatelessWidget {
             key: _key,
             child: Column(
               children: [
-
-                ForgotCodeHeadingWidget(title: AppText.forgotPasswordTitle, subtitle:AppText.forgotPasswordSubtitle,),
-
+                ForgotCodeHeadingWidget(
+                  title: AppText.forgotPasswordTitle,
+                  subtitle: AppText.forgotPasswordSubtitle,
+                ),
 
                 SizedBox(height: ResponsiveHelper.height(64)),
+
                 ///email field
                 InputFieldWidget(
                   title: AppText.enterYourEmail,
                   hint: AppText.enterEmail,
                   controller: emailController,
                 ),
-                    SizedBox(height: ResponsiveHelper.height(120),),
+                SizedBox(height: ResponsiveHelper.height(120)),
 
                 // forgot  Button
                 Obx(() {
                   return ElevatedButton(
                     onPressed: authController.inProgressForgot.value
-                        ? (){}
+                        ? () {}
                         : () => onTapForgot(context),
 
                     child: authController.inProgressForgot.value
-                        ? CircularProgressIndicator(
-                      color: AppColors.white,
-                    )
+                        ? CircularProgressIndicator(color: AppColors.white)
                         : Text(AppText.sendOtp),
                   );
                 }),
-
-
               ],
             ),
           ),
@@ -66,50 +62,29 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 
-
   Future<void> onTapForgot(BuildContext context) async {
-
     // email empty check
     if (emailController.text.trim().isEmpty) {
-
       CustomSnackbar.error(context, "Email cannot be empty");
 
       return;
-
     }
 
     if (!_key.currentState!.validate()) return;
-
-
 
     bool success = await authController.forgot(
       email: emailController.text.trim(),
     );
 
     if (success) {
-
-     context.pushNamed(RoutesPath.verifyCodeScreen,
-       extra: emailController.text.trim(),
-     );
-
-      emailController.clear();
-
-    } else {
-
-      CustomSnackbar.error(
-        context,
-        authController.errorMessage.value,
+      context.pushNamed(
+        RoutesPath.verifyCodeScreen,
+        extra: emailController.text.trim(),
       );
 
+      emailController.clear();
+    } else {
+      CustomSnackbar.error(context, authController.errorMessage.value);
     }
-
   }
-
-
-
-
 }
-
-
-
-

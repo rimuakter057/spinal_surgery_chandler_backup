@@ -8,15 +8,16 @@ class CartDetailsModel {
   String? createdAt;
   String? updatedAt;
 
-  CartDetailsModel(
-      {this.id,
-        this.title,
-        this.parentId,
-        this.type,
-        this.productInfo,
-        this.isBookmarked,
-        this.createdAt,
-        this.updatedAt});
+  CartDetailsModel({
+    this.id,
+    this.title,
+    this.parentId,
+    this.type,
+    this.productInfo,
+    this.isBookmarked,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   CartDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,7 +25,7 @@ class CartDetailsModel {
     parentId = json['parent_id'];
     type = json['type'];
     productInfo = json['product_info'] != null
-        ? new ProductInfo.fromJson(json['product_info'])
+        ? ProductInfo.fromJson(json['product_info'])
         : null;
     isBookmarked = json['is_bookmarked'];
     createdAt = json['createdAt'];
@@ -32,17 +33,17 @@ class CartDetailsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['parent_id'] = this.parentId;
-    data['type'] = this.type;
-    if (this.productInfo != null) {
-      data['product_info'] = this.productInfo!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['parent_id'] = parentId;
+    data['type'] = type;
+    if (productInfo != null) {
+      data['product_info'] = productInfo!.toJson();
     }
-    data['is_bookmarked'] = this.isBookmarked;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    data['is_bookmarked'] = isBookmarked;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -54,12 +55,13 @@ class ProductInfo {
   String? videoFileUrl;
   String? bannerImageUrl;
 
-  ProductInfo(
-      {this.id,
-        this.description,
-        this.brochureFileUrl,
-        this.videoFileUrl,
-        this.bannerImageUrl});
+  ProductInfo({
+    this.id,
+    this.description,
+    this.brochureFileUrl,
+    this.videoFileUrl,
+    this.bannerImageUrl,
+  });
 
   ProductInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,12 +72,12 @@ class ProductInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['description'] = this.description;
-    data['brochure_file_url'] = this.brochureFileUrl;
-    data['video_file_url'] = this.videoFileUrl;
-    data['banner_image_url'] = this.bannerImageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['description'] = description;
+    data['brochure_file_url'] = brochureFileUrl;
+    data['video_file_url'] = videoFileUrl;
+    data['banner_image_url'] = bannerImageUrl;
     return data;
   }
 }

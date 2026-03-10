@@ -11,7 +11,6 @@ import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -23,30 +22,25 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: ResponsiveHelper.all(16),
-          child: Column(children: [
-            _buildEditProfile(context),
+          child: Column(
+            children: [
+              _buildEditProfile(context),
 
-            SizedBox(height: ResponsiveHelper.spacing(12)),
+              SizedBox(height: ResponsiveHelper.spacing(12)),
 
-            Text(
-             "Banedict Fring Dron",
-              style: context.bodyLarge
-            ),
-            SizedBox(height: ResponsiveHelper.spacing(4)),
-            Text(
-              "Great Falls, Marylan",
-              style: context.bodyMedium.copyWith(color: AppColors.greyTextColor),
-            ),
+              Text("Banedict Fring Dron", style: context.bodyLarge),
+              SizedBox(height: ResponsiveHelper.spacing(4)),
+              Text(
+                "Great Falls, Marylan",
+                style: context.bodyMedium.copyWith(
+                  color: AppColors.greyTextColor,
+                ),
+              ),
 
-            SizedBox(height:ResponsiveHelper.spacing(16)),
-            _buildDeliveryDetails(context),
-
-
-
-
-
-
-          ]),
+              SizedBox(height: ResponsiveHelper.spacing(16)),
+              _buildDeliveryDetails(context),
+            ],
+          ),
         ),
       ),
     );
@@ -54,31 +48,29 @@ class ProfileScreen extends StatelessWidget {
 
   Stack _buildEditProfile(BuildContext context) {
     return Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              CustomProfileAvatar(
-                width:ResponsiveHelper.iconSize(78),
-                height: ResponsiveHelper.iconSize(78),
-              ),
+      alignment: Alignment.bottomRight,
+      children: [
+        CustomProfileAvatar(
+          width: ResponsiveHelper.iconSize(78),
+          height: ResponsiveHelper.iconSize(78),
+        ),
 
-
-
-              /// Edit Button
-              GestureDetector(
-                onTap: () {
-                  context.pushNamed(RoutesPath.editProfileScreen);
-                },
-                child: Container(
-                  padding:  ResponsiveHelper.all(4),
-                  decoration: BoxDecoration(
-                    color: AppColors.blueColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: CustomImage(imageSrc: AppAssets.edit)
-                ),
-              ),
-            ],
-          );
+        /// Edit Button
+        GestureDetector(
+          onTap: () {
+            context.pushNamed(RoutesPath.editProfileScreen);
+          },
+          child: Container(
+            padding: ResponsiveHelper.all(4),
+            decoration: BoxDecoration(
+              color: AppColors.blueColor,
+              shape: BoxShape.circle,
+            ),
+            child: CustomImage(imageSrc: AppAssets.edit),
+          ),
+        ),
+      ],
+    );
   }
 
   ///details cart=========================================================================================================
@@ -95,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
             AppText.nameLabel,
             style: context.bodyMedium.copyWith(color: AppColors.white),
           ),
-          SizedBox(height: ResponsiveHelper.spacing(4),),
+          SizedBox(height: ResponsiveHelper.spacing(4)),
           Text(
             "Cameron Williamson",
             style: context.bodyMedium.copyWith(color: AppColors.white),

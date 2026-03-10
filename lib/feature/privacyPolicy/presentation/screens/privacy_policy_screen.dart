@@ -6,7 +6,6 @@ import 'package:chandler_app/utils/config/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart'; // ❗ flutter_html import
 
-
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({super.key});
 
