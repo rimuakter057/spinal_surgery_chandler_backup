@@ -17,6 +17,7 @@ class OrderCardWidget extends StatelessWidget {
     this.status,
     this.statusBgColor,
   });
+
   final Widget? widgetHistory;
   final String? status;
   final String orderId;
@@ -24,45 +25,60 @@ class OrderCardWidget extends StatelessWidget {
   final String totalPrice;
   final String date;
   final Color? statusBgColor;
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
-    print('Screen width: $width');
-
     return CustomContainer(
       backgroundColor: AppColors.containerGreyBgColor.withAlpha(70),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("${AppText.orderId}$orderId", style: context.bodyMedium),
-              Text("${AppText.totalItem}$totalItem", style: context.bodyMedium),
-
-              Text("${AppText.deliveredDate}$date", style: context.bodyMedium),
-            ],
+          /// Left — takes all remaining space
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "${AppText.orderId}$orderId",
+                  style: context.bodyMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  "${AppText.totalItem}$totalItem",
+                  style: context.bodyMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  "${AppText.deliveredDate}$date",
+                  style: context.bodyMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ],
+            ),
           ),
 
+          SizedBox(width: ResponsiveHelper.spacing(8)),
 
-              CustomContainer(
-                //height: width>400? 30.h:38.h,
-                height: ResponsiveHelper.height(38),
-                radius: ResponsiveHelper.borderRadius(50),
-                padding: ResponsiveHelper.symmetric(horizontal: 10, vertical: 8),
-                backgroundColor:AppColors.green,
-                child: Text(
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                 "Complete",
-                  style: context.bodyMedium.copyWith(
-                    // fontSize: width>400?12:14,
-                    fontSize: ResponsiveHelper.fontSize(14),
-                    color: AppColors.white,
-                  ),
-                ),
+          /// Right — fixed size badge, never grows
+          CustomContainer(
+            height: ResponsiveHelper.height(38),
+            radius: ResponsiveHelper.borderRadius(50),
+            padding: ResponsiveHelper.symmetric(horizontal: 10, vertical: 8),
+            backgroundColor: statusBgColor ?? AppColors.green,
+            child: Text(
+              status ?? "Complete",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.bodyMedium.copyWith(
+                fontSize: ResponsiveHelper.fontSize(14),
+                color: AppColors.white,
               ),
+            ),
+          ),
         ],
       ),
     );

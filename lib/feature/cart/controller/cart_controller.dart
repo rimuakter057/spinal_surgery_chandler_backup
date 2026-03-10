@@ -2,6 +2,7 @@ import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/cart/models/cart_details_model.dart';
 import 'package:chandler_app/feature/cart/models/cart_model.dart';
+import 'package:chandler_app/feature/history/model/history_model.dart' hide Items;
 import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/feature/save/models/bookmark_model.dart';
 import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
@@ -180,4 +181,60 @@ class CartController extends GetxController {
       return false;
     }
   }
+
+
+
+  ///get history
+
+
+
+  /// get order history api ====================================
+  /// get order history api ====================================
+  final RxBool isLoadingHistory = false.obs;       // প্রথম পেজ loader
+  final RxBool isLoadingMoreHistory = false.obs;   // ✅ scroll pagination loader
+  final RxList<Orders> orderHistory = <Orders>[].obs;
+  final RxInt currentPage = 1.obs;
+  final RxInt totalPages = 1.obs;
+  final int historyLimit = 8;
+
+  Future<void> fetchOrderHistory({int page = 1}) async {
+    // duplicate call বন্ধ করো
+    if (isLoadingHistory.value || isLoadingMoreHistory.value) return;
+    if (page > totalPages.value && page != 1) return;
+
+    // ✅ page 1 = full loader | page 2+ = linear indicator
+    if (page == 1) {
+      isLoadingHistory.value = true;
+    } else {
+      isLoadingMoreHistory.value = true;
+    }
+
+    final response = await ApiClient.getData(
+      ApiUrl.getAllHistory(page: page, limit: historyLimit),
+    );
+
+    // দুইটাই false করো
+    isLoadingHistory.value = false;
+    isLoadingMoreHistory.value = false;
+
+    if (response.statusCode == 200) {
+      final historyModel = HistoryModel.fromJson(response.body['data']);
+
+      final int total = historyModel.totalOrders ?? 0;
+      totalPages.value = (total / historyLimit).ceil();
+
+      if (page == 1) orderHistory.clear();
+      orderHistory.addAll(historyModel.orders ?? []);
+      currentPage.value = page;
+
+      debugPrint("✅ Page: $page / ${totalPages.value} | Total: $total");
+    } else {
+      debugPrint("❌ History fetch failed: ${response.statusText}");
+    }
+  }
+
+
+
+
+
 }

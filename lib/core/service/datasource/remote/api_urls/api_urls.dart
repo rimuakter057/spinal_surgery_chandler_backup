@@ -31,12 +31,10 @@ class ApiUrl {
 
 static const String createComplain="/complaints/create-request";
 static  String getSingleComplain({complainId})=>"/complaints/get-single/$complainId";
-  static String getAllComplain({
-    required String status,
+  static String getAllHistory({
     required int page,
     required int limit,
-  }) =>
-      "/complaints/my?status=$status&page=$page&limit=$limit";
+  }) => "/orders?page=$page&limit=$limit";
 
 
 
