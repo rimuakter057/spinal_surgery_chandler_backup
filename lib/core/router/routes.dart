@@ -6,7 +6,6 @@ import 'package:chandler_app/feature/auth/presentation/screens/sign_up_screen.da
 import 'package:chandler_app/feature/auth/presentation/screens/splash_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_details_screen.dart';
-import 'package:chandler_app/feature/cart/presentation/screens/cart_list_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
 import 'package:chandler_app/feature/home/model/home_model.dart';
@@ -71,8 +70,9 @@ class AppRouter {
         name: RoutesPath.shoreLine,
         path: RoutesPath.shoreLine.addBasePath,
         pageBuilder: (context, state) {
+          final parentId = state.extra as String? ?? "";
           return _buildPageWithAnimation(
-            child:  ShorelineScreen(),
+            child:  ShorelineScreen(parentId: parentId,),
             state: state,
           );
         },

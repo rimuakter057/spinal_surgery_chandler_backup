@@ -34,7 +34,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ResponsiveHelper.height(164),
+      width: ResponsiveHelper.width(164),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
@@ -52,14 +52,32 @@ class ProductCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-
-
-
-                  child: Image.network(
+                  // 🔥 null / empty image → placeholder
+                  child: imageUrl.isEmpty || imageUrl.contains('/null')
+                      ? Container(
+                    height: ResponsiveHelper.height(90),
+                    width: double.infinity,
+                    color: Colors.grey.shade200,
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      color: Colors.grey,
+                    ),
+                  )
+                      : Image.network(
                     imageUrl,
-                    height: ResponsiveHelper.height(96),
+                    height: ResponsiveHelper.height(100),
                     width: double.infinity,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Container(
+                          height: ResponsiveHelper.height(100),
+                          width: double.infinity,
+                          color: Colors.grey.shade200,
+                          child: const Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey,
+                          ),
+                        ),
                   ),
                 ),
                 Positioned(

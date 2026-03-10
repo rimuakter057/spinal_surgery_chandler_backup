@@ -1,10 +1,142 @@
+// import 'package:chandler_app/core/router/route_path.dart';
+// import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
+// import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+// import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
+// import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
+// import 'package:chandler_app/utils/app_assets/app_assets.dart';
+// import 'package:chandler_app/utils/app_const/app_const.dart';
+// import 'package:chandler_app/utils/color/app_colors.dart';
+// import 'package:chandler_app/utils/extension/base_extension.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:go_router/go_router.dart';
+//
+// class ShorelineScreen extends StatefulWidget {
+//   const ShorelineScreen({super.key, required this.parentId});
+//
+//   final String parentId;
+//
+//   @override
+//   State<ShorelineScreen> createState() => _ShorelineScreenState();
+// }
+//
+// class _ShorelineScreenState extends State<ShorelineScreen> {
+//   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       key: scaffoldKey, // 🔥 important
+//       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
+//
+//       appBar: AppBar(
+//         automaticallyImplyLeading: false,
+//         scrolledUnderElevation: 0,
+//         leading: IconButton(
+//           onPressed: () {
+//             Navigator.pop(context);
+//           },
+//           icon: CustomImage(
+//             imageSrc: AppAssets.back,
+//             height: ResponsiveHelper.height(24), // small icon size
+//             width: ResponsiveHelper.width(24),
+//             fit: BoxFit.contain,
+//           ),
+//         ),
+//
+//         title: Text(
+//           "Posterior Cervical Fixation",
+//           maxLines: 1,
+//           overflow: TextOverflow.ellipsis,
+//           style: context.titleSmall,
+//         ),
+//
+//         actions: [
+//           Padding(
+//             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
+//             child: GestureDetector(
+//               onTap: () {
+//                 context.pushNamed(RoutesPath.notification);
+//               },
+//               child: CustomImage(imageSrc: AppAssets.notification),
+//             ),
+//           ),
+//         ],
+//       ),
+//
+//       body: SingleChildScrollView(
+//         child: Padding(
+//           padding: ResponsiveHelper.all(8.0),
+//           child: Column(
+//             children: [
+//               ///search bar=============================
+//               TextField(
+//                 decoration: InputDecoration(
+//                   hintText: "Search here...",
+//                   hintStyle: context.bodyMedium.copyWith(
+//                     color: AppColors.searchTextColor,
+//                   ),
+//                 ),
+//               ),
+//
+//               SizedBox(height: ResponsiveHelper.spacing(12)),
+//
+//               GridView.builder(
+//                 shrinkWrap: true,
+//                 physics: NeverScrollableScrollPhysics(),
+//
+//                 itemCount: 3,
+//
+//                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                   crossAxisCount: 2,
+//
+//                   crossAxisSpacing: ResponsiveHelper.spacing(12),
+//                   mainAxisSpacing: ResponsiveHelper.spacing(12),
+//
+//                   childAspectRatio: 0.9,
+//                 ),
+//
+//                 itemBuilder: (context, index) {
+//                   return ProductCard(
+//                     isBookmarked: false.obs,
+//                     imageUrl: AppConstant.unknown,
+//
+//                     title: 'Reform POCT',
+//
+//                     onAddToCart: () {},
+//                     tapDetails: () {},
+//
+//                     onBookmark: () {},
+//
+//                     onInfo: () {},
+//                   );
+//                 },
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+
+
 import 'package:chandler_app/core/router/route_path.dart';
+import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
+import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
+import 'package:chandler_app/feature/home/controller/home_controller.dart';
+import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
+import 'package:chandler_app/share/widgets/custom_loader/custom_loader.dart';
+import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
-import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +144,9 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ShorelineScreen extends StatefulWidget {
-  const ShorelineScreen({super.key});
+  const ShorelineScreen({super.key, required this.parentId});
+
+  final String parentId;
 
   @override
   State<ShorelineScreen> createState() => _ShorelineScreenState();
@@ -21,96 +155,189 @@ class ShorelineScreen extends StatefulWidget {
 class _ShorelineScreenState extends State<ShorelineScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final HomeController controller = Get.find<HomeController>();
+
+  final TextEditingController searchController = TextEditingController();
+  final RxString searchQuery = ''.obs;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.fetchProducts(parentId: widget.parentId, context: context);
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _onRefresh() async {
+    await controller.fetchProducts(parentId: widget.parentId, context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey, // 🔥 important
+      key: scaffoldKey,
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
           icon: CustomImage(
             imageSrc: AppAssets.back,
-            height: ResponsiveHelper.height(24), // small icon size
+            height: ResponsiveHelper.height(24),
             width: ResponsiveHelper.width(24),
             fit: BoxFit.contain,
           ),
         ),
-
         title: Text(
-          "Posterior Cervical Fixation",
+          "Products",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.titleSmall,
         ),
-
         actions: [
           Padding(
             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
-            child: GestureDetector(
-              onTap: () {
-                context.pushNamed(RoutesPath.notification);
-              },
-              child: CustomImage(imageSrc: AppAssets.notification),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () => context.pushNamed(RoutesPath.notification),
+                  child: CustomImage(imageSrc: AppAssets.notification),
+                ),
+                SizedBox(width: ResponsiveHelper.spacing(12)),
+                GestureDetector(
+                  onTap: () => scaffoldKey.currentState!.openDrawer(),
+                  child: CustomImage(imageSrc: AppAssets.menu),
+                ),
+              ],
             ),
           ),
         ],
       ),
-
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: ResponsiveHelper.all(8.0),
-          child: Column(
-            children: [
-              ///search bar=============================
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Search here...",
-                  hintStyle: context.bodyMedium.copyWith(
-                    color: AppColors.searchTextColor,
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: ResponsiveHelper.all(8.0),
+            child: Column(
+              children: [
+                /// Search Bar
+                TextField(
+                  controller: searchController,
+                  onChanged: (val) => searchQuery.value = val.toLowerCase(),
+                  decoration: InputDecoration(
+                    hintText: "Search here...",
+                    hintStyle: context.bodyMedium.copyWith(
+                      color: AppColors.searchTextColor,
+                    ),
+                prefixIcon: Padding(
+                  padding:  EdgeInsets.only(left: ResponsiveHelper.width(8)),
+            child: CustomImage(imageSrc: AppAssets.search),
+          ),
+                    suffixIcon: Obx(
+                          () => searchQuery.value.isNotEmpty
+                          ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          searchController.clear();
+                          searchQuery.value = '';
+                        },
+                      )
+                          : const SizedBox.shrink(),
+                    ),
                   ),
                 ),
-              ),
 
-              SizedBox(height: ResponsiveHelper.spacing(12)),
+                SizedBox(height: ResponsiveHelper.spacing(12)),
 
-              GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                /// Product Grid
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: Center(child: CustomLoader()),
+                    );
+                  }
 
-                itemCount: 3,
+                  final filtered = searchQuery.value.isEmpty
+                      ? controller.productList.toList()
+                      : controller.productList
+                      .where(
+                        (e) => (e.title ?? '').toLowerCase().contains(
+                      searchQuery.value,
+                    ),
+                  )
+                      .toList();
 
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  if (filtered.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: Center(child: Text("No Products Found")),
+                    );
+                  }
 
-                  crossAxisSpacing: ResponsiveHelper.spacing(12),
-                  mainAxisSpacing: ResponsiveHelper.spacing(12),
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filtered.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: ResponsiveHelper.spacing(12),
+                      mainAxisSpacing: ResponsiveHelper.spacing(12),
+                      childAspectRatio: 0.9,
+                    ),
 
-                  childAspectRatio: 0.9,
-                ),
 
-                itemBuilder: (context, index) {
-                  return ProductCard(
-                    isBookmarked: false.obs,
-                    imageUrl: AppConstant.unknown,
 
-                    title: 'Reform POCT',
+                    itemBuilder: (context, index) {
+                      final item = filtered[index];
 
-                    onAddToCart: () {},
-                    tapDetails: () {},
 
-                    onBookmark: () {},
+                      final bannerUrl = item.productInfo?.bannerImageUrl;
+                      final imageUrl = bannerUrl != null
+                          ? "${ApiUrl.primaryUrl}/${bannerUrl.replaceAll("\\", "/")}"
+                          : "";
+                      return ProductCard(
+                        isBookmarked: item.isBookmarked,
+                        imageUrl: imageUrl, // empty হলে ProductCard এ handle করো
+                        title: item.title ?? "",
+                        onAddToCart: () async {
+                          final success = await controller.addToCart(
+                            itemId: item.id ?? "",
+                            itemTitle: item.title ?? "",
+                            itemImage: item.productInfo?.bannerImageUrl ?? "",
+                          );
+                          if (success) {
+                            CustomSnackbar.success(context: context, message: "Added to cart!");
+                          } else {
+                            CustomSnackbar.error(context, "Failed to add to cart");
+                          }
+                        },
+                        tapDetails: () {
+                          debugPrint("=== id: ${item.id}");
+                          context.pushNamed(RoutesPath.productDetailsScreen, extra: item.id);
+                        },
+                        onBookmark: () async {
+                          controller.toggleBookmark(itemId: item.id.toString());
+                        },
+                        onInfo: () {},
+                      );
+                    },
 
-                    onInfo: () {},
+
+
+
                   );
-                },
-              ),
-            ],
+                }),
+              ],
+            ),
           ),
         ),
       ),

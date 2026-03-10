@@ -112,7 +112,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                     hintStyle: context.bodyMedium.copyWith(
                       color: AppColors.searchTextColor,
                     ),
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: Padding(
+                      padding:  EdgeInsets.only(left: ResponsiveHelper.width(8)),
+                      child: CustomImage(imageSrc: AppAssets.search),
+                    ),
                     suffixIcon: Obx(
                           () => searchQuery.value.isNotEmpty
                           ? IconButton(
@@ -163,46 +166,9 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                       crossAxisCount: 2,
                       crossAxisSpacing: ResponsiveHelper.spacing(12),
                       mainAxisSpacing: ResponsiveHelper.spacing(12),
-                      childAspectRatio: 0.9,
+                      childAspectRatio: 0.88,
                     ),
 
-                    // itemBuilder: (context, index) {
-                    //   final item = filtered[index];
-                    //   final imageUrl =
-                    //       "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
-                    //
-                    //   return ProductCard(
-                    //     isBookmarked: item.isBookmarked,
-                    //     imageUrl: imageUrl,
-                    //     title: item.title ?? "",
-                    //     onAddToCart: () async {
-                    //       final success = await controller.addToCart(
-                    //         itemId: item.id ?? "",
-                    //         itemTitle: item.title ?? "",
-                    //         itemImage: item.productInfo?.bannerImageUrl ?? "",
-                    //       );
-                    //
-                    //       if (success) {
-                    //         CustomSnackbar.success(
-                    //             context: context, message: "Added to cart!");
-                    //       } else {
-                    //         CustomSnackbar.error(
-                    //             context, "Failed to add to cart");
-                    //       }
-                    //     },
-                    //     tapDetails: () {
-                    //       debugPrint("=== id: ${item.id}");
-                    //       context.pushNamed(RoutesPath.productDetailsScreen,
-                    //           extra: item.id);
-                    //     },
-                    //     onBookmark: () async {
-                    //       controller.toggleBookmark(
-                    //         itemId: item.id.toString(),
-                    //       );
-                    //     },
-                    //     onInfo: () {},
-                    //   );
-                    // },
 
 
 
@@ -215,8 +181,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                         if (!isProduct) {
                           return GestureDetector(
                             onTap: () {
-
-                              context.pushNamed(RoutesPath.shoreLine);
+                              debugPrint("=== shoreline parentId: ${item.id}"); // verify করো
+                              context.pushNamed(RoutesPath.shoreLine,
+                              extra: item.id
+                              );
 
 
 
