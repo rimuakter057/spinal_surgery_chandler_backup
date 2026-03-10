@@ -131,23 +131,6 @@ class HomeController extends GetxController {
     }
     isLoading.value = false;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // ─────────────────────────────────────────────────────────
   // MainInformationScreen initState এ call হবে
   // productList এ data আসবে
@@ -297,7 +280,8 @@ class HomeController extends GetxController {
   void _showDialog({
     required List<HomeModel> children,
     required BuildContext context,
-  }) {
+  })
+  {
     showDialog(
       context: context,
       builder: (ctx) => DialogWidget(

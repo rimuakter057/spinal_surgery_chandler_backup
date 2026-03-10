@@ -165,44 +165,117 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                       mainAxisSpacing: ResponsiveHelper.spacing(12),
                       childAspectRatio: 0.9,
                     ),
-                    itemBuilder: (context, index) {
-                      final item = filtered[index];
 
-                      final imageUrl =
-                          "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
+                    // itemBuilder: (context, index) {
+                    //   final item = filtered[index];
+                    //   final imageUrl =
+                    //       "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
+                    //
+                    //   return ProductCard(
+                    //     isBookmarked: item.isBookmarked,
+                    //     imageUrl: imageUrl,
+                    //     title: item.title ?? "",
+                    //     onAddToCart: () async {
+                    //       final success = await controller.addToCart(
+                    //         itemId: item.id ?? "",
+                    //         itemTitle: item.title ?? "",
+                    //         itemImage: item.productInfo?.bannerImageUrl ?? "",
+                    //       );
+                    //
+                    //       if (success) {
+                    //         CustomSnackbar.success(
+                    //             context: context, message: "Added to cart!");
+                    //       } else {
+                    //         CustomSnackbar.error(
+                    //             context, "Failed to add to cart");
+                    //       }
+                    //     },
+                    //     tapDetails: () {
+                    //       debugPrint("=== id: ${item.id}");
+                    //       context.pushNamed(RoutesPath.productDetailsScreen,
+                    //           extra: item.id);
+                    //     },
+                    //     onBookmark: () async {
+                    //       controller.toggleBookmark(
+                    //         itemId: item.id.toString(),
+                    //       );
+                    //     },
+                    //     onInfo: () {},
+                    //   );
+                    // },
 
-                      return ProductCard(
-                        isBookmarked: item.isBookmarked,
-                        imageUrl: imageUrl,
-                        title: item.title ?? "",
-                        onAddToCart: () async {
-                          final success = await controller.addToCart(
-                            itemId: item.id ?? "",
-                            itemTitle: item.title ?? "",
-                            itemImage: item.productInfo?.bannerImageUrl ?? "",
+
+
+
+                      itemBuilder: (context, index) {
+                        final item = filtered[index];
+                        final isProduct = item.type?.toUpperCase() == "PRODUCT"; // 🔥 এখানে
+
+                        // Non-PRODUCT → simple title container
+                        if (!isProduct) {
+                          return GestureDetector(
+                            onTap: () {
+
+                              context.pushNamed(RoutesPath.shoreLine);
+
+
+
+                            },
+
+
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(12),
+
+                              ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(12),
+                              child: Text(
+                                item.title ?? "",
+                                textAlign: TextAlign.center,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.titleMedium.copyWith(color: AppColors.white),
+                              ),
+                            ),
                           );
+                        }
 
-                          if (success) {
-                            CustomSnackbar.success(
-                                context: context, message: "Added to cart!");
-                          } else {
-                            CustomSnackbar.error(
-                                context, "Failed to add to cart");
-                          }
-                        },
-                        tapDetails: () {
-                          debugPrint("=== id: ${item.id}");
-                          context.pushNamed(RoutesPath.productDetailsScreen,
-                              extra: item.id);
-                        },
-                        onBookmark: () async {
-                          controller.toggleBookmark(
-                            itemId: item.id.toString(),
-                          );
-                        },
-                        onInfo: () {},
-                      );
-                    },
+                        // PRODUCT → existing ProductCard
+                        final imageUrl =
+                            "${ApiUrl.primaryUrl}/${item.productInfo?.bannerImageUrl?.replaceAll("\\", "/")}";
+
+                        return ProductCard(
+                          isBookmarked: item.isBookmarked,
+                          imageUrl: imageUrl,
+                          title: item.title ?? "",
+                          onAddToCart: () async {
+                            final success = await controller.addToCart(
+                              itemId: item.id ?? "",
+                              itemTitle: item.title ?? "",
+                              itemImage: item.productInfo?.bannerImageUrl ?? "",
+                            );
+                            if (success) {
+                              CustomSnackbar.success(context: context, message: "Added to cart!");
+                            } else {
+                              CustomSnackbar.error(context, "Failed to add to cart");
+                            }
+                          },
+                          tapDetails: () {
+                            debugPrint("=== id: ${item.id}");
+                            context.pushNamed(RoutesPath.productDetailsScreen, extra: item.id);
+                          },
+                          onBookmark: () async {
+                            controller.toggleBookmark(itemId: item.id.toString());
+                          },
+                          onInfo: () {},
+                        );
+                      },
+
+
+
+
                   );
                 }),
               ],
