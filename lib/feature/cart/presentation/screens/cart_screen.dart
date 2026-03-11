@@ -2,6 +2,7 @@ import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/add_to_cart_widget.dart';
+import 'package:chandler_app/helper/image_handler/image_handler.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
@@ -151,7 +152,7 @@ class _CartScreenState extends State<CartScreen> {
                           return AddToCartWidget(
                             title: item.itemTitle ?? "",
                             price: item.quantity.toString(),
-                            image: imageUrl,
+                            image: ImageHandler.imagesHandle(item.itemImage),
                             onTapDetails: () {
                               context.pushNamed(
                                 RoutesPath.productDetailsScreen,

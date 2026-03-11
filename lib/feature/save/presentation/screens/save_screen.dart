@@ -1,5 +1,7 @@
+import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/feature/save/presentation/widgets/delete_confirmation_widget.dart';
+import 'package:chandler_app/helper/image_handler/image_handler.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
@@ -10,6 +12,7 @@ import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class SaveScreen extends StatefulWidget {
   const SaveScreen({super.key});
@@ -84,8 +87,8 @@ class _SaveScreenState extends State<SaveScreen> {
                             ? CustomNetworkImage(
                                 height: ResponsiveHelper.iconSize(88),
                                 width: ResponsiveHelper.iconSize(126),
-                                imageUrl:
-                                    item.item!.productInfo!.bannerImageUrl!,
+                                imageUrl:ImageHandler.imagesHandle(item.item!.productInfo!.bannerImageUrl!,)
+                                    
                               )
                             : CustomImage(
                                 imageSrc: AppAssets.doctorImage,
@@ -109,7 +112,16 @@ class _SaveScreenState extends State<SaveScreen> {
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: ResponsiveHelper.spacing(8)),
-                            Text("details..."),
+                            GestureDetector(
+
+                                onTap: (){
+                                  context.pushNamed(
+                                    RoutesPath.productDetailsScreen,
+                                    extra: item.itemId,
+                                  );
+                                },
+
+                                child: Text("details...")),
                           ],
                         ),
                       ),
