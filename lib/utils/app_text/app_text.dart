@@ -110,9 +110,9 @@ class AppText {
   static const String download = "Download";
 
 
-  static const String orderId="Order Id";
-  static const String totalItem="Total item";
-  static const String deliveredDate="Delivered Date";
+  static const String orderId="Order Id: ";
+  static const String totalItem="Total item: ";
+  static const String deliveredDate="Delivered Date: ";
 
 
 }

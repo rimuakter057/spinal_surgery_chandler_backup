@@ -37,7 +37,7 @@ class AppColors {
   static const Color greyTextColor = Color(0x7F7F7F80);
   static const Color dividerColor = Color(0xFFE2E2E2);
   static const Color inputBorderColor = Color(0xFFD1D5DB);
-  static const Color fillColorColor = Color(0xFFEBEBEB);
+  static const Color fillColor = Color(0xFFEBEBEB);
   static const Color labelTextColor=Color(0xFF374151);
   static const Color errorColor = Color(0xffFF0000);
   static const Color hintColor = Color(0x7F7F7F80);

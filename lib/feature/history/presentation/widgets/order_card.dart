@@ -29,7 +29,8 @@ class OrderCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      backgroundColor: AppColors.containerGreyBgColor.withAlpha(70),
+      backgroundColor: AppColors.fillColor,
+      padding: ResponsiveHelper.symmetric(vertical: 20,horizontal: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

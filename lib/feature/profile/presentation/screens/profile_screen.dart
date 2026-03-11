@@ -110,20 +110,10 @@ class ProfileScreen extends StatelessWidget {
             style: context.bodyMedium.copyWith(color: AppColors.white),
           ),
 
-          SizedBox(height: ResponsiveHelper.spacing(8)),
+          SizedBox(height: ResponsiveHelper.spacing(16)),
 
-          /// Address
-          Text(
-            AppText.addressLabel,
-            style: context.bodyMedium.copyWith(color: AppColors.white),
-          ),
-          SizedBox(height: ResponsiveHelper.spacing(4)),
-          Text(
-            isLoading ? "" : profile?['address'] ?? '',
-            style: context.bodyMedium.copyWith(color: AppColors.white),
-          ),
 
-          SizedBox(height: ResponsiveHelper.spacing(8)),
+
 
           /// Email
           Text(

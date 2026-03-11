@@ -81,7 +81,7 @@ final ThemeData lightTheme = ThemeData(
   /// InputDecoration Theme ==============================
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: AppColors.fillColorColor,
+    fillColor: AppColors.fillColor,
     iconColor: AppColors.primaryColor,
     prefixIconColor: AppColors.primaryColor,
     suffixIconColor: AppColors.primaryColor,
@@ -106,11 +106,11 @@ final ThemeData lightTheme = ThemeData(
 
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
-      borderSide: BorderSide(color: AppColors.fillColorColor),
+      borderSide: BorderSide(color: AppColors.fillColor),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
-      borderSide: BorderSide(color: AppColors.fillColorColor),
+      borderSide: BorderSide(color: AppColors.fillColor),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(ResponsiveHelper.borderRadius(12)),
