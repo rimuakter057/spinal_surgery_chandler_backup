@@ -177,7 +177,8 @@ class ApiClient extends GetxService {
     Map<String, String> body, {
     List<MultipartBody>? multipartBody,
     Map<String, String>? headers,
-  }) async {
+  }) async
+  {
     try {
       bearerToken = await SharePrefsHelper.getString(AppConstant.bearerToken);
 

@@ -3,7 +3,6 @@ import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,12 +12,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBack;
   final double leadingWidth;
   final double iconSize;
+  final bool isBack;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.leadingIcon,
     this.onBack,
+    this.isBack = true,
     this.leadingWidth = 48,
     this.iconSize = 30,
   });
@@ -28,12 +29,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       scrolledUnderElevation: 0,
       leadingWidth: leadingWidth.w,
-      leading: GestureDetector(
-        onTap:
-            onBack ??
-            () {
-              context.pop();
-            },
+      leading: isBack == false
+          ? null
+          : GestureDetector(
+        onTap: onBack ?? () => context.pop(),
         child: Center(
           child: CustomImage(
             imageSrc: leadingIcon ?? AppAssets.back,

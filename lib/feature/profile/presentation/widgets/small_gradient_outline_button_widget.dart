@@ -10,12 +10,14 @@ class SmallOutlineGradientButtonRow extends StatelessWidget {
     required this.outlineOnTap,
     required this.gradientTitle,
     required this.gradientOnTap,
+
   });
 
   final String gradientTitle;
   final String outlineTitle;
   final VoidCallback gradientOnTap;
   final VoidCallback outlineOnTap;
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class SmallOutlineGradientButtonRow extends StatelessWidget {
 
         Expanded(
           child: GestureDetector(
-            onTap: gradientOnTap,
+            onTap:  gradientOnTap,
             child: Container(
               width: double.infinity,
               padding: ResponsiveHelper.symmetric(horizontal: 24, vertical: 8),
@@ -59,7 +61,8 @@ class SmallOutlineGradientButtonRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 color: AppColors.primaryColor,
               ),
-              child: Text(
+              child:
+                  Text(
                 gradientTitle,
                 textAlign: TextAlign.center,
                 style: context.bodyLarge.copyWith(color: AppColors.white),

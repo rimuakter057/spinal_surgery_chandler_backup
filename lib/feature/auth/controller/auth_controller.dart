@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:chandler_app/core/service/datasource/remote/api_client.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
@@ -223,6 +224,55 @@ class AuthController extends GetxController {
       debugPrint("❌ Profile fetch failed: ${response.statusText}");
     }
   }
+
+
+
+
+
+
+
+
+  ///update profile==========================================================
+  RxBool isLoadingUpdateProfile = false.obs;
+
+  Future<bool> updateProfile({
+    required String fullName,
+    File? avatar,
+  }) async {
+    isLoadingUpdateProfile.value = true;
+    errorMessage.value = '';
+
+    final List<MultipartBody>? multipartFiles = avatar != null
+        ? [MultipartBody('avatar', avatar)]
+        : null;
+
+    final Response response = await ApiClient.patchMultipartData(
+      ApiUrl.updateProfile,
+      {"full_name": fullName},
+      multipartBody: multipartFiles,
+    );
+
+    isLoadingUpdateProfile.value = false;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = response.body['data'];
+      profileData.value = data; // update local profile instantly
+      return true;
+    } else {
+      _setErrorMessage(response.body?['message'] ?? 'Something went wrong');
+      return false;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
 
 
 }

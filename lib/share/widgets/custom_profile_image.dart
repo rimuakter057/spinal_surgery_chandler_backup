@@ -1,3 +1,4 @@
+import 'package:chandler_app/helper/image_handler/image_handler.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class CustomProfileAvatar extends StatelessWidget {
         shape: BoxShape.circle,
 
         image: DecorationImage(
-          image: NetworkImage(image??AppConstant.unknown),
+          image: NetworkImage(ImageHandler.imagesHandle(image)),
           fit: BoxFit.cover,
         ),
       ),
