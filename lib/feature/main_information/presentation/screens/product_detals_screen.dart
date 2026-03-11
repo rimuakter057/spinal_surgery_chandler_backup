@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:chandler_app/feature/cart/controller/cart_controller.dart';
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
+import 'package:chandler_app/helper/download-helper_file/download_helper.dart';
 import 'package:chandler_app/share/widgets/custom_loader/custom_loader.dart';
 import 'package:chandler_app/share/widgets/custom_snack_bar/custom_snack_bar.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
@@ -16,8 +14,6 @@ import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -45,6 +41,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     cartController.fetchSingleDetails(itemId: widget.id);
   }
 
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +71,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         final info = product?.productInfo;
         final videoUrl = _buildUrl(info?.videoFileUrl);
         final brochureUrl = _buildUrl(info?.brochureFileUrl);
+
+        // ✅ Debug prints
+        debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        debugPrint("📦 product:===================== $product");
+        debugPrint("ℹ️  info:================= $info");
+        debugPrint("🎥 videoUrl:================= $videoUrl");
+        debugPrint("📄 brochureUrl:==================== $brochureUrl");
+        debugPrint("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
         return SingleChildScrollView(
           padding: ResponsiveHelper.all(20.0),
@@ -93,7 +105,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
               SizedBox(height: ResponsiveHelper.spacing(20)),
 
-              // Title + Brochure Download
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -107,14 +119,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   if (brochureUrl.isNotEmpty)
                     GestureDetector(
-                      onTap: () {
-                        ///download brochureUrl
-                        _downloadBrochure(
+                      onTap: () async {
+                        final success = await DownloadHelper.downloadFile(
+                          url: brochureUrl,
                           context: context,
-                          url: brochureUrl
-
                         );
 
+                        if (success) {
+                          CustomSnackbar.success(
+                            context: context,
+                            message: "Downloaded!",
+                          );
+                        } else {
+                          CustomSnackbar.error(context, "Download failed");
+                        }
                       },
                       child: Row(
                         children: [
@@ -149,7 +167,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         );
       }),
-
 
       bottomNavigationBar: Padding(
         padding: ResponsiveHelper.symmetric(horizontal: 20.0, vertical: 20.0),
@@ -197,38 +214,55 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-Future<void> _downloadBrochure({required String url,required BuildContext context}) async {
-  try {
-    // Permission check
-    if (Platform.isAndroid) {
-      final status = await Permission.storage.request();
-      if (!status.isGranted) {
-        CustomSnackbar.error(context, "Storage permission denied");
-        return;
-      }
-    }
-
-    CustomSnackbar.success(context: context, message: "Downloading...");
-
-    final dio = Dio();
-    final dir = await getApplicationDocumentsDirectory();
-    final fileName = url.split('/').last; // file name from url
-    final savePath = "${dir.path}/$fileName";
-
-    await dio.download(url, savePath);
-
-    CustomSnackbar.success(context: context, message: "Downloaded: $fileName");
-  } catch (e) {
-    CustomSnackbar.error(context, "Download failed");
-  }
-}
+//
+// Future<void> _downloadBrochure({
+//   required String url,
+//   required BuildContext context,
+// }) async
+// {
+//   try {
+//    // CustomSnackbar.success(context: context, message: "Downloading...");
+//
+//     final dio = Dio();
+//     final fileName = url.split('/').last.split('?').first;
+//
+//     Directory? dir;
+//     if (Platform.isAndroid) {
+//       dir = Directory('/storage/emulated/0/Download');
+//       if (!await dir.exists()) {
+//         dir = await getExternalStorageDirectory();
+//       }
+//     } else {
+//       dir = await getApplicationDocumentsDirectory();
+//     }
+//
+//     final savePath = "${dir!.path}/$fileName";
+//
+//     await dio.download(
+//       url,
+//       savePath,
+//       onReceiveProgress: (received, total) {
+//         if (total != -1) {
+//           debugPrint("Progress: ${(received / total * 100).toStringAsFixed(0)}%");
+//         }
+//       },
+//     );
+//
+//     // ✅ Media Scanner — file টা Gallery/Files app এ visible করে
+//     await Process.run('am', [
+//       'broadcast',
+//       '-a', 'android.intent.action.MEDIA_SCANNER_SCAN_FILE',
+//       '-d', 'file://$savePath',
+//     ]);
+//
+//     debugPrint("Saved to: $savePath");
+//
+//     CustomSnackbar.success(
+//       context: context,
+//       message: "Saved to Downloads/$fileName",
+//     );
+//   } catch (e) {
+//     debugPrint("Download error: $e");
+//     CustomSnackbar.error(context, "Download failed");
+//   }
+// }
