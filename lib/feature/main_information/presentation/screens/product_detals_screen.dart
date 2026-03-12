@@ -20,9 +20,11 @@ import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key, required this.id});
+  const ProductDetailsScreen({super.key, required this.id, required this.title});
 
   final String id;
+final String title;
+
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -60,7 +62,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Obx(() {
           final title = cartController.singleDetails.value?.title ?? "Product";
-          return CustomAppBar(title: title);
+          return CustomAppBar(title: widget.title);
         }),
       ),
 

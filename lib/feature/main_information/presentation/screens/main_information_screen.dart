@@ -16,9 +16,11 @@ import 'package:go_router/go_router.dart';
 import '../../../../share/widgets/custom_loader/custom_loader.dart';
 
 class MainInformationScreen extends StatefulWidget {
-  const MainInformationScreen({super.key, required this.parentId});
+  const MainInformationScreen({super.key, required this.parentId, required this.title,});
 
   final String parentId;
+final String title;
+
 
   @override
   State<MainInformationScreen> createState() => _MainInformationScreenState();
@@ -36,7 +38,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchProducts(parentId: widget.parentId, context: context);
+      controller.fetchProducts(
+          parentId: widget.parentId,
+
+          context: context);
     });
   }
 
@@ -68,7 +73,7 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
           ),
         ),
         title: Text(
-          "Products",
+         widget.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.titleSmall,
@@ -171,7 +176,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                             onTap: () {
                               debugPrint("=== shoreline parentId: ${item.id}");
                               context.pushNamed(RoutesPath.shoreLine,
-                              extra: item.id
+                                  extra: {
+                                    'parentId': item.id,
+                                    'title': item.title ?? "",
+                                  }
                               );
 
 
@@ -220,7 +228,12 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
                           },
                           tapDetails: () {
                             debugPrint("=== id: ${item.id}");
-                            context.pushNamed(RoutesPath.productDetailsScreen, extra: item.id);
+                            context.pushNamed(RoutesPath.productDetailsScreen,
+                                extra: {
+                                      "id": item.id,
+                                  "title": item.title,
+                                }
+                            );
                           },
                           onBookmark: () async {
                             controller.toggleBookmark(itemId: item.id.toString());

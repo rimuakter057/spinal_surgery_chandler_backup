@@ -16,9 +16,10 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ShorelineScreen extends StatefulWidget {
-  const ShorelineScreen({super.key, required this.parentId});
+  const ShorelineScreen({super.key, required this.parentId, required this.title});
 
   final String parentId;
+  final String title;
 
   @override
   State<ShorelineScreen> createState() => _ShorelineScreenState();
@@ -55,7 +56,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
-      appBar: CustomAppBar(title: "products"),
+      appBar: CustomAppBar(title: widget.title),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: SingleChildScrollView(
@@ -157,8 +158,13 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
                           }
                         },
                         tapDetails: () {
-                          debugPrint("=== id: ${item.id}");
-                          context.pushNamed(RoutesPath.productDetailsScreen, extra: item.id);
+                          debugPrint("=== id:============= ${item.id}");
+                          context.pushNamed(RoutesPath.productDetailsScreen,
+                              extra: {
+                                "id": item.id,
+                                "title": item.title,
+                              }
+                          );
                         },
                         onBookmark: () async {
                           controller.toggleBookmark(itemId: item.id.toString());

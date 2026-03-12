@@ -116,7 +116,10 @@ class _SaveScreenState extends State<SaveScreen> {
                                 onTap: (){
                                   context.pushNamed(
                                     RoutesPath.productDetailsScreen,
-                                    extra: item.itemId,
+                                    extra: {
+                                      "id": item.itemId,
+                                      "title": item.item!.title,
+                                    }
                                   );
                                 },
 

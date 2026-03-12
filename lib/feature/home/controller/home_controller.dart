@@ -239,7 +239,17 @@ class HomeController extends GetxController {
     );
 
     if (allProducts) {
-      context.pushNamed(RoutesPath.mainInformation, extra: rootItem.id);
+      context.pushNamed(RoutesPath.mainInformation,
+          extra: {
+            'parentId': rootItem.id,
+            'title': rootItem.title,
+          },
+      );
+
+
+      debugPrint("parentId================================:${rootItem.id}");
+      debugPrint("parentId================================:${rootItem.title}");
+
     } else {
       _showDialog(children: children, context: context);
     }
@@ -250,7 +260,15 @@ class HomeController extends GetxController {
   // ─────────────────────────────────────────────────────────
   Future<void> onDialogItemClick(HomeModel item, BuildContext context) async {
     if (item.type?.toUpperCase() == "PRODUCT") {
-      context.pushNamed(RoutesPath.mainInformation, extra: item.id);
+      context.pushNamed(RoutesPath.mainInformation, extra: {
+        'parentId': item.id,
+        'title': item.title,
+
+      },
+      );
+
+      debugPrint("parentId================================:${item.id}");
+      debugPrint("parentId================================:${item.title}");
       return;
     }
 
@@ -271,9 +289,14 @@ class HomeController extends GetxController {
       (e) => e.type?.toUpperCase() == "PRODUCT",
     );
 
-    if (allProducts) {
-      context.pushNamed(RoutesPath.mainInformation, extra: item.id);
-    } else {
+
+      if (allProducts) {
+        context.pushNamed(RoutesPath.mainInformation, extra: {
+          'parentId': item.id,
+          'title': item.title ?? "",
+        });
+      }
+     else {
       _showDialog(children: children, context: context);
     }
   }

@@ -42,7 +42,7 @@ class _CartScreenState extends State<CartScreen> {
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         title: Text(
-          "Posterior Cervical Fixation",
+          "Cart",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.titleSmall,
@@ -80,28 +80,28 @@ class _CartScreenState extends State<CartScreen> {
                 return Column(
                   children: [
 
-                    /// Search Bar
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search here...",
-                        hintStyle: context.bodyMedium.copyWith(
-                          color: AppColors.searchTextColor,
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(
-                            left: ResponsiveHelper.padding(16),
-                          ),
-                          child: CustomImage(
-                            imageSrc: AppAssets.search,
-                            height: ResponsiveHelper.iconSize(18),
-                            width: ResponsiveHelper.iconSize(18),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: ResponsiveHelper.height(12)),
+                    // /// Search Bar
+                    // TextField(
+                    //   decoration: InputDecoration(
+                    //     hintText: "Search here...",
+                    //     hintStyle: context.bodyMedium.copyWith(
+                    //       color: AppColors.searchTextColor,
+                    //     ),
+                    //     prefixIcon: Padding(
+                    //       padding: EdgeInsets.only(
+                    //         left: ResponsiveHelper.padding(16),
+                    //       ),
+                    //       child: CustomImage(
+                    //         imageSrc: AppAssets.search,
+                    //         height: ResponsiveHelper.iconSize(18),
+                    //         width: ResponsiveHelper.iconSize(18),
+                    //         fit: BoxFit.contain,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    //
+                    // SizedBox(height: ResponsiveHelper.height(12)),
 
                     /// Empty State
                     if (items.isEmpty) ...[
@@ -130,7 +130,11 @@ class _CartScreenState extends State<CartScreen> {
                             onTapDetails: () {
                               context.pushNamed(
                                 RoutesPath.productDetailsScreen,
-                                extra: item.itemId,
+                                extra: {
+                                  "id": item.itemId,
+                                  "title": item.itemTitle,
+
+                                },
                               );
                             },
                             onTapIncrement: () {

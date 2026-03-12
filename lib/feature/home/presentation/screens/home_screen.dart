@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return const SizedBox.shrink();
                 }),
 
-                /// 🔥 Cervicothoracic → rootList[0] এর id নিয়ে process করবে
+
                 Positioned(
                   top: height * 0.25,
                   right: width * 0.08,
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                /// 🔥 Thoracolumbar → rootList[1] এর id নিয়ে process করবে
+
                 Positioned(
                   bottom: height * 0.20,
                   left: width * 0.19,

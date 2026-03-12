@@ -5,7 +5,7 @@ import 'package:chandler_app/feature/auth/presentation/screens/login_screen.dart
 import 'package:chandler_app/feature/auth/presentation/screens/sign_up_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/splash_screen.dart';
 import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart';
-import 'package:chandler_app/feature/cart/presentation/screens/cart_details_screen.dart';
+
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
 import 'package:chandler_app/feature/history/presentation/screens/history_screen.dart';
@@ -53,17 +53,29 @@ class AppRouter {
         name: RoutesPath.mainInformation,
         path: RoutesPath.mainInformation.addBasePath,
         pageBuilder: (context, state) {
-          final parentId = state.extra as String;
+
+
+          final extra = state.extra;
+
+          String parentId = "";
+          String title = "";
+
+          if (extra is Map) {
+            parentId = extra['parentId'] ?? "";
+            title = extra['title'] ?? "";
+          } else if (extra is String) {
+            parentId = extra;
+          }
 
           return _buildPageWithAnimation(
-            child:  MainInformationScreen(parentId: parentId),
+            child: MainInformationScreen(
+              parentId: parentId,
+              title: title,
+            ),
             state: state,
           );
         },
       ),
-
-
-
 
 
 
@@ -71,14 +83,19 @@ class AppRouter {
         name: RoutesPath.shoreLine,
         path: RoutesPath.shoreLine.addBasePath,
         pageBuilder: (context, state) {
-          final parentId = state.extra as String? ?? "";
+          final data = state.extra as Map?;
+          final parentId = data?['parentId'] ?? "";
+          final title = data?['title'] ?? "";
+
           return _buildPageWithAnimation(
-            child:  ShorelineScreen(parentId: parentId,),
+            child: ShorelineScreen(
+              parentId: parentId,
+              title: title,       // ← add করুন
+            ),
             state: state,
           );
         },
       ),
-
 
 
 
@@ -215,35 +232,25 @@ class AppRouter {
 ///==============================================
 
 
-
-      GoRoute(
-        name: RoutesPath.cartDetailsScreen,
-        path: RoutesPath.cartDetailsScreen.addBasePath,
-        pageBuilder: (context, state) {
-          final product = state.extra as HomeModel;
-
-          return _buildPageWithAnimation(
-            child:  CartDetailsScreen(product: product,),
-            state: state,
-          );
-        },
-      ),
-
-
-
       GoRoute(
         name: RoutesPath.productDetailsScreen,
         path: RoutesPath.productDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final String id = state.extra as String? ?? '';
+
+          final data = state.extra as Map?;
+
+          final String id = data?['id'] ?? '';
+          final String title = data?['title'] ?? '';
 
           return _buildPageWithAnimation(
-            child:  ProductDetailsScreen(id: id,),
+            child: ProductDetailsScreen(
+              id: id,
+              title: title,
+            ),
             state: state,
           );
         },
       ),
-
 
 
       GoRoute(

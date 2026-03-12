@@ -304,27 +304,27 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             padding: ResponsiveHelper.all(16),
             child: Column(
               children: [
-                /// Search Bar
-                TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    hintText: "Search here...",
-                    hintStyle: context.bodyMedium.copyWith(
-                      color: AppColors.searchTextColor,
-                    ),
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(
-                        left: ResponsiveHelper.padding(16),
-                      ),
-                      child: CustomImage(
-                        imageSrc: AppAssets.search,
-                        height: ResponsiveHelper.iconSize(18),
-                        width: ResponsiveHelper.iconSize(18),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ),
+                // /// Search Bar
+                // TextField(
+                //   controller: searchController,
+                //   decoration: InputDecoration(
+                //     hintText: "Search here...",
+                //     hintStyle: context.bodyMedium.copyWith(
+                //       color: AppColors.searchTextColor,
+                //     ),
+                //     prefixIcon: Padding(
+                //       padding: EdgeInsets.only(
+                //         left: ResponsiveHelper.padding(16),
+                //       ),
+                //       child: CustomImage(
+                //         imageSrc: AppAssets.search,
+                //         height: ResponsiveHelper.iconSize(18),
+                //         width: ResponsiveHelper.iconSize(18),
+                //         fit: BoxFit.contain,
+                //       ),
+                //     ),
+                //   ),
+                // ),
 
                 SizedBox(height: ResponsiveHelper.spacing(16)),
 
