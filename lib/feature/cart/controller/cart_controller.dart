@@ -10,91 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
-  // ///get cart api====================================
-  // final RxBool isLoadingGetCart = false.obs;
-  // final RxList<Items> cartItems = <Items>[].obs;
-  // Future<void> fetchCart() async {
-  //   isLoadingGetCart.value = true;
-  //   final response = await ApiClient.getData(ApiUrl.cart);
-  //   isLoadingGetCart.value = false;
-  //   if (response.statusCode == 200) {
-  //     final cart = CartModel.fromJson(response.body['data']);
-  //     cartItems.assignAll(cart.items ?? []);
-  //   } else {
-  //     debugPrint(response.statusText);
-  //   }
-  // }
-
-  ///cart========================================================================
 
 
-
-
-//   final RxBool isLoadingGetCart = false.obs;
-//   final RxList<Items> cartItems = <Items>[].obs;
-//   final RxMap<String, int> itemQuantities = <String, int>{}.obs; // ✅ add
-//   final RxString cartId = "".obs;
-//
-//
-//   Future<void> fetchCart() async {
-//     isLoadingGetCart.value = true;
-//     final response = await ApiClient.getData(ApiUrl.cart);
-//     isLoadingGetCart.value = false;
-//     if (response.statusCode == 200) {
-//       final cart = CartModel.fromJson(response.body['data']);
-//       cartId.value = cart.id ?? ""; // ✅ cart id store
-//       cartItems.assignAll(cart.items ?? []);
-// /// cart id
-//       // for (var item in cart.items ?? []) {
-//       //   itemQuantities[item.itemId ?? ""] = item.quantity ?? 1;
-//       // }
-//
-//     ///id================
-//
-//       for (var item in cart.items ?? []) {
-//         itemQuantities[item.itemId ?? ""] = item.quantity ?? 1; // ✅ item.itemId
-//       }
-//
-//     } else {
-//       debugPrint(response.statusText);
-//     }
-//   }
-//
-//
-//   Future<void> incrementItem(String itemId) async {
-//     final current = itemQuantities[itemId] ?? 1;
-//     itemQuantities[itemId] = current + 1;
-//
-//     final response = await ApiClient.patchData(
-//       ApiUrl.updateItemQuantity(itemId: cartId.value), // ✅ cartId
-//       {"quantity": itemQuantities[itemId]},
-//     );
-//
-//     if (response.statusCode != 200) {
-//       itemQuantities[itemId] = current;
-//       debugPrint(response.statusText);
-//     }
-//   }
-//
-//   Future<void> decrementItem(String itemId) async {
-//     final current = itemQuantities[itemId] ?? 1;
-//     if (current <= 1) return;
-//
-//     itemQuantities[itemId] = current - 1;
-//
-//     final response = await ApiClient.patchData(
-//       ApiUrl.updateItemQuantity(itemId: cartId.value), // ✅ cartId
-//       {"quantity": itemQuantities[itemId]},
-//     );
-//
-//     if (response.statusCode != 200) {
-//       itemQuantities[itemId] = current;
-//       debugPrint(response.statusText);
-//     }
-//   }
-
-
-
+///fetch cart list====================================================
 
   final RxBool isLoadingGetCart = false.obs;
   final RxList<Items> cartItems = <Items>[].obs;
@@ -115,6 +33,8 @@ class CartController extends GetxController {
       debugPrint(response.statusText);
     }
   }
+
+  ///fetch increment count====================================================
 
   Future<void> incrementItem({required String id,required BuildContext context}) async {
     debugPrint("incrementItem called ====== id: $id"); // ✅
@@ -143,6 +63,8 @@ class CartController extends GetxController {
     }
   }
 
+  ///fetch decrement count====================================================
+
   Future<void> decrementItem({required String id,required BuildContext context}) async {
     final current = itemQuantities[id] ?? 1;
     if (current <= 1) return;
@@ -161,16 +83,6 @@ class CartController extends GetxController {
       CustomSnackbar.error(context, "To many request");
     }
   }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -270,7 +182,7 @@ class CartController extends GetxController {
     }
   }
 
-  ///get single details
+  ///get single details=============================================
   final RxBool isLoadingGetSingleDetails = false.obs;
   final Rxn<CartDetailsModel> singleDetails = Rxn<CartDetailsModel>();
 
@@ -332,12 +244,6 @@ class CartController extends GetxController {
   }
 
 
-
-  ///get history
-
-
-
-  /// get order history api ====================================
   /// get order history api ====================================
   final RxBool isLoadingHistory = false.obs;       // প্রথম পেজ loader
   final RxBool isLoadingMoreHistory = false.obs;   // ✅ scroll pagination loader

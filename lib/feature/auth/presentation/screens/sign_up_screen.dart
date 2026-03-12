@@ -99,10 +99,12 @@ class SignUpScreen extends StatelessWidget {
                   hint: AppText.enterConfirmedPassword,
                   controller: confirmedPassController,
                   validator: (v) {
-                    if (v == null || v.isEmpty)
+                    if (v == null || v.isEmpty) {
                       return 'Please confirm your password';
-                    if (v != passwordController.text)
+                    }
+                    if (v != passwordController.text) {
                       return 'Passwords do not match';
+                    }
                     return null;
                   },
                 ),
@@ -110,19 +112,22 @@ class SignUpScreen extends StatelessWidget {
                 gap,
                 gap,
                 gap,
-                //   ElevatedButton(onPressed: (){}, child: Text(AppText.signUp)),
 
-                // Sign Up Button
                 Obx(() {
-                  return ElevatedButton(
-                    onPressed: authController.inProgressSignup.value
-                        ? null
-                        : () => _onTapSignUp(context),
-
-                    child: authController.inProgressSignup.value
-                        ? CircularProgressIndicator(color: AppColors.white)
-                        : Text(AppText.signUp),
-                  );
+                  final isLoading = authController.inProgressSignup.value;
+                  return isLoading
+                      ? SizedBox(
+                          height: ResponsiveHelper.iconSize(24),
+                          width: ResponsiveHelper.iconSize(24),
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : ElevatedButton(
+                          onPressed: () => _onTapSignUp(context),
+                          child: Text(AppText.signUp),
+                        );
                 }),
 
                 SizedBox(height: ResponsiveHelper.height(12)),

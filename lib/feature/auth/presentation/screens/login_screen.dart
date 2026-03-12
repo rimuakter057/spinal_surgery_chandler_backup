@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Widget gap = SizedBox(height: ResponsiveHelper.height(24));
     return Scaffold(
-      appBar: CustomAppBar(title: AppText.login),
+      appBar: CustomAppBar(title: AppText.login,isBack: false,),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -128,16 +128,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               gap,
               gap,
-
               Obx(() {
-                return ElevatedButton(
-                  onPressed: authController.inProgressLogIn.value
-                      ? null
-                      : () => onTapLogin(),
-                  child: authController.inProgressLogIn.value
-                      ? CircularProgressIndicator(color: AppColors.white)
-                      : Text(AppText.signIn),
-                );
+                final isLoading = authController.inProgressLogIn.value;
+                return isLoading
+                    ? SizedBox(
+                        height: ResponsiveHelper.iconSize(24),
+                        width: ResponsiveHelper.iconSize(24),
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () => onTapLogin(),
+                        child: Text(AppText.signIn),
+                      );
               }),
 
               SizedBox(height: ResponsiveHelper.height(12)),
@@ -146,10 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 prefixText: AppText.dontHaveAccount,
                 actionText: AppText.signUp,
                 onActionTapped: () {
-                  context.pushNamed(
-                    RoutesPath.signUpScreen,
-                    extra: widget.role,
-                  );
+                  context.pushNamed(RoutesPath.signUpScreen);
                 },
                 isUnderline: true,
               ),
@@ -210,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await SharePrefsHelper.setBool(AppConstant.rememberMe, false);
         }
 
-        context.goNamed(RoutesPath.homeScreen);
+        context.goNamed(RoutesPath.mainNavScreen);
       } else {
         CustomSnackbar.error(context, authController.errorMessage.value);
       }

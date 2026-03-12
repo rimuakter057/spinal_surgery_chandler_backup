@@ -28,6 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       scrolledUnderElevation: 0,
+      automaticallyImplyLeading: false,
       leadingWidth: leadingWidth.w,
       leading: isBack == false
           ? null

@@ -34,11 +34,11 @@ class MyApp extends StatelessWidget {
             // ✅ SAFE INIT
             ResponsiveHelper.init(context);
 
-            return GetMaterialApp.router(
+            return MaterialApp.router(
               debugShowCheckedModeBanner: false,
               title: 'Chandler',
               theme: AppTheme.lightTheme,
-            initialBinding: DependencyInjection(), // ✅ auto inject,
+           // initialBinding: DependencyInjection(), // ✅ auto inject,
               routeInformationParser:
               AppRouter.initRoute.routeInformationParser,
               routerDelegate: AppRouter.initRoute.routerDelegate,

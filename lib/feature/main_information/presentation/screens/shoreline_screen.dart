@@ -3,6 +3,7 @@ import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.da
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/share/widgets/custom_loader/custom_loader.dart';
@@ -54,43 +55,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: CustomImage(
-            imageSrc: AppAssets.back,
-            height: ResponsiveHelper.height(24),
-            width: ResponsiveHelper.width(24),
-            fit: BoxFit.contain,
-          ),
-        ),
-        title: Text(
-          "Products",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.titleSmall,
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => context.pushNamed(RoutesPath.notification),
-                  child: CustomImage(imageSrc: AppAssets.notification),
-                ),
-                SizedBox(width: ResponsiveHelper.spacing(12)),
-                GestureDetector(
-                  onTap: () => scaffoldKey.currentState!.openDrawer(),
-                  child: CustomImage(imageSrc: AppAssets.menu),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(title: "products"),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: SingleChildScrollView(

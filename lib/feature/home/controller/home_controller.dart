@@ -89,6 +89,51 @@ class HomeController extends GetxController {
     }
   }
 
+
+  ///book mark=================================
+  Future<void> toggleBookmark({required String itemId}) async {
+    final item = productList.firstWhereOrNull((e) => e.id == itemId);
+    if (item == null) return;
+
+    // 🔥 আগে local toggle — fast UI response
+    item.isBookmarked.toggle();
+
+    try {
+      if (item.isBookmarked.value) {
+        final response = await ApiClient.postData(ApiUrl.addBookmark, {
+          "item_id": itemId,
+        });
+
+        if (response.statusCode != 200 && response.statusCode != 201) {
+          item.isBookmarked.toggle();
+          debugPrint("Add bookmark failed: ${response.body}");
+        }
+      } else {
+        final response = await ApiClient.deleteData(
+          ApiUrl.removeBookmark(id: itemId),
+        );
+
+        if (response.statusCode != 200) {
+          item.isBookmarked.toggle();
+          debugPrint("Remove bookmark failed: ${response.body}");
+        }
+      }
+    } catch (e) {
+      item.isBookmarked.toggle();
+      debugPrint("Bookmark error: $e");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
   /// 🔥 Root list — HomeScreen এর 2টা button এর জন্য
   RxList<HomeModel> rootList = <HomeModel>[].obs;
 
@@ -97,7 +142,12 @@ class HomeController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  Future<void> fetchRootNodes({required BuildContext context}) async {
+
+
+
+
+  Future<void> fetchRootNodes({required BuildContext context}) async
+  {
     isLoading.value = true;
     try {
       final response = await ApiClient.getData(ApiUrl.node);
@@ -123,7 +173,8 @@ class HomeController extends GetxController {
   Future<void> fetchProducts({
     required String parentId,
     required BuildContext context,
-  }) async {
+  }) async
+  {
     isLoading.value = true;
     productList.clear(); // 🔥 প্রতিবার fresh
     try {
@@ -233,7 +284,8 @@ class HomeController extends GetxController {
   Future<List<HomeModel>> _fetchChildren({
     required String parentId,
     required BuildContext context,
-  }) async {
+  }) async
+  {
     isLoading.value = true;
     List<HomeModel> result = [];
     try {
@@ -260,7 +312,8 @@ class HomeController extends GetxController {
   void _showDialog({
     required List<HomeModel> children,
     required BuildContext context,
-  }) {
+  })
+  {
     showDialog(
       context: context,
       builder: (ctx) => DialogWidget(
@@ -288,37 +341,39 @@ class HomeController extends GetxController {
     );
   }
 
-  ///book mark=================================
-  Future<void> toggleBookmark({required String itemId}) async {
-    final item = productList.firstWhereOrNull((e) => e.id == itemId);
-    if (item == null) return;
 
-    // 🔥 আগে local toggle — fast UI response
-    item.isBookmarked.toggle();
 
+
+  ///shoreline================
+  RxList<HomeModel> shorelineList = <HomeModel>[].obs; // ← নতুন
+
+  RxBool isLoadingShoreline = false.obs;
+
+  Future<void> fetchShorelineProducts({
+    required String parentId,
+    required BuildContext context,
+  }) async {
+    isLoadingShoreline.value = true;
+    shorelineList.clear();
     try {
-      if (item.isBookmarked.value) {
-        final response = await ApiClient.postData(ApiUrl.addBookmark, {
-          "item_id": itemId,
-        });
-
-        if (response.statusCode != 200 && response.statusCode != 201) {
-          item.isBookmarked.toggle();
-          debugPrint("Add bookmark failed: ${response.body}");
-        }
+      final response = await ApiClient.getData(
+        "${ApiUrl.node}?parent_id=$parentId",
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> list = response.body['data'] as List<dynamic>;
+        shorelineList.value = list.map((e) => HomeModel.fromJson(e)).toList();
+      } else if (response.statusCode == 401) {
+        context.goNamed(RoutesPath.loginScreen);
+        CustomSnackbar.error(context, "Please login again");
       } else {
-        final response = await ApiClient.deleteData(
-          ApiUrl.removeBookmark(id: itemId),
-        );
-
-        if (response.statusCode != 200) {
-          item.isBookmarked.toggle();
-          debugPrint("Remove bookmark failed: ${response.body}");
-        }
+        CustomSnackbar.error(context, "Failed to fetch products");
       }
     } catch (e) {
-      item.isBookmarked.toggle();
-      debugPrint("Bookmark error: $e");
+      CustomSnackbar.error(context, e.toString());
     }
+    isLoadingShoreline.value = false;
   }
+
+
+
 }

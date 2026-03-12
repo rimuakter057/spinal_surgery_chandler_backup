@@ -14,6 +14,7 @@ import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -175,16 +176,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
 
-
-
-
-
-
-
-
-
-
-
   Future<void> _handleSave() async {
     final name = nameController.text.trim();
     if (name.isEmpty) {
@@ -192,7 +183,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return;
     }
 
-    // কোনো change না হলে api call করবে না
+
     final originalName = _authController.profileData.value?['full_name'] ?? '';
     if (name == originalName && _selectedImage == null) {
       CustomSnackbar.error(context, 'Nothing to update');
@@ -211,7 +202,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         context: context,
         message: 'Profile updated successfully',
       );
-      Get.back();
+      context.pop();
     } else {
       CustomSnackbar.error(
         context,

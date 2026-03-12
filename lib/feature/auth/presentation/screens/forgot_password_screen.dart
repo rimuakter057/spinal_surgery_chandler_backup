@@ -42,16 +42,20 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 SizedBox(height: ResponsiveHelper.height(120)),
 
-                // forgot  Button
                 Obx(() {
-                  return ElevatedButton(
-                    onPressed: authController.inProgressForgot.value
-                        ? () {}
-                        : () => onTapForgot(context),
-
-                    child: authController.inProgressForgot.value
-                        ? CircularProgressIndicator(color: AppColors.white)
-                        : Text(AppText.sendOtp),
+                  final isLoading = authController.inProgressForgot.value;
+                  return isLoading
+                      ? SizedBox(
+                    height: ResponsiveHelper.iconSize(24),
+                    width: ResponsiveHelper.iconSize(24),
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                      strokeWidth: 2,
+                    ),
+                  )
+                      : ElevatedButton(
+                    onPressed: () => onTapForgot(context),
+                    child: Text(AppText.sendOtp),
                   );
                 }),
               ],

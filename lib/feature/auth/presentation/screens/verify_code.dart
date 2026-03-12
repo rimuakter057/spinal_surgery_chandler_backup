@@ -46,15 +46,21 @@ class VerifyCodeScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: ResponsiveHelper.height(120)),
+                ///verify code button===================================
                 Obx(() {
-                  return ElevatedButton(
-                    onPressed: authController.inProgressVerification.value
-                        ? () {}
-                        : () => onTapVerification(context),
-
-                    child: authController.inProgressVerification.value
-                        ? CircularProgressIndicator(color: AppColors.white)
-                        : Text(AppText.verify),
+                  final isLoading = authController.inProgressVerification.value;
+                  return isLoading
+                      ? SizedBox(
+                    height: ResponsiveHelper.iconSize(24),
+                    width: ResponsiveHelper.iconSize(24),
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                      strokeWidth: 2,
+                    ),
+                  )
+                      : ElevatedButton(
+                    onPressed: () => onTapVerification(context),
+                    child: Text(AppText.verify),
                   );
                 }),
               ],
@@ -78,7 +84,7 @@ class VerifyCodeScreen extends StatelessWidget {
     bool success = await authController.verifyOtp(
       email: email,
       otp:
-          int.tryParse(otpController.text.trim()) ?? 0, // convert string to int
+          int.tryParse(otpController.text.trim()) ?? 0,
     );
 
     if (success) {

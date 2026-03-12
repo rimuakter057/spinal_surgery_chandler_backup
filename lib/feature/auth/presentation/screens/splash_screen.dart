@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Matching the off-white background color from your image
+
       backgroundColor: AppColors.primaryShadeColor,
       body: Center(
         child: Column(
@@ -91,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 color: AppColors.black,
                 letterSpacing: ResponsiveHelper.width(
                   4,
-                ), // Wider spacing for the bottom line
+                ),
               ),
             ),
           ],
