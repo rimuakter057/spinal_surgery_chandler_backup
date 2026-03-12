@@ -102,15 +102,14 @@ class AddToCartWidget extends StatelessWidget {
           ///number count
           Column(
             children: [
-              CountButton(onTap: onTapDecrement, title: "-"),
+              CountButton(onTap: onTapIncrement, title: "+"),
               SizedBox(height: ResponsiveHelper.spacing(4)),
               CountButton(
                 onTap: onTapDecrement,
-
                 title: countText.toString() ?? '1',
               ),
               SizedBox(height: ResponsiveHelper.spacing(4)),
-              CountButton(onTap: onTapIncrement, title: "+"),
+              CountButton(onTap: onTapDecrement, title: "-"),
             ],
           ),
         ],

@@ -50,18 +50,9 @@ class _CartScreenState extends State<CartScreen> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => context.pushNamed(RoutesPath.notification),
-                  child: CustomImage(imageSrc: AppAssets.notification),
-                ),
-                SizedBox(width: ResponsiveHelper.spacing(12)),
-                GestureDetector(
-                  onTap: () => scaffoldKey.currentState!.openDrawer(),
-                  child: CustomImage(imageSrc: AppAssets.menu),
-                ),
-              ],
+            child:    GestureDetector(
+              onTap: () => scaffoldKey.currentState!.openDrawer(),
+              child: CustomImage(imageSrc: AppAssets.menu),
             ),
           ),
         ],

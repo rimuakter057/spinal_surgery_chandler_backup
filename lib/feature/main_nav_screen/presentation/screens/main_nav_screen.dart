@@ -20,18 +20,6 @@ class MainNavScreen extends StatefulWidget {
 class _MainNavScreenState extends State<MainNavScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-     HomeScreen(),
-
-    const SaveScreen(),
-
-    CartScreen(),
-
-    const ProfileScreen(),
-  ];
-
-
-
   Widget _getScreen(int index) {
     switch (index) {
       case 0:

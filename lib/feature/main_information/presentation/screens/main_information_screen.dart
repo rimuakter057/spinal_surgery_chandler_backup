@@ -76,18 +76,9 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: ResponsiveHelper.padding(12)),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => context.pushNamed(RoutesPath.notification),
-                  child: CustomImage(imageSrc: AppAssets.notification),
-                ),
-                SizedBox(width: ResponsiveHelper.spacing(12)),
-                GestureDetector(
-                  onTap: () => scaffoldKey.currentState!.openDrawer(),
-                  child: CustomImage(imageSrc: AppAssets.menu),
-                ),
-              ],
+            child:   GestureDetector(
+              onTap: () => scaffoldKey.currentState!.openDrawer(),
+              child: CustomImage(imageSrc: AppAssets.menu),
             ),
           ),
         ],
@@ -172,13 +163,13 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
                       itemBuilder: (context, index) {
                         final item = filtered[index];
-                        final isProduct = item.type?.toUpperCase() == "PRODUCT"; // 🔥 এখানে
+                        final isProduct = item.type?.toUpperCase() == "PRODUCT";
 
                         // Non-PRODUCT → simple title container
                         if (!isProduct) {
                           return GestureDetector(
                             onTap: () {
-                              debugPrint("=== shoreline parentId: ${item.id}"); // verify করো
+                              debugPrint("=== shoreline parentId: ${item.id}");
                               context.pushNamed(RoutesPath.shoreLine,
                               extra: item.id
                               );

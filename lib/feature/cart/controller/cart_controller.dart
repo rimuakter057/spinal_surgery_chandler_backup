@@ -36,51 +36,45 @@ class CartController extends GetxController {
 
   ///fetch increment count====================================================
 
-  Future<void> incrementItem({required String id,required BuildContext context}) async {
-    debugPrint("incrementItem called ====== id: $id"); // ✅
-    debugPrint("itemQuantities before ===== ${itemQuantities}"); // ✅
-
+  Future<void> incrementItem({required String id, required BuildContext context}) async {
     final current = itemQuantities[id] ?? 1;
-    debugPrint("current quantity ========== $current"); // ✅
-
     itemQuantities[id] = current + 1;
-    debugPrint("itemQuantities after ====== ${itemQuantities}"); // ✅
 
     final response = await ApiClient.patchData(
       ApiUrl.updateItemQuantity(itemId: id),
       {"quantity": itemQuantities[id]},
     );
 
-    debugPrint("response status =========== ${response.statusCode}"); // ✅
-    debugPrint("response body ============= ${response.body}"); // ✅
+    if (response.statusCode == 200) {
 
-    if (response.statusCode != 200) {
-      itemQuantities[id] = current;
+    } else if (response.statusCode == 429) {
+      itemQuantities[id] = current; // ← rollback
+      CustomSnackbar.error(context, "Too many requests");
+    } else {
+      itemQuantities[id] = current; // ← rollback
       debugPrint(response.statusText);
     }
-    else if(response.statusCode==429){
-      CustomSnackbar.error(context, "To many request");
-    }
   }
-
   ///fetch decrement count====================================================
-
-  Future<void> decrementItem({required String id,required BuildContext context}) async {
+  Future<void> decrementItem({required String id, required BuildContext context}) async {
     final current = itemQuantities[id] ?? 1;
     if (current <= 1) return;
 
     itemQuantities[id] = current - 1;
 
     final response = await ApiClient.patchData(
-      ApiUrl.updateItemQuantity(itemId: id), // ✅ item.id
+      ApiUrl.updateItemQuantity(itemId: id),
       {"quantity": itemQuantities[id]},
     );
 
-    if (response.statusCode != 200) {
-      itemQuantities[id] = current;
+    if (response.statusCode == 200) {
+      // success
+    } else if (response.statusCode == 429) {
+      itemQuantities[id] = current; // ← rollback
+      CustomSnackbar.error(context, "Too many requests");
+    } else {
+      itemQuantities[id] = current; // ← rollback
       debugPrint(response.statusText);
-    }  else if(response.statusCode==429){
-      CustomSnackbar.error(context, "To many request");
     }
   }
 
