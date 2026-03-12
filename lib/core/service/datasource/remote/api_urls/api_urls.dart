@@ -2,10 +2,10 @@ class ApiUrl {
 
 
   //local Server
- // static const String primaryUrl = "http://10.10.20.44:3086"; // ////
+  static const String primaryUrl = "http://10.10.20.44:3086"; // ////
 
  //real device
-  static const String primaryUrl = "https://fttfmf0j-3086.inc1.devtunnels.ms"; // ////
+ // static const String primaryUrl = "https://fttfmf0j-3086.inc1.devtunnels.ms"; // ////
 
   static const String baseUrl = "$primaryUrl/api/v1";
   static const String imageUrl = "$primaryUrl/";
@@ -26,6 +26,7 @@ class ApiUrl {
   static const String orders="/orders";
 
   static  String removeBookmark({required String id})=>"/bookmarks/items/$id";
+  static  String updateItemQuantity({required String itemId})=>"/cart/items/$itemId";
   static const String addToCart="/cart/items";
   static const String cart="/cart";
 

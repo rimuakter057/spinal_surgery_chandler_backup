@@ -12,11 +12,11 @@ class CountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      padding: ResponsiveHelper.symmetric(horizontal: 12, vertical: 2),
-      backgroundColor: AppColors.navUnselectedColor,
-      child: GestureDetector(
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: CustomContainer(
+        padding: ResponsiveHelper.symmetric(horizontal: 12, vertical: 2),
+        backgroundColor: AppColors.navUnselectedColor,
         child: Text(
           title,
           style: context.bodyLarge.copyWith(

@@ -10,9 +10,96 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
-  ///get cart api====================================
+  // ///get cart api====================================
+  // final RxBool isLoadingGetCart = false.obs;
+  // final RxList<Items> cartItems = <Items>[].obs;
+  // Future<void> fetchCart() async {
+  //   isLoadingGetCart.value = true;
+  //   final response = await ApiClient.getData(ApiUrl.cart);
+  //   isLoadingGetCart.value = false;
+  //   if (response.statusCode == 200) {
+  //     final cart = CartModel.fromJson(response.body['data']);
+  //     cartItems.assignAll(cart.items ?? []);
+  //   } else {
+  //     debugPrint(response.statusText);
+  //   }
+  // }
+
+  ///cart========================================================================
+
+
+
+
+//   final RxBool isLoadingGetCart = false.obs;
+//   final RxList<Items> cartItems = <Items>[].obs;
+//   final RxMap<String, int> itemQuantities = <String, int>{}.obs; // ✅ add
+//   final RxString cartId = "".obs;
+//
+//
+//   Future<void> fetchCart() async {
+//     isLoadingGetCart.value = true;
+//     final response = await ApiClient.getData(ApiUrl.cart);
+//     isLoadingGetCart.value = false;
+//     if (response.statusCode == 200) {
+//       final cart = CartModel.fromJson(response.body['data']);
+//       cartId.value = cart.id ?? ""; // ✅ cart id store
+//       cartItems.assignAll(cart.items ?? []);
+// /// cart id
+//       // for (var item in cart.items ?? []) {
+//       //   itemQuantities[item.itemId ?? ""] = item.quantity ?? 1;
+//       // }
+//
+//     ///id================
+//
+//       for (var item in cart.items ?? []) {
+//         itemQuantities[item.itemId ?? ""] = item.quantity ?? 1; // ✅ item.itemId
+//       }
+//
+//     } else {
+//       debugPrint(response.statusText);
+//     }
+//   }
+//
+//
+//   Future<void> incrementItem(String itemId) async {
+//     final current = itemQuantities[itemId] ?? 1;
+//     itemQuantities[itemId] = current + 1;
+//
+//     final response = await ApiClient.patchData(
+//       ApiUrl.updateItemQuantity(itemId: cartId.value), // ✅ cartId
+//       {"quantity": itemQuantities[itemId]},
+//     );
+//
+//     if (response.statusCode != 200) {
+//       itemQuantities[itemId] = current;
+//       debugPrint(response.statusText);
+//     }
+//   }
+//
+//   Future<void> decrementItem(String itemId) async {
+//     final current = itemQuantities[itemId] ?? 1;
+//     if (current <= 1) return;
+//
+//     itemQuantities[itemId] = current - 1;
+//
+//     final response = await ApiClient.patchData(
+//       ApiUrl.updateItemQuantity(itemId: cartId.value), // ✅ cartId
+//       {"quantity": itemQuantities[itemId]},
+//     );
+//
+//     if (response.statusCode != 200) {
+//       itemQuantities[itemId] = current;
+//       debugPrint(response.statusText);
+//     }
+//   }
+
+
+
+
   final RxBool isLoadingGetCart = false.obs;
   final RxList<Items> cartItems = <Items>[].obs;
+  final RxMap<String, int> itemQuantities = <String, int>{}.obs;
+
   Future<void> fetchCart() async {
     isLoadingGetCart.value = true;
     final response = await ApiClient.getData(ApiUrl.cart);
@@ -20,10 +107,72 @@ class CartController extends GetxController {
     if (response.statusCode == 200) {
       final cart = CartModel.fromJson(response.body['data']);
       cartItems.assignAll(cart.items ?? []);
+
+      for (var item in cart.items ?? []) {
+        itemQuantities[item.id ?? ""] = item.quantity ?? 1; // ✅ item.id
+      }
     } else {
       debugPrint(response.statusText);
     }
   }
+
+  Future<void> incrementItem({required String id,required BuildContext context}) async {
+    debugPrint("incrementItem called ====== id: $id"); // ✅
+    debugPrint("itemQuantities before ===== ${itemQuantities}"); // ✅
+
+    final current = itemQuantities[id] ?? 1;
+    debugPrint("current quantity ========== $current"); // ✅
+
+    itemQuantities[id] = current + 1;
+    debugPrint("itemQuantities after ====== ${itemQuantities}"); // ✅
+
+    final response = await ApiClient.patchData(
+      ApiUrl.updateItemQuantity(itemId: id),
+      {"quantity": itemQuantities[id]},
+    );
+
+    debugPrint("response status =========== ${response.statusCode}"); // ✅
+    debugPrint("response body ============= ${response.body}"); // ✅
+
+    if (response.statusCode != 200) {
+      itemQuantities[id] = current;
+      debugPrint(response.statusText);
+    }
+    else if(response.statusCode==429){
+      CustomSnackbar.error(context, "To many request");
+    }
+  }
+
+  Future<void> decrementItem({required String id,required BuildContext context}) async {
+    final current = itemQuantities[id] ?? 1;
+    if (current <= 1) return;
+
+    itemQuantities[id] = current - 1;
+
+    final response = await ApiClient.patchData(
+      ApiUrl.updateItemQuantity(itemId: id), // ✅ item.id
+      {"quantity": itemQuantities[id]},
+    );
+
+    if (response.statusCode != 200) {
+      itemQuantities[id] = current;
+      debugPrint(response.statusText);
+    }  else if(response.statusCode==429){
+      CustomSnackbar.error(context, "To many request");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   /// place order api====================================
   final RxBool isLoadingOrder = false.obs;

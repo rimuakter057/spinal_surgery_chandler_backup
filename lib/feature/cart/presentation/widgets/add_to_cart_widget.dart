@@ -110,7 +110,7 @@ class AddToCartWidget extends StatelessWidget {
                 title: countText.toString() ?? '1',
               ),
               SizedBox(height: ResponsiveHelper.spacing(4)),
-              CountButton(onTap: onTapDecrement, title: "+"),
+              CountButton(onTap: onTapIncrement, title: "+"),
             ],
           ),
         ],
