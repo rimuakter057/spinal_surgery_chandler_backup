@@ -2,7 +2,6 @@ import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/core/service/datasource/remote/api_urls/api_urls.dart';
 import 'package:chandler_app/feature/cart/presentation/widgets/product_card_widget.dart';
 import 'package:chandler_app/feature/home/controller/home_controller.dart';
-import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_drawer/custom_drawer.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
