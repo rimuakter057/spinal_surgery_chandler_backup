@@ -5,7 +5,6 @@ import 'package:chandler_app/helper/image_handler/image_handler.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
 import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
-import 'package:chandler_app/share/widgets/custom_loader/custom_loader.dart';
 import 'package:chandler_app/share/widgets/network_image/custom_network_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
@@ -128,12 +127,11 @@ class _SaveScreenState extends State<SaveScreen> {
 
                       SizedBox(width: ResponsiveHelper.width(8)),
 
-                      // Delete button
                       IconButton(
                         onPressed: () {
                           DeleteConfirmationDialog.show(
                             context: context,
-                            onConfirm: () => controller.removeBookMark(
+                            onConfirm: () => controller.deleteBookMark(
                               itemId: item.itemId.toString(),
                               context: context,
                             ),
@@ -143,7 +141,10 @@ class _SaveScreenState extends State<SaveScreen> {
                           () =>
                               controller.deletingItemId.value ==
                                   item.itemId.toString()
-                              ? CustomLoader()
+                              ? SizedBox(
+                                   height: ResponsiveHelper.iconSize(24),
+                                   width: ResponsiveHelper.iconSize(24),
+                                  child: CircularProgressIndicator(color: AppColors.primaryColor,))
                               : Icon(
                                   Icons.delete,
                                   size: ResponsiveHelper.iconSize(24),
@@ -151,6 +152,10 @@ class _SaveScreenState extends State<SaveScreen> {
                                 ),
                         ),
                       ),
+
+
+
+
                     ],
                   ),
                 ),

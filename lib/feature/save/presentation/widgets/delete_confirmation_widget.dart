@@ -3,6 +3,7 @@ import 'package:chandler_app/share/widgets/custom_divider/custom_divider.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 // ─── Delete Confirmation Dialog ───────────────────────────────────────────────
 class DeleteConfirmationDialog extends StatelessWidget {
@@ -105,7 +106,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
                   // Cancel Button
                   Expanded(
                     child: TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
+                      onPressed: () => context.pop(),
                       style: TextButton.styleFrom(
                         padding: ResponsiveHelper.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -127,7 +128,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pop(true);
+                        context.pop();
                         onConfirm();
                       },
                       style: ElevatedButton.styleFrom(

@@ -145,13 +145,13 @@ class CartController extends GetxController {
 
   ///delete bookmark api==================================================
 
-  final RxString deletingItemId = ''.obs; // কোন item delete হচ্ছে track করবে
+  final RxString deletingItemId = ''.obs;
 
-  Future<void> removeBookMark({
+  Future<void> deleteBookMark({
     required String itemId,
     required BuildContext context,
   }) async {
-    deletingItemId.value = itemId; // শুধু এই item এর loader
+    deletingItemId.value = itemId;
 
     final response = await ApiClient.deleteData(
       ApiUrl.removeBookmark(id: itemId),
@@ -175,6 +175,10 @@ class CartController extends GetxController {
       );
     }
   }
+
+
+
+
 
   ///get single details=============================================
   final RxBool isLoadingGetSingleDetails = false.obs;
