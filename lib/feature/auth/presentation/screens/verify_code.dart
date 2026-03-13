@@ -33,7 +33,7 @@ class VerifyCodeScreen extends StatelessWidget {
               children: [
                 ForgotCodeHeadingWidget(
                   title: AppText.enterVerificationCode,
-                  subtitle: AppText.verificationSent,
+                  subtitle:  "We've sent a 6-digit code to ${maskEmail(email)}",
                 ),
 
                 SizedBox(height: ResponsiveHelper.height(64)),
@@ -95,4 +95,16 @@ class VerifyCodeScreen extends StatelessWidget {
       CustomSnackbar.error(context, authController.errorMessage.value);
     }
   }
+}
+
+String maskEmail(String email) {
+  final parts = email.split('@');
+  if (parts.length != 2) return email;
+
+  final name = parts[0];
+  final domain = parts[1];
+
+  final visible = name.length >= 2 ? name.substring(0, 2) : name;
+
+  return '$visible***@$domain';
 }
