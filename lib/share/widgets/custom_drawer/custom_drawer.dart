@@ -1,8 +1,10 @@
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:chandler_app/share/widgets/custom_divider/custom_divider.dart' show CustomDivider;
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
 import 'package:chandler_app/utils/app_assets/app_assets.dart';
+import 'package:chandler_app/utils/app_const/app_const.dart';
 import 'package:chandler_app/utils/app_text/app_text.dart';
 import 'package:chandler_app/utils/color/app_colors.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
@@ -87,10 +89,13 @@ class CustomDrawer extends StatelessWidget {
                 _buildDrawerTitle(
                   context,
                   title: AppText.logOut,
-                  onTap: () {
-                    context.pushNamed(
-                        RoutesPath
-                            .loginScreen);
+                  onTap: () async {
+
+                    await SharePrefsHelper.remove(AppConstant.bearerToken);
+                    await SharePrefsHelper.remove(AppConstant.userId);
+
+                    context.goNamed(RoutesPath.loginScreen);
+
                   },
                 ),
               ],
