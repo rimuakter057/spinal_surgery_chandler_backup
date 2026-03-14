@@ -80,6 +80,8 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Shore line  parentId: ===============================${widget.parentId}");
+    debugPrint("shore line title==========================: ${widget.title}");
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
@@ -194,6 +196,8 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
                         imageUrl: imageUrl, // empty হলে ProductCard এ handle করো
                         title: item.title ?? "",
                         onAddToCart: () async {
+                          debugPrint("add cart parentId============================: ${item.id}");
+                          debugPrint("add title title=============================: ${item.title}");
                           final success = await controller.addToCart(
                             itemId: item.id ?? "",
                             itemTitle: item.title ?? "",
@@ -206,7 +210,7 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
                           }
                         },
                         tapDetails: () {
-                          debugPrint("=== id:============= ${item.id}");
+                          debugPrint("=== before on tap navigate shoreline============================= ${item.id}");
                           context.pushNamed(RoutesPath.productDetailsScreen,
                               extra: {
                                 "id": item.id,

@@ -57,6 +57,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint("product details parentId=======================: ${widget.id}");
+    debugPrint("product details title==========================: ${widget.title}");
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),

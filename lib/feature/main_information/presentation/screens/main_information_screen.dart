@@ -56,6 +56,10 @@ class _MainInformationScreenState extends State<MainInformationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint("main information screen parentId:======================= ${widget.parentId}");
+    debugPrint("main information screen  title:================================ ${widget.title}");
+
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(backgroundColor: AppColors.white, child: CustomDrawer()),
