@@ -33,13 +33,40 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
   final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
 
+
+  // initState
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchProducts(parentId: widget.parentId, context: context);
+      controller.fetchShorelineProducts(  // ← পরিবর্তন
+        parentId: widget.parentId,
+        context: context,
+      );
     });
   }
+
+// _onRefresh
+  Future<void> _onRefresh() async {
+    await controller.fetchShorelineProducts(  // ← পরিবর্তন
+      parentId: widget.parentId,
+      context: context,
+    );
+  }
+
+
+
+
+
+
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     controller.fetchProducts(parentId: widget.parentId, context: context);
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -47,9 +74,9 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
     super.dispose();
   }
 
-  Future<void> _onRefresh() async {
-    await controller.fetchProducts(parentId: widget.parentId, context: context);
-  }
+  // Future<void> _onRefresh() async {
+  //   await controller.fetchProducts(parentId: widget.parentId, context: context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +122,29 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
                 SizedBox(height: ResponsiveHelper.spacing(12)),
 
                 /// Product Grid
+                // Obx(() {
+                //   if (controller.isLoading.value) {
+                //     return const Padding(
+                //       padding: EdgeInsets.only(top: 60),
+                //       child: Center(child: CustomLoader()),
+                //     );
+                //   }
+                //
+                //   final filtered = searchQuery.value.isEmpty
+                //       ? controller.productList.toList()
+                //       : controller.productList
+                //       .where(
+                //         (e) => (e.title ?? '').toLowerCase().contains(
+                //       searchQuery.value,
+                //     ),
+                //   )
+                //       .toList();
+
+
+
+
                 Obx(() {
-                  if (controller.isLoading.value) {
+                  if (controller.isLoadingShoreline.value) {  // ← পরিবর্তন
                     return const Padding(
                       padding: EdgeInsets.only(top: 60),
                       child: Center(child: CustomLoader()),
@@ -104,14 +152,14 @@ class _ShorelineScreenState extends State<ShorelineScreen> {
                   }
 
                   final filtered = searchQuery.value.isEmpty
-                      ? controller.productList.toList()
-                      : controller.productList
-                      .where(
-                        (e) => (e.title ?? '').toLowerCase().contains(
-                      searchQuery.value,
-                    ),
-                  )
+                      ? controller.shorelineList.toList()  // ← পরিবর্তন
+                      : controller.shorelineList           // ← পরিবর্তন
+                      .where((e) => (e.title ?? '').toLowerCase()
+                      .contains(searchQuery.value))
                       .toList();
+
+
+
 
                   if (filtered.isEmpty) {
                     return const Padding(
