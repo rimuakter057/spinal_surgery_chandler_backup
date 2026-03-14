@@ -1,6 +1,7 @@
 import 'package:chandler_app/feature/auth/controller/auth_controller.dart';
 import 'package:chandler_app/core/router/route_path.dart';
 import 'package:chandler_app/helper/responsive_helper/responsive_helper.dart';
+import 'package:chandler_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:chandler_app/share/widgets/custom_appbar/custom_appbar.dart';
 import 'package:chandler_app/share/widgets/custom_container/custom_container.dart';
 import 'package:chandler_app/share/widgets/custom_image/custom_image.dart';
@@ -26,7 +27,26 @@ class ProfileScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      appBar: CustomAppBar(title: AppText.profile,isBack: false,),
+      appBar: AppBar(
+        title: Text("Profile", style: context.titleSmall),
+        actions: [
+
+          IconButton(onPressed: ()async{
+
+
+
+
+              await SharePrefsHelper.remove(AppConstant.bearerToken);
+              await SharePrefsHelper.remove(AppConstant.userId);
+
+              context.goNamed(RoutesPath.loginScreen);
+
+
+
+          }, icon: Icon(Icons.logout_outlined,color: AppColors.black,))
+        ],
+
+      ),
 
       body: Obx(() {
         final bool isLoading = authController.isLoadingProfile.value;
