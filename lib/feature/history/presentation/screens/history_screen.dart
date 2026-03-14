@@ -281,7 +281,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
 
   Color _getStatusColor(String? status) {
     switch ((status ?? '').toLowerCase()) {
-      case 'completed':
+      case 'confirmed':
         return AppColors.green;
       case 'pending':
         return Colors.orange;
