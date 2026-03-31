@@ -47,4 +47,7 @@ static  String getSingleComplain({complainId})=>"/complaints/get-single/$complai
   static const String changePassword="/users/change-password";
 
 
+  static  String security({required String type})=>"/site-policy/$type"; //PrivacyPolicy or Terms
+
+
 }

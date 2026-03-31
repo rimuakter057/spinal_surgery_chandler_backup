@@ -9,18 +9,17 @@ import 'package:chandler_app/feature/auth/presentation/screens/verify_code.dart'
 import 'package:chandler_app/feature/cart/presentation/screens/cart_screen.dart';
 import 'package:chandler_app/feature/cart/presentation/screens/order_screen.dart';
 import 'package:chandler_app/feature/history/presentation/screens/history_screen.dart';
-import 'package:chandler_app/feature/home/model/home_model.dart';
 import 'package:chandler_app/feature/home/presentation/screens/home_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/main_information_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/product_detals_screen.dart';
 import 'package:chandler_app/feature/main_information/presentation/screens/shoreline_screen.dart';
 import 'package:chandler_app/feature/main_nav_screen/presentation/screens/main_nav_screen.dart';
 import 'package:chandler_app/feature/notification/presentation/screens/notification_screen.dart';
-import 'package:chandler_app/feature/privacyPolicy/presentation/screens/privacy_policy_screen.dart';
 import 'package:chandler_app/feature/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:chandler_app/feature/profile/presentation/screens/profile_screen.dart';
 import 'package:chandler_app/feature/save/presentation/screens/save_screen.dart';
-import 'package:chandler_app/feature/terms_condition/presentation/screens/terms_condition_screen.dart';
+import 'package:chandler_app/feature/security/privacyPolicy/presentation/screens/privacy_policy_screen.dart';
+import 'package:chandler_app/feature/security/terms_condition/presentation/screens/terms_condition_screen.dart';
 import 'package:chandler_app/utils/extension/base_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -90,7 +89,7 @@ class AppRouter {
           return _buildPageWithAnimation(
             child: ShorelineScreen(
               parentId: parentId,
-              title: title,       // ← add করুন
+              title: title,
             ),
             state: state,
           );

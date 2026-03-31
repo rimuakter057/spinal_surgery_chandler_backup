@@ -163,7 +163,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     outlineTitle: AppText.cancel,
                     gradientTitle: AppText.save,
 
-                    outlineOnTap: () => Get.back(),
+                    outlineOnTap: (){
+                      debugPrint ("cancel");
+                    },
                     gradientOnTap: _handleSave,
                   ),
 

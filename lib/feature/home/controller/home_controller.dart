@@ -166,9 +166,7 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  // ─────────────────────────────────────────────────────────
-  // MainInformationScreen initState এ call হবে
-  // productList এ data আসবে
+
   // ─────────────────────────────────────────────────────────
   Future<void> fetchProducts({
     required String parentId,

@@ -3,6 +3,8 @@ class AppText {
 
   static const termsAndConditions = 'Terms & Conditions';
   static const privacyPolicy = 'Privacy Policy';
+  static const privacyType = 'PrivacyPolicy';
+  static const termsType = 'Terms';
   static const notifications = 'Notifications';
 
   //   // Profile
