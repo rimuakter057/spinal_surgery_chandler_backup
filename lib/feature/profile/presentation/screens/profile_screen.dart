@@ -15,16 +15,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final AuthController authController = Get.find<AuthController>();
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
 
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  final AuthController authController = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       authController.fetchProfile();
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -32,8 +46,6 @@ class ProfileScreen extends StatelessWidget {
         actions: [
 
           IconButton(onPressed: ()async{
-
-
 
 
               await SharePrefsHelper.remove(AppConstant.bearerToken);
@@ -152,5 +164,4 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-
 }
